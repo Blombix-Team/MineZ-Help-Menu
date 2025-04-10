@@ -1,0 +1,22 @@
+{
+  "category.minez_help_menu": "MineZ Help Menu",
+  "key.minez_help_menu.open_gui": "Otwórz menu",
+  "menu.minez_help.title": "Menu Pomocy MineZ",
+  "menu.minez_help.input_label": "Wprowadź dane:",
+  "menu.minez_help.button1": "Getting Started",
+  "menu.minez_help.button2": "Locations",
+  "menu.minez_help.button3": "Items",
+  "menu.minez_help.button4": "Loot Chests",
+  "menu.minez_help.button5": "Achievements",
+  "menu.minez_help.button6": "Spawn Kit",
+  "menu.minez_help.button7": "Grave Robbing & Fishing",
+  "menu.minez_help.button8": "Mobs",
+  "menu.minez_help.button9": "Lore",
+  "menu.minez_help.button10": "Healing",
+  "menu.minez_help.button11": "Thirst & Visibility",
+  "menu.minez_help.button12": "Bleeding & Infection",
+  "menu.minez_help.description": "To jest przykładowy opis w menu pomocy!",
+  "menu.minez_help.webmap": "MineZ Map",
+  "menu.minez_help.wiki": "MineZ Wiki",
+  "menu.minez_help.close": "Zamknij"
+}
