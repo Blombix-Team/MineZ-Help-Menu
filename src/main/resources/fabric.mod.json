@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "minez-help-menu",
+  "version": "${version}",
+  "name": "MineZ Help Menu",
+  "description": "Minecraft Mod for menu to help while playing MineZ!",
+  "authors": [
+    "Bubix"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/project/minez-help-menu",
+    "sources": ""
+  },
+  "license": "ARR",
+  "icon": "assets/minez-help-menu/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "value": "team.blombix.MineZHelpMenu",
+        "adapter": "kotlin"
+      }
+    ],
+    "client": [
+      {
+        "value": "team.blombix.MineZHelpMenuClient",
+        "adapter": "kotlin"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "value": "team.blombix.MineZHelpMenuDataGenerator",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "mixins": [
+    "minez-help-menu.mixins.json",
+    {
+      "config": "minez-help-menu.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.13",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
