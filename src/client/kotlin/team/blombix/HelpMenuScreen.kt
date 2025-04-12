@@ -28,7 +28,6 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
 
     override fun init() {
         val leftPanelWidth = (width * 0.3).toInt()
-
         val labelY = 20
         val textFieldY = labelY + 15
 
@@ -44,21 +43,19 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
         textField?.setEditable(true)
         addSelectableChild(textField)
 
+        val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
+        val buttonHeight = 24
+        val spacing = 10
         val startY = textFieldY + 30
-        val buttonWidth = (leftPanelWidth - 60) / 3
-        val buttonHeight = 20
-        var index = 0
-        for (row in 0 until 6) {
-            for (col in 0 until 2) {
-                val x = 20 + col * (buttonWidth + 10)
-                val y = startY + row * (buttonHeight + 5)
-                val button = ButtonWidget.builder(buttonTexts[index]) {
-                    // logika po kliknięciu
-                }.dimensions(x, y, buttonWidth, buttonHeight).build()
-                dynamicButtons.add(button)
-                addDrawableChild(button)
-                index++
-            }
+
+        for (i in 0 until 12) {
+            val x = 20
+            val y = startY + i * (buttonHeight + spacing)
+            val button = ButtonWidget.builder(buttonTexts[i]) {
+                // Obsługa kliknięcia
+            }.dimensions(x, y, buttonWidth, buttonHeight).build()
+            dynamicButtons.add(button)
+            addDrawableChild(button)
         }
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
