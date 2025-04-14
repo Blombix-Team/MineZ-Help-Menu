@@ -15,7 +15,7 @@ class MineZHelpMenuClient : ClientModInitializer {
             KeyBinding(
                 "key.minez_help_menu.open_gui",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_L,
+                GLFW.GLFW_KEY_I,
                 "category.minez_help_menu"
             )
         )
