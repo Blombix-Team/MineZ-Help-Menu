@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
+class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.title")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -47,7 +47,7 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
         textField?.setEditable(true)
         addSelectableChild(textField)
 
-        // Przycisków 14
+        // Przycisków 13
         val startY = textFieldY + 30
         val availableHeight = height - startY - 60
         val buttonCount = 14
@@ -74,7 +74,7 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
         }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ")
+            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
