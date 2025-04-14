@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
+class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help.title")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()

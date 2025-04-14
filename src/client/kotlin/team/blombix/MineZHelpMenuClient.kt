@@ -22,7 +22,7 @@ class MineZHelpMenuClient : ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
             if (openGuiKey.wasPressed()) {
-                client.setScreen(HelpMenuScreen())
+                client.setScreen(HelpMenuScreenGettingStarted())
             }
         })
     }
