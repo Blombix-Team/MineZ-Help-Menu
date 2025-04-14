@@ -23,14 +23,18 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
         Text.translatable("menu.minez_help.button9"),
         Text.translatable("menu.minez_help.button10"),
         Text.translatable("menu.minez_help.button11"),
-        Text.translatable("menu.minez_help.button12")
+        Text.translatable("menu.minez_help.button12"),
+        Text.translatable("menu.minez_help.button13"),
+        Text.translatable("menu.minez_help.button14")
     )
 
     override fun init() {
         val leftPanelWidth = (width * 0.3).toInt()
+        leftPanelWidth + 10
         val labelY = 20
         val textFieldY = labelY + 15
 
+        // Pole tekstowe w lewym panelu
         textField = TextFieldWidget(
             textRenderer,
             20,
@@ -43,12 +47,15 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
         textField?.setEditable(true)
         addSelectableChild(textField)
 
-        val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
-        val buttonHeight = 24
-        val spacing = 10
+        // Przycisków 13
         val startY = textFieldY + 30
+        val availableHeight = height - startY - 60
+        val buttonCount = 14
+        val buttonHeight = 24
+        val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
+        val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
 
-        for (i in 0 until 12) {
+        for (i in 0 until buttonCount) {
             val x = 20
             val y = startY + i * (buttonHeight + spacing)
             val button = ButtonWidget.builder(buttonTexts[i]) {
@@ -58,17 +65,21 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
             addDrawableChild(button)
         }
 
+        // Dolne przyciski: Webmap / Wiki / Close
+        val buttonY = height - 40
+        val smallButtonWidth = 80
+
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
             Util.getOperatingSystem().open("https://maps.shotbow.net/minez")
-        }.dimensions(width - 290, height - 30, 80, 20).build())
+        }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
             Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ")
-        }.dimensions(width - 190, height - 30, 80, 20).build())
+        }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
             client?.setScreen(null)
-        }.dimensions(width - 90, height - 30, 80, 20).build())
+        }.dimensions(width - 100, buttonY, smallButtonWidth, 20).build())
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -76,19 +87,37 @@ class HelpMenuScreen : Screen(Text.translatable("menu.minez_help.title")) {
 
         val leftPanelWidth = (width * 0.3).toInt()
 
-        context.fill(10, 10, leftPanelWidth - 10, height - 50, 0x80000000.toInt())
+        // Tło lewego panelu
+        context.fill(10, 10, leftPanelWidth - 10, height - 10, 0x80000000.toInt())
         context.drawTextWithShadow(textRenderer, Text.translatable("menu.minez_help.input_label"), 20, 20, 0xFFFFFF)
 
-        context.fill(leftPanelWidth + 10, 10, width - 10, height - 50, 0x80202020.toInt())
+        // Tło prawego panelu
+        context.fill(leftPanelWidth + 10, 10, width - 10, height - 10, 0x80202020.toInt())
+
+        // Tytuł sekcji (większą czcionką)
+        context.matrices.push()
+        context.matrices.translate((leftPanelWidth + 20).toFloat(), 15f, 0f)
+        context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.description"),
-            leftPanelWidth + 20,
-            20,
+            Text.translatable("menu.minez_help.menu1.title"),
+            0,
+            0,
             0xFFFFFF
         )
+        context.matrices.pop()
 
-        context.fill(0, height - 40, width, height, 0x80303030.toInt())
+// Tekst opisu (zawijany automatycznie)
+        val lines = textRenderer.wrapLines(
+            Text.translatable("menu.minez_help.description"),
+            width - leftPanelWidth - 40
+        )
+
+        var y = 38 // było 30 → zwiększamy odstęp po skalowanym tytule
+        for (line in lines) {
+            context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
+            y += 12
+        }
 
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
