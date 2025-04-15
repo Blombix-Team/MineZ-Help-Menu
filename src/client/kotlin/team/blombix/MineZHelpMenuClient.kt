@@ -25,5 +25,7 @@ class MineZHelpMenuClient : ClientModInitializer {
                 client.setScreen(HelpMenuScreenGettingStarted())
             }
         })
+
     }
+
 }

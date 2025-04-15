@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.title")) {
+class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.button1")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -25,7 +25,25 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.t
         Text.translatable("menu.minez_help.button11"),
         Text.translatable("menu.minez_help.button12"),
         Text.translatable("menu.minez_help.button13"),
-        Text.translatable("menu.minez_help.button14")
+        Text.translatable("menu.minez_help.button14"),
+        Text.translatable("menu.minez_help.button15")
+    )
+    private val screenList: List<() -> Screen> = listOf(
+        { HelpMenuScreenGettingStarted() },
+        { HelpMenuScreenThirstVisibility() },
+        { HelpMenuScreenHealing() },
+        { HelpMenuScreenBleedingInfection() },
+        { HelpMenuScreenSpawnKits() },
+        { HelpMenuScreenMobs() },
+        { HelpMenuScreenGraveRobbingFishing() },
+        { HelpMenuScreenMiningComponentBags() },
+        { HelpMenuScreenRecipes() },
+        { HelpMenuScreenItems() },
+        { HelpMenuScreenLocations() },
+        { HelpMenuScreenDungeons() },
+        { HelpMenuScreenLootChests() },
+        { HelpMenuScreenAchievements() },
+        { HelpMenuScreenMineZLoreQuestlines() }
     )
 
     override fun init() {
@@ -47,10 +65,10 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.t
         textField?.setEditable(true)
         addSelectableChild(textField)
 
-        // Przycisków 13
+        // Przycisków 15
         val startY = textFieldY + 30
         val availableHeight = height - startY - 60
-        val buttonCount = 14
+        val buttonCount = 15
         val buttonHeight = 24
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
         val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
@@ -59,7 +77,7 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.t
             val x = 20
             val y = startY + i * (buttonHeight + spacing)
             val button = ButtonWidget.builder(buttonTexts[i]) {
-                // Obsługa kliknięcia
+                client?.setScreen(screenList[i]())
             }.dimensions(x, y, buttonWidth, buttonHeight).build()
             dynamicButtons.add(button)
             addDrawableChild(button)
@@ -109,7 +127,7 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.t
 
 // Tekst opisu (zawijany automatycznie)
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description"),
+            Text.translatable("menu.minez_help.description.gettingstarted"),
             width - leftPanelWidth - 40
         )
 
