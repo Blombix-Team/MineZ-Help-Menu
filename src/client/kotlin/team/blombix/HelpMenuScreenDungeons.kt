@@ -5,7 +5,7 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
 
-class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help.button2")) {
+class HelpMenuScreenDungeons : Screen(Text.translatable("menu.minez_help.button12")) {
 
     override fun init() {
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.back")) {
