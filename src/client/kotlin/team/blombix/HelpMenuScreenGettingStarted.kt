@@ -89,11 +89,11 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.b
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(null)
+            client?.setScreen(HelpMenuScreenMineZLoreQuestlines())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(null)
+            client?.setScreen(HelpMenuScreenThirstVisibility())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
