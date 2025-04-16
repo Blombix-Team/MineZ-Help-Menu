@@ -49,7 +49,7 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.b
     private var scrollOffset = 0
     private var totalTextHeight = 0
     private val scrollAreaTop = 38
-    private val scrollAreaBottom get() = height - 40
+    private val scrollAreaBottom get() = height - 65
     private val scrollAreaHeight get() = scrollAreaBottom - scrollAreaTop
 
     override fun init() {
@@ -72,22 +72,29 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.b
         val startY = textFieldY + 30
         val availableHeight = height - startY - 60
         val buttonCount = 15
-        val buttonHeight = 24
+        val buttonHeight = 22
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
         val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
 
         for (i in 0 until buttonCount) {
-            val x = 20
             val y = startY + i * (buttonHeight + spacing)
             val button = ButtonWidget.builder(buttonTexts[i]) {
                 client?.setScreen(screenList[i]())
-            }.dimensions(x, y, buttonWidth, buttonHeight).build()
+            }.dimensions(20, y, buttonWidth, buttonHeight).build()
             dynamicButtons.add(button)
             addDrawableChild(button)
         }
 
         val buttonY = height - 40
         val smallButtonWidth = 80
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
+            client?.setScreen(null)
+        }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
+            client?.setScreen(null)
+        }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
             Util.getOperatingSystem().open("https://maps.shotbow.net/minez")
@@ -138,9 +145,28 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.b
             }
             y += 12
         }
+
         drawScrollbar(context)
+
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
+    }
+
+    override fun mouseScrolled(
+        mouseX: Double,
+        mouseY: Double,
+        horizontalAmount: Double,
+        verticalAmount: Double
+    ): Boolean {
+        val scrollStep = 12
+        val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(0)
+
+        if (mouseY in scrollAreaTop.toDouble()..scrollAreaBottom.toDouble()) {
+            scrollOffset = (scrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, maxScroll)
+            return true
+        }
+
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
     }
 
     private fun drawScrollbar(context: DrawContext) {
