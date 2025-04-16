@@ -124,7 +124,7 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.b
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu1.title1"),
+            Text.translatable("menu.minez_help.menu1.title"),
             0,
             0,
             0xFFFFFF
