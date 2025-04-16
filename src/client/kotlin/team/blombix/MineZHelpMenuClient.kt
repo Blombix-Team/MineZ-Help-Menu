@@ -7,8 +7,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import org.lwjgl.glfw.GLFW
-import team.blombix.configs.ModConfig
-import team.blombix.configs.ModSettingsScreen
 
 import team.blombix.hud.CustomHudOverlay
 import team.blombix.screens.HelpMenuScreenGettingStarted
@@ -16,7 +14,6 @@ import team.blombix.tooltips.TooltipInjector
 
 class MineZHelpMenuClient : ClientModInitializer {
     private lateinit var openGuiKey: KeyBinding
-    private lateinit var openSettingsGuiKey: KeyBinding
 
     override fun onInitializeClient() {
 
@@ -31,25 +28,12 @@ class MineZHelpMenuClient : ClientModInitializer {
             )
         )
 
-        openSettingsGuiKey = KeyBindingHelper.registerKeyBinding(
-            KeyBinding(
-                "key.minez_help_menu.open_settings_gui",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_U,
-                "category.minez_help_menu"
-            )
-        )
-
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
             if (openGuiKey.wasPressed()) {
                 client.setScreen(HelpMenuScreenGettingStarted())
             }
-            if (openSettingsGuiKey.wasPressed()) {
-                client.setScreen(ModSettingsScreen())
-            }
         })
 
-        ModConfig.load()
 
         HudRenderCallback.EVENT.register { _, _ ->
             CustomHudOverlay.render()

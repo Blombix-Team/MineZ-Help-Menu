@@ -107,7 +107,7 @@ class HelpMenuScreenRecipes : Screen(Text.translatable("menu.minez_help.button9"
                     this.client,
                     SystemToast.Type.NARRATOR_TOGGLE,
                     Text.translatable("menu.minez_toast.title"),
-                    Text.translatable("menu.minez_toast.recipes.text")
+                    Text.translatable("menu.minez_toast.noewikipage.text")
                 )
             )
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())

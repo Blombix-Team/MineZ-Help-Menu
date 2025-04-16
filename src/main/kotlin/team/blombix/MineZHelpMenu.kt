@@ -1,6 +1,10 @@
 package team.blombix
 
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType
+import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
 object MineZHelpMenu : ModInitializer {
@@ -15,9 +19,19 @@ object MineZHelpMenu : ModInitializer {
         logger.info(" ")
         logger.info("Contributors:")
         logger.info("BasicAly")
+        logger.info("All MineZ Wiki Editors")
         logger.info(" ")
-        logger.info("Version: 0.0.17")
+        logger.info("Version: 0.0.18")
         logger.info(" ")
         logger.info("[==============================================]")
+
+        FabricLoader.getInstance().getModContainer("minez-help-menu").ifPresent { container ->
+            ResourceManagerHelper.registerBuiltinResourcePack(
+                Identifier.of("minez-help-menu", "minez_mod_resourcespack"),
+                container,
+                ResourcePackActivationType.ALWAYS_ENABLED
+            )
+        }
+
     }
 }
