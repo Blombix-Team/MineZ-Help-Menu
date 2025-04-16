@@ -46,13 +46,17 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         { HelpMenuScreenMineZLoreQuestlines() }
     )
 
+    private var scrollOffset = 0
+    private var totalTextHeight = 0
+    private val scrollAreaTop = 38
+    private val scrollAreaBottom get() = height - 65
+    private val scrollAreaHeight get() = scrollAreaBottom - scrollAreaTop
+
     override fun init() {
         val leftPanelWidth = (width * 0.3).toInt()
-        leftPanelWidth + 10
         val labelY = 20
         val textFieldY = labelY + 15
 
-        // Pole tekstowe w lewym panelu
         textField = TextFieldWidget(
             textRenderer,
             20,
@@ -65,34 +69,39 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         textField?.setEditable(true)
         addSelectableChild(textField)
 
-        // Przycisków 15
         val startY = textFieldY + 30
         val availableHeight = height - startY - 60
         val buttonCount = 15
-        val buttonHeight = 24
+        val buttonHeight = 22
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
         val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
 
         for (i in 0 until buttonCount) {
-            val x = 20
             val y = startY + i * (buttonHeight + spacing)
             val button = ButtonWidget.builder(buttonTexts[i]) {
                 client?.setScreen(screenList[i]())
-            }.dimensions(x, y, buttonWidth, buttonHeight).build()
+            }.dimensions(20, y, buttonWidth, buttonHeight).build()
             dynamicButtons.add(button)
             addDrawableChild(button)
         }
 
-        // Dolne przyciski: Webmap / Wiki / Close
         val buttonY = height - 40
         val smallButtonWidth = 80
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
+            client?.setScreen(HelpMenuScreenGettingStarted())
+        }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
+            client?.setScreen(HelpMenuScreenHealing())
+        }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
             Util.getOperatingSystem().open("https://maps.shotbow.net/minez")
         }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/Thirst_%26_Visibility")
+            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
@@ -105,40 +114,73 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
 
         val leftPanelWidth = (width * 0.3).toInt()
 
-        // Tło lewego panelu
         context.fill(10, 10, leftPanelWidth - 10, height - 10, 0x80000000.toInt())
         context.drawTextWithShadow(textRenderer, Text.translatable("menu.minez_help.input_label"), 20, 20, 0xFFFFFF)
 
-        // Tło prawego panelu
         context.fill(leftPanelWidth + 10, 10, width - 10, height - 10, 0x80202020.toInt())
 
-        // Tytuł sekcji (większą czcionką)
         context.matrices.push()
         context.matrices.translate((leftPanelWidth + 20).toFloat(), 15f, 0f)
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu2.title"),
+            Text.translatable("menu.minez_help.menu1.title1"),
             0,
             0,
             0xFFFFFF
         )
         context.matrices.pop()
 
-// Tekst opisu (zawijany automatycznie)
         val lines = textRenderer.wrapLines(
             Text.translatable("menu.minez_help.description.thirstvisibility"),
             width - leftPanelWidth - 40
         )
 
-        var y = 38 // było 30 → zwiększamy odstęp po skalowanym tytule
+        totalTextHeight = lines.size * 12
+        var y = scrollAreaTop - scrollOffset
+
         for (line in lines) {
-            context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
+            if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
+                context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
+            }
             y += 12
         }
 
+        drawScrollbar(context)
+
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
+    }
+
+    override fun mouseScrolled(
+        mouseX: Double,
+        mouseY: Double,
+        horizontalAmount: Double,
+        verticalAmount: Double
+    ): Boolean {
+        val scrollStep = 12
+        val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(0)
+
+        if (mouseY in scrollAreaTop.toDouble()..scrollAreaBottom.toDouble()) {
+            scrollOffset = (scrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, maxScroll)
+            return true
+        }
+
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
+    }
+
+    private fun drawScrollbar(context: DrawContext) {
+        if (totalTextHeight <= scrollAreaHeight) return
+
+        val scrollbarX = width - 8
+        val scrollbarY = scrollAreaTop
+        val scrollbarHeight = scrollAreaHeight
+        val thumbHeight = (scrollbarHeight * (scrollAreaHeight.toFloat() / totalTextHeight)).toInt().coerceAtLeast(20)
+        val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(1)
+        val thumbY = scrollbarY + ((scrollOffset.toFloat() / maxScroll) * (scrollbarHeight - thumbHeight)).toInt()
+
+        context.fill(scrollbarX, scrollbarY, scrollbarX + 4, scrollbarY + scrollbarHeight, 0x80000000.toInt())
+        context.fill(scrollbarX, thumbY, scrollbarX + 4, thumbY + thumbHeight, 0xFFAAAAAA.toInt())
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
