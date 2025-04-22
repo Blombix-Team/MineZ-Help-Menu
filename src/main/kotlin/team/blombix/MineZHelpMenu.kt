@@ -10,8 +10,8 @@ object MineZHelpMenu : ModInitializer {
         logger.info("[==============================================]")
         logger.info(" ")
         logger.info("MineZ Help Menu Mod")
-        logger.info("Author:")
-        logger.info("Bubix")
+        logger.info("Authors:")
+        logger.info("Bubix, ChefMadCat")
         logger.info(" ")
         logger.info("[==============================================]")
     }
