@@ -89,11 +89,11 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button3"
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenGettingStarted())
+            client?.setScreen(HelpMenuScreenThirstVisibility())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenHealing())
+            client?.setScreen(HelpMenuScreenBleedingInfection())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
