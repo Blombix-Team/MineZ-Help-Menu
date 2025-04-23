@@ -13,6 +13,10 @@ class MineZHelpMenuClient : ClientModInitializer {
     private lateinit var openSettingsGuiKey: KeyBinding
 
     override fun onInitializeClient() {
+
+        TooltipInjector.register()
+
+
         openGuiKey = KeyBindingHelper.registerKeyBinding(
             KeyBinding(
                 "key.minez_help_menu.open_gui",
