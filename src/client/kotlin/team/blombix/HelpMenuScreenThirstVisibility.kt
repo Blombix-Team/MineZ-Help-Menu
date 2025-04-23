@@ -131,25 +131,62 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         )
         context.matrices.pop()
 
+        val textStartX = leftPanelWidth + 20
+        var y = scrollAreaTop - scrollOffset
+
         val lines = textRenderer.wrapLines(
             Text.translatable("menu.minez_help.description.thirstvisibility"),
             width - leftPanelWidth - 40
         )
 
-        totalTextHeight = lines.size * 12
-        var y = scrollAreaTop - scrollOffset
+        totalTextHeight = lines.size * 12 + 28 * 12 + 20
 
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
-                context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
+                context.drawTextWithShadow(textRenderer, line, textStartX, y, 0xFFFFFF)
             }
             y += 12
         }
 
-        drawScrollbar(context)
+        val (headers, rows) = getLangTableData()
+        val columnWidths = listOf(60, 80, 60, 60, 60, 80)
+        val cellHeight = 13
+        val tableStartY = y + 12
 
+        var headerX = textStartX
+        headers.forEachIndexed { i, header ->
+            context.drawTextWithShadow(textRenderer, header, headerX, tableStartY, 0xFFDD55)
+            headerX += columnWidths[i]
+        }
+
+        for ((rowIndex, rowData) in rows.withIndex()) {
+            var cellX = textStartX
+            val cellY = tableStartY + (rowIndex + 1) * cellHeight
+            if (cellY in scrollAreaTop until scrollAreaBottom) {
+                rowData.forEachIndexed { colIndex, cellText ->
+                    context.drawTextWithShadow(textRenderer, cellText, cellX, cellY, 0xAAAAAA)
+                    cellX += columnWidths[colIndex]
+                }
+            }
+        }
+
+        drawScrollbar(context)
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
+    }
+
+    private fun getLangTableData(): Pair<List<String>, List<List<String>>> {
+        val headers = (0..5).map { i ->
+            Text.translatable("menu.minez_help.thirst_table.headers[$i]").string
+        }
+
+        val rows = (0 until 28).map { row ->
+            (0 until 6).map { col ->
+                Text.translatable("menu.minez_help.thirst_table.rows[$row][$col]").string
+            }
+        }
+
+        return Pair(headers, rows)
     }
 
     override fun mouseScrolled(

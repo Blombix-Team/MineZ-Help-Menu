@@ -13,6 +13,8 @@ object MineZHelpMenu : ModInitializer {
         logger.info("Authors:")
         logger.info("Bubix, ChefMadCat")
         logger.info(" ")
+        logger.info("Version: 0.0.14")
+        logger.info(" ")
         logger.info("[==============================================]")
     }
 }
