@@ -1,12 +1,15 @@
 {
   "schemaVersion": 1,
   "id": "minez-help-menu",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "name": "MineZ Help Menu",
   "description": "Minecraft Mod for menu to help while playing MineZ!",
   "authors": [
-    "Bubix",
-    "ChefMadCat"
+    "Bubix (Code)",
+    "ChefMadCat (Text)"
+  ],
+  "contributors": [
+    "BasicAly (ShotBow Staff)"
   ],
   "contact": {
     "homepage": "https://modrinth.com/project/minez-help-menu",

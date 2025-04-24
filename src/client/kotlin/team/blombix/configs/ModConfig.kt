@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.configs
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -20,8 +20,6 @@ object ModConfig {
 
         try {
             val loaded = gson.fromJson(configFile.readText(), ModConfig::class.java)
-            this.showWaterDropIcon = loaded.showWaterDropIcon
-            this.enableExpGradient = loaded.enableExpGradient
         } catch (e: Exception) {
             println("Nie udało się załadować configu: ${e.message}")
         }

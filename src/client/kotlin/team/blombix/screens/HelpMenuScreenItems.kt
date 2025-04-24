@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help.button2")) {
+class HelpMenuScreenItems : Screen(Text.translatable("menu.minez_help.button10")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -89,11 +89,11 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenGettingStarted())
+            client?.setScreen(HelpMenuScreenRecipes())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenHealing())
+            client?.setScreen(HelpMenuScreenLocations())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
@@ -124,69 +124,32 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu2.title"),
+            Text.translatable("menu.minez_help.menu10.title"),
             0,
             0,
             0xFFFFFF
         )
         context.matrices.pop()
 
-        val textStartX = leftPanelWidth + 20
-        var y = scrollAreaTop - scrollOffset
-
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.thirstvisibility"),
+            Text.translatable("menu.minez_help.description.items"),
             width - leftPanelWidth - 40
         )
 
-        totalTextHeight = lines.size * 12 + 28 * 12 + 20
+        totalTextHeight = lines.size * 12
+        var y = scrollAreaTop - scrollOffset
 
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
-                context.drawTextWithShadow(textRenderer, line, textStartX, y, 0xFFFFFF)
+                context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
             }
             y += 12
         }
 
-        val (headers, rows) = getLangTableData()
-        val columnWidths = listOf(60, 80, 60, 60, 60, 80)
-        val cellHeight = 13
-        val tableStartY = y + 12
-
-        var headerX = textStartX
-        headers.forEachIndexed { i, header ->
-            context.drawTextWithShadow(textRenderer, header, headerX, tableStartY, 0xFFDD55)
-            headerX += columnWidths[i]
-        }
-
-        for ((rowIndex, rowData) in rows.withIndex()) {
-            var cellX = textStartX
-            val cellY = tableStartY + (rowIndex + 1) * cellHeight
-            if (cellY in scrollAreaTop until scrollAreaBottom) {
-                rowData.forEachIndexed { colIndex, cellText ->
-                    context.drawTextWithShadow(textRenderer, cellText, cellX, cellY, 0xAAAAAA)
-                    cellX += columnWidths[colIndex]
-                }
-            }
-        }
-
         drawScrollbar(context)
+
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
-    }
-
-    private fun getLangTableData(): Pair<List<String>, List<List<String>>> {
-        val headers = (0..5).map { i ->
-            Text.translatable("menu.minez_help.thirst_table.headers[$i]").string
-        }
-
-        val rows = (0 until 28).map { row ->
-            (0 until 6).map { col ->
-                Text.translatable("menu.minez_help.thirst_table.rows[$row][$col]").string
-            }
-        }
-
-        return Pair(headers, rows)
     }
 
     override fun mouseScrolled(

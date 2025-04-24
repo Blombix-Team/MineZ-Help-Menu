@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenMineZLoreQuestlines : Screen(Text.translatable("menu.minez_help.button15")) {
+class HelpMenuScreenDungeons : Screen(Text.translatable("menu.minez_help.button12")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -89,11 +89,11 @@ class HelpMenuScreenMineZLoreQuestlines : Screen(Text.translatable("menu.minez_h
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenAchievements())
+            client?.setScreen(HelpMenuScreenLocations())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenGettingStarted())
+            client?.setScreen(HelpMenuScreenLootChests())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
@@ -124,7 +124,7 @@ class HelpMenuScreenMineZLoreQuestlines : Screen(Text.translatable("menu.minez_h
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu15.title"),
+            Text.translatable("menu.minez_help.menu12.title"),
             0,
             0,
             0xFFFFFF
@@ -132,7 +132,7 @@ class HelpMenuScreenMineZLoreQuestlines : Screen(Text.translatable("menu.minez_h
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.lore"),
+            Text.translatable("menu.minez_help.description.dungeons"),
             width - leftPanelWidth - 40
         )
 

@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.tooltips
 
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.minecraft.item.ItemStack
@@ -23,7 +23,15 @@ object TooltipInjector {
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
-                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
+                            Text.literal("+2").formatted(Formatting.DARK_AQUA)
+                        )
+                )
+
+                Items.GOLDEN_APPLE -> lines.add(
+                    Text.literal("Thirst: ")
+                        .formatted(Formatting.AQUA)
+                        .append(
+                            Text.literal("+2").formatted(Formatting.DARK_AQUA)
                         )
                 )
 
@@ -55,7 +63,7 @@ object TooltipInjector {
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
-                            Text.literal("+10").formatted(Formatting.DARK_AQUA)
+                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
                         )
                 )
 
@@ -63,7 +71,7 @@ object TooltipInjector {
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
-                            Text.literal("+10").formatted(Formatting.DARK_AQUA)
+                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
                         )
                 )
             }

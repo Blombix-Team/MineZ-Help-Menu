@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenAchievements : Screen(Text.translatable("menu.minez_help.button14")) {
+class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.button1")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -89,11 +89,11 @@ class HelpMenuScreenAchievements : Screen(Text.translatable("menu.minez_help.but
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenLootChests())
+            client?.setScreen(HelpMenuScreenMineZLoreQuestlines())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenMineZLoreQuestlines())
+            client?.setScreen(HelpMenuScreenThirstVisibility())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
@@ -124,7 +124,7 @@ class HelpMenuScreenAchievements : Screen(Text.translatable("menu.minez_help.but
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu14.title"),
+            Text.translatable("menu.minez_help.menu1.title"),
             0,
             0,
             0xFFFFFF
@@ -132,7 +132,7 @@ class HelpMenuScreenAchievements : Screen(Text.translatable("menu.minez_help.but
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.achievements"),
+            Text.translatable("menu.minez_help.description.gettingstarted"),
             width - leftPanelWidth - 40
         )
 
