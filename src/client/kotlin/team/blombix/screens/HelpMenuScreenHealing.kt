@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.button13")) {
+class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button3")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -89,11 +89,11 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenDungeons())
+            client?.setScreen(HelpMenuScreenThirstVisibility())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenAchievements())
+            client?.setScreen(HelpMenuScreenBleedingInfection())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
@@ -124,7 +124,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu13.title"),
+            Text.translatable("menu.minez_help.menu3.title"),
             0,
             0,
             0xFFFFFF
@@ -132,7 +132,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.lootchests"),
+            Text.translatable("menu.minez_help.description.healing"),
             width - leftPanelWidth - 40
         )
 

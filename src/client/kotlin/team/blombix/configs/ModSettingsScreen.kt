@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.configs
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen

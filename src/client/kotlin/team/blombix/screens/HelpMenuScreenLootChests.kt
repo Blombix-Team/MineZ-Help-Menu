@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button11")) {
+class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.button13")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -89,11 +89,11 @@ class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenItems())
+            client?.setScreen(HelpMenuScreenDungeons())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenDungeons())
+            client?.setScreen(HelpMenuScreenAchievements())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
@@ -124,7 +124,7 @@ class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu11.title"),
+            Text.translatable("menu.minez_help.menu13.title"),
             0,
             0,
             0xFFFFFF
@@ -132,7 +132,7 @@ class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.locations"),
+            Text.translatable("menu.minez_help.description.lootchests"),
             width - leftPanelWidth - 40
         )
 

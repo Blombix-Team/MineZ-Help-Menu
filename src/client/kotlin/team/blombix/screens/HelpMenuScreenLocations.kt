@@ -1,4 +1,4 @@
-package team.blombix
+package team.blombix.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenBleedingInfection : Screen(Text.translatable("menu.minez_help.button4")) {
+class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button11")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -89,11 +89,11 @@ class HelpMenuScreenBleedingInfection : Screen(Text.translatable("menu.minez_hel
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenHealing())
+            client?.setScreen(HelpMenuScreenItems())
         }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenSpawnKits())
+            client?.setScreen(HelpMenuScreenDungeons())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
@@ -124,7 +124,7 @@ class HelpMenuScreenBleedingInfection : Screen(Text.translatable("menu.minez_hel
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu4.title"),
+            Text.translatable("menu.minez_help.menu11.title"),
             0,
             0,
             0xFFFFFF
@@ -132,7 +132,7 @@ class HelpMenuScreenBleedingInfection : Screen(Text.translatable("menu.minez_hel
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.bleedinginfection"),
+            Text.translatable("menu.minez_help.description.locations"),
             width - leftPanelWidth - 40
         )
 
