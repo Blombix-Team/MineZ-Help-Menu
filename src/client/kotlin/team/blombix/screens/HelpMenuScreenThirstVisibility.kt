@@ -74,7 +74,7 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         val buttonCount = 15
         val buttonHeight = 22
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
-        val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
+        val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
 
         for (i in 0 until buttonCount) {
             val y = startY + i * (buttonHeight + spacing)
@@ -101,7 +101,7 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
+            Util.getOperatingSystem().open("https://wiki.shotbow.net/Thirst_%26_Visibility")
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
@@ -139,7 +139,7 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
             width - leftPanelWidth - 40
         )
 
-        totalTextHeight = lines.size * 12 + 28 * 12 + 20
+        totalTextHeight = lines.size * 12 + 28 * 12 + 150
 
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
@@ -149,9 +149,9 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         }
 
         val (headers, rows) = getLangTableData()
-        val columnWidths = listOf(100, 60, 60, 60, 60, 100)
+        val columnWidths = listOf(100, 60, 70, 60, 60, 150)
         val cellHeight = 15
-        val tableStartY = y + 12
+        val tableStartY = y + 10
 
         var headerX = textStartX
         headers.forEachIndexed { i, header ->
@@ -180,7 +180,7 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
             Text.translatable("menu.minez_help.thirst_table.headers[$i]").string
         }
 
-        val rows = (0 until 28).map { row ->
+        val rows = (0 until 27).map { row ->
             (0 until 6).map { col ->
                 Text.translatable("menu.minez_help.thirst_table.rows[$row][$col]").string
             }

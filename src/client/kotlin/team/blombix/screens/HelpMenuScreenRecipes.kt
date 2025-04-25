@@ -74,7 +74,7 @@ class HelpMenuScreenRecipes : Screen(Text.translatable("menu.minez_help.button9"
         val buttonCount = 15
         val buttonHeight = 22
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
-        val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
+        val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
 
         for (i in 0 until buttonCount) {
             val y = startY + i * (buttonHeight + spacing)
@@ -101,7 +101,7 @@ class HelpMenuScreenRecipes : Screen(Text.translatable("menu.minez_help.button9"
         }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
+            //TODO(Jakiś alert że nie ma strony wikii z craftingami)
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
