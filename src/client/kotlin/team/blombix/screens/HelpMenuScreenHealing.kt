@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
-class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button3")) {
+class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -74,7 +74,7 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button3"
         val buttonCount = 15
         val buttonHeight = 22
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
-        val buttonWidth = ((leftPanelWidth - 40) * 2) / 3
+        val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
 
         for (i in 0 until buttonCount) {
             val y = startY + i * (buttonHeight + spacing)
@@ -101,7 +101,7 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button3"
         }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
+            Util.getOperatingSystem().open("https://wiki.shotbow.net/Healing")
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
@@ -131,25 +131,62 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button3"
         )
         context.matrices.pop()
 
+        val textStartX = leftPanelWidth + 20
+        var y = scrollAreaTop - scrollOffset
+
         val lines = textRenderer.wrapLines(
             Text.translatable("menu.minez_help.description.healing"),
             width - leftPanelWidth - 40
         )
 
-        totalTextHeight = lines.size * 12
-        var y = scrollAreaTop - scrollOffset
+        totalTextHeight = lines.size * 12 + 28 * 12 + 150
 
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
-                context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
+                context.drawTextWithShadow(textRenderer, line, textStartX, y, 0xFFFFFF)
             }
             y += 12
         }
 
-        drawScrollbar(context)
+        val (headers, rows) = getLangTableData()
+        val columnWidths = listOf(100, 60, 70, 60, 60, 150)
+        val cellHeight = 15
+        val tableStartY = y + 10
 
+        var headerX = textStartX
+        headers.forEachIndexed { i, header ->
+            context.drawTextWithShadow(textRenderer, header, headerX, tableStartY, 0xFFDD55)
+            headerX += columnWidths[i]
+        }
+
+        for ((rowIndex, rowData) in rows.withIndex()) {
+            var cellX = textStartX
+            val cellY = tableStartY + (rowIndex + 1) * cellHeight
+            if (cellY in scrollAreaTop until scrollAreaBottom) {
+                rowData.forEachIndexed { colIndex, cellText ->
+                    context.drawTextWithShadow(textRenderer, cellText, cellX, cellY, 0xAAAAAA)
+                    cellX += columnWidths[colIndex]
+                }
+            }
+        }
+
+        drawScrollbar(context)
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
+    }
+
+    private fun getLangTableData(): Pair<List<String>, List<List<String>>> {
+        val headers = (0..5).map { i ->
+            Text.translatable("menu.minez_help.thirst_table.headers[$i]").string
+        }
+
+        val rows = (0 until 27).map { row ->
+            (0 until 6).map { col ->
+                Text.translatable("menu.minez_help.thirst_table.rows[$row][$col]").string
+            }
+        }
+
+        return Pair(headers, rows)
     }
 
     override fun mouseScrolled(
