@@ -16,7 +16,7 @@ object MineZHelpMenu : ModInitializer {
         logger.info("Contributors:")
         logger.info("BasicAly")
         logger.info(" ")
-        logger.info("Version: 0.0.16")
+        logger.info("Version: 0.0.17")
         logger.info(" ")
         logger.info("[==============================================]")
     }
