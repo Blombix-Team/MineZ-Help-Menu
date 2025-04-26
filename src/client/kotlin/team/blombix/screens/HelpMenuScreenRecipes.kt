@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
+import net.minecraft.client.toast.SystemToast
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 
@@ -101,7 +102,14 @@ class HelpMenuScreenRecipes : Screen(Text.translatable("menu.minez_help.button9"
         }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            //TODO(Jakiś alert że nie ma strony wikii z craftingami)
+            this.client?.toastManager?.add(
+                SystemToast.create(
+                    this.client,
+                    SystemToast.Type.NARRATOR_TOGGLE,
+                    Text.translatable("menu.minez_toast.title"),
+                    Text.translatable("menu.minez_toast.recipes.text")
+                )
+            )
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {

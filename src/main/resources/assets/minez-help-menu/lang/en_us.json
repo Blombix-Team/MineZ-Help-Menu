@@ -20,6 +20,12 @@
   "menu.minez_help.button13": "Loot Chests",
   "menu.minez_help.button14": "Achievements",
   "menu.minez_help.button15": "Lore",
+  "menu.minez_help.pageback": "Previous page",
+  "menu.minez_help.next": "Next page",
+  "menu.minez_help.webmap": "MineZ Map",
+  "menu.minez_help.wiki": "MineZ Wiki",
+  "menu.minez_help.close": "Close",
+
   "menu.minez_help.menu1.title": "§f§lGetting Started To MineZ:",
   "menu.minez_help.menu2.title": "§f§lHunger, Thirst & Visibility",
   "menu.minez_help.menu3.title": "§f§lHealing",
@@ -51,11 +57,7 @@
   "menu.minez_help.description.lootchests": "Loot Chests",
   "menu.minez_help.description.achievements": "Achievements",
   "menu.minez_help.description.lore": "Lore",
-  "menu.minez_help.pageback": "Previous page",
-  "menu.minez_help.next": "Next page",
-  "menu.minez_help.webmap": "MineZ Map",
-  "menu.minez_help.wiki": "MineZ Wiki",
-  "menu.minez_help.close": "Close",
+
   "menu.minez_help.thirst_table.headers[0]": "Item",
   "menu.minez_help.thirst_table.headers[1]": "Hunger",
   "menu.minez_help.thirst_table.headers[2]": "Saturation",
@@ -224,5 +226,8 @@
   "menu.minez_help.thirst_table.rows[26][3]": "§f1",
   "menu.minez_help.thirst_table.rows[26][4]": "§e+1",
   "menu.minez_help.thirst_table.rows[26][5]": "Craft",
+  "menu.minez_toast.title": "Information!",
+  "menu.minez_toast.recipes.text": "The official server wikii does not have a page on this topic.",
+
   "recipe.minez-help-menu.bread": "Bread Recipe"
 }

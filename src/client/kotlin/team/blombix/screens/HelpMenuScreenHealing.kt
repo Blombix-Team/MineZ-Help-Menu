@@ -124,69 +124,33 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.menu3.title"),
+            Text.translatable("menu.minez_help.menu1.title"),
             0,
             0,
             0xFFFFFF
         )
         context.matrices.pop()
 
-        val textStartX = leftPanelWidth + 20
-        var y = scrollAreaTop - scrollOffset
-
         val lines = textRenderer.wrapLines(
             Text.translatable("menu.minez_help.description.healing"),
+            //TODO: W "menu.minez_help.description.healing" wpisać tabelkę z pliku wikii
             width - leftPanelWidth - 40
         )
 
-        totalTextHeight = lines.size * 12 + 28 * 12 + 150
+        totalTextHeight = lines.size * 12
+        var y = scrollAreaTop - scrollOffset
 
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
-                context.drawTextWithShadow(textRenderer, line, textStartX, y, 0xFFFFFF)
+                context.drawTextWithShadow(textRenderer, line, leftPanelWidth + 20, y, 0xFFFFFF)
             }
             y += 12
         }
 
-        val (headers, rows) = getLangTableData()
-        val columnWidths = listOf(100, 60, 70, 60, 60, 150)
-        val cellHeight = 15
-        val tableStartY = y + 10
-
-        var headerX = textStartX
-        headers.forEachIndexed { i, header ->
-            context.drawTextWithShadow(textRenderer, header, headerX, tableStartY, 0xFFDD55)
-            headerX += columnWidths[i]
-        }
-
-        for ((rowIndex, rowData) in rows.withIndex()) {
-            var cellX = textStartX
-            val cellY = tableStartY + (rowIndex + 1) * cellHeight
-            if (cellY in scrollAreaTop until scrollAreaBottom) {
-                rowData.forEachIndexed { colIndex, cellText ->
-                    context.drawTextWithShadow(textRenderer, cellText, cellX, cellY, 0xAAAAAA)
-                    cellX += columnWidths[colIndex]
-                }
-            }
-        }
-
         drawScrollbar(context)
+
         textField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
-    }
-
-    private fun getLangTableData(): Pair<List<String>, List<List<String>>> {
-        val headers = (0..5).map { i ->
-            Text.translatable("menu.minez_help.thirst_table.headers[$i]").string
-        }
-
-        val rows = (0 until 27).map { row ->
-            (0 until 6).map { col ->
-                Text.translatable("menu.minez_help.thirst_table.rows[$row][$col]").string
-            }
-        }
-
-        return Pair(headers, rows)
     }
 
     override fun mouseScrolled(

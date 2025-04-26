@@ -22,7 +22,6 @@ class MineZHelpMenuClient : ClientModInitializer {
 
         TooltipInjector.register()
 
-
         openGuiKey = KeyBindingHelper.registerKeyBinding(
             KeyBinding(
                 "key.minez_help_menu.open_gui",
