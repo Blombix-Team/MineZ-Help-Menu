@@ -21,17 +21,20 @@ object MineZHelpMenu : ModInitializer {
         logger.info("BasicAly")
         logger.info("All MineZ Wiki Editors")
         logger.info(" ")
-        logger.info("Version: 0.0.18")
+        logger.info("Version: 0.0.19")
         logger.info(" ")
         logger.info("[==============================================]")
 
         FabricLoader.getInstance().getModContainer("minez-help-menu").ifPresent { container ->
-            ResourceManagerHelper.registerBuiltinResourcePack(
-                Identifier.of("minez-help-menu", "minez_mod_resourcespack"),
-                container,
-                ResourcePackActivationType.ALWAYS_ENABLED
-            )
-        }
+            val packs = listOf("default", "zombies")
 
+            for (pack in packs) {
+                ResourceManagerHelper.registerBuiltinResourcePack(
+                    Identifier.of("minez-help-menu", pack),
+                    container,
+                    ResourcePackActivationType.NORMAL
+                )
+            }
+        }
     }
 }
