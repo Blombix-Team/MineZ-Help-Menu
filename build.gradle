@@ -17,7 +17,12 @@ repositories {
         name = "JEI"
         url = uri("https://maven.blamejared.com/")
     }
+    maven {
+        name = "JitPack"
+        url = uri("https://jitpack.io")
+    }
 }
+
 
 loom {
     splitEnvironmentSourceSets()

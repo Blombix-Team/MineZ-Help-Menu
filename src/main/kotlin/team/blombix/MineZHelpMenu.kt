@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
+
 object MineZHelpMenu : ModInitializer {
     private val logger = LoggerFactory.getLogger("minez-help-menu")
 
@@ -21,12 +22,12 @@ object MineZHelpMenu : ModInitializer {
         logger.info("BasicAly")
         logger.info("All MineZ Wiki Editors")
         logger.info(" ")
-        logger.info("Version: 0.0.20")
+        logger.info("Version: 0.0.21")
         logger.info(" ")
         logger.info("[==============================================]")
 
         FabricLoader.getInstance().getModContainer("minez-help-menu").ifPresent { container ->
-            val packs = listOf("default", "zombies", "eclipseddung")
+            val packs = listOf("default", "zombies", "dungshelper")
 
             for (pack in packs) {
                 ResourceManagerHelper.registerBuiltinResourcePack(
