@@ -1,4 +1,3 @@
-package team.blombix.screens.dungeons.easy;
+package team.blombix.screens.dungeons.easy
 
-public class HMSDungeonsCategoryEasy {
-}
+class HMSDungeonsCategoryEasy
