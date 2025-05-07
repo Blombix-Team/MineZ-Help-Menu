@@ -65,8 +65,8 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
             20,
             Text.translatable("menu.minez_help.input")
         )
-        textField?.setMaxLength(100)
-        textField?.setEditable(true)
+        textField?.maxLength = 100
+        textField?.isEditable = true
         addSelectableChild(textField)
 
         val startY = textFieldY + 30
@@ -133,7 +133,6 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
 
         val lines = textRenderer.wrapLines(
             Text.translatable("menu.minez_help.description.healing"),
-            //TODO: W "menu.minez_help.description.healing" wpisać tabelkę z pliku wikii
             width - leftPanelWidth - 40
         )
 

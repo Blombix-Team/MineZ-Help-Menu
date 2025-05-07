@@ -1,0 +1,3 @@
+package team.blombix.mixin
+
+class MixinLivingEntityRenderer
