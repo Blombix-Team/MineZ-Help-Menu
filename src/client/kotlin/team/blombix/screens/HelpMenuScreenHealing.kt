@@ -65,8 +65,8 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
             20,
             Text.translatable("menu.minez_help.input")
         )
-        textField?.maxLength = 100
-        textField?.isEditable = true
+        textField?.setMaxLength(100)
+        textField?.setEditable(true)
         addSelectableChild(textField)
 
         val startY = textFieldY + 30
