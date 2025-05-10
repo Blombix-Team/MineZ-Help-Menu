@@ -1,3 +1,3 @@
 package team.blombix.screens.mobs.hostile.others
 
-class zombie
+class Scorchers

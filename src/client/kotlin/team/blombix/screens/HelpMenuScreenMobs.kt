@@ -6,6 +6,7 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
+import team.blombix.screens.mobs.hostile.others.Zombie
 
 class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) {
 
@@ -96,10 +97,6 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
             client?.setScreen(HelpMenuScreenGraveRobbingFishing())
         }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
 
-        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.webmap")) {
-            Util.getOperatingSystem().open("https://maps.shotbow.net/minez")
-        }.dimensions(width - 300, buttonY, smallButtonWidth, 20).build())
-
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
             Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Mobs")
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
@@ -107,6 +104,39 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
             client?.setScreen(null)
         }.dimensions(width - 100, buttonY, smallButtonWidth, 20).build())
+
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.zombie.button")) {
+            client?.setScreen(Zombie())
+        }.dimensions(width - 650, 95, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.pigmen.button")) {
+            //client?.setScreen(Pigmen())
+            //TODO:Plik Pigmen.kt do zrobienia
+        }.dimensions(width - 550, 95, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.shivers.button")) {
+            //client?.setScreen(Shivers())
+            //TODO:Plik Shivers.kt do zrobienia
+        }.dimensions(width - 450, 95, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.revenants.button")) {
+            //client?.setScreen(Revenants())
+            //TODO:Plik Revenants.kt do zrobienia
+        }.dimensions(width - 350, 95, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.forsaken.button")) {
+            //client?.setScreen(Forsaken())
+            //TODO:Plik Forsaken.kt do zrobienia
+        }.dimensions(width - 250, 95, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.scorchers.button")) {
+            //client?.setScreen(Scorchers())
+            //TODO:Plik Scorchers.kt do zrobienia
+        }.dimensions(width - 150, 95, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.wolf.button")) {
+            //client?.setScreen(Wolf())
+            //TODO:Plik Wolf.kt do zrobienia
+        }.dimensions(width - 650, 120, smallButtonWidth, 20).build())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.ocelot.button")) {
+            //client?.setScreen(Ocelot())
+            //TODO:Plik Ocelot.kt do zrobienia
+        }.dimensions(width - 550, 120, smallButtonWidth, 20).build())
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
