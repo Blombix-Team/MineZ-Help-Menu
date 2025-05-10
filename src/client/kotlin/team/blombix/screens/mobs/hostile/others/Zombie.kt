@@ -60,7 +60,7 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         }.dimensions(width - 450, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
+            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Mobs")
         }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {

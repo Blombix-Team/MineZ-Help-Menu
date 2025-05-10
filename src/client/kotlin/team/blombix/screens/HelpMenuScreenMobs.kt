@@ -6,7 +6,7 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
-import team.blombix.screens.mobs.hostile.others.Zombie
+import team.blombix.screens.mobs.hostile.others.*
 
 class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) {
 
@@ -110,32 +110,25 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
             client?.setScreen(Zombie())
         }.dimensions(width - 650, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.pigmen.button")) {
-            //client?.setScreen(Pigmen())
-            //TODO:Plik Pigmen.kt do zrobienia
+            client?.setScreen(Pigmen())
         }.dimensions(width - 550, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.shivers.button")) {
-            //client?.setScreen(Shivers())
-            //TODO:Plik Shivers.kt do zrobienia
+            client?.setScreen(Shivers())
         }.dimensions(width - 450, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.revenants.button")) {
-            //client?.setScreen(Revenants())
-            //TODO:Plik Revenants.kt do zrobienia
+            client?.setScreen(Revenants())
         }.dimensions(width - 350, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.forsaken.button")) {
-            //client?.setScreen(Forsaken())
-            //TODO:Plik Forsaken.kt do zrobienia
+            client?.setScreen(Forsaken())
         }.dimensions(width - 250, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.scorchers.button")) {
-            //client?.setScreen(Scorchers())
-            //TODO:Plik Scorchers.kt do zrobienia
+            client?.setScreen(Scorchers())
         }.dimensions(width - 150, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.wolf.button")) {
-            //client?.setScreen(Wolf())
-            //TODO:Plik Wolf.kt do zrobienia
+            client?.setScreen(Wolf())
         }.dimensions(width - 650, 120, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.ocelot.button")) {
-            //client?.setScreen(Ocelot())
-            //TODO:Plik Ocelot.kt do zrobienia
+            client?.setScreen(Ocelot())
         }.dimensions(width - 550, 120, smallButtonWidth, 20).build())
     }
 
