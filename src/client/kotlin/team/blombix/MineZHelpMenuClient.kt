@@ -11,6 +11,7 @@ import team.blombix.tooltips.TooltipInjector
 
 class MineZHelpMenuClient : ClientModInitializer {
     private lateinit var openGuiKey: KeyBinding
+    private lateinit var toggleDHKey: KeyBinding
 
     override fun onInitializeClient() {
 
@@ -25,9 +26,21 @@ class MineZHelpMenuClient : ClientModInitializer {
             )
         )
 
+        toggleDHKey = KeyBindingHelper.registerKeyBinding(
+            KeyBinding(
+                "key.minez_help_menu.toggle_dh",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_R,
+                "category.minez_help_menu"
+            )
+        )
+
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
             if (openGuiKey.wasPressed()) {
                 client.setScreen(HelpMenuScreenGettingStarted())
+            }
+            if (toggleDHKey.wasPressed()) {
+                toggleDistantHorizonsRendering()
             }
         })
     }
