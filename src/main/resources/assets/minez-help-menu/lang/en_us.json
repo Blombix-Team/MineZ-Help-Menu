@@ -1,7 +1,10 @@
 {
   "category.minez_help_menu": "MineZ Help Menu",
+  
   "key.minez_help_menu.open_gui": "Open Gui",
   "key.minez_help_menu.open_settings_gui": "Open Settings",
+  "key.minez_help_menu.toggle_dh": "Toggle Distant Horizons Render"
+  
   "menu.minez_help.title": "MineZ Help Menu",
   "menu.minez_help.input_label": "Search for information:",
 
