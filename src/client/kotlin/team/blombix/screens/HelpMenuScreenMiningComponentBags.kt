@@ -73,7 +73,7 @@ class HelpMenuScreenMiningComponentBags : Screen(Text.translatable("menu.minez_h
         val startY = textFieldY + 30
         val availableHeight = height - startY - 60
         val buttonCount = 15
-        val buttonHeight = 22
+        val buttonHeight = 20
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
         val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
 

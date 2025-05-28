@@ -1,3 +1,0 @@
-package team.blombix
-
-class toggleDistantHorizonsRendering

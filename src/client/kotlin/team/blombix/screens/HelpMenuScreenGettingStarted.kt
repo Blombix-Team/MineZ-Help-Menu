@@ -73,7 +73,6 @@ class HelpMenuScreenGettingStarted : Screen(Text.translatable("menu.minez_help.b
         val availableHeight = height - startY - 60
         val buttonCount = 15
         val buttonHeight = 20
-//TODO: updated buttonHeight in others screen clas
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
         val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
 

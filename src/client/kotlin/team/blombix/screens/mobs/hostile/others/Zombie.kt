@@ -4,6 +4,12 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.mob.ZombieEntity
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 import team.blombix.screens.*
@@ -12,6 +18,8 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
 
     private var searchField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
+    private lateinit var zombieEntity: ZombieEntity
+
     private val screenList: List<() -> Screen> = listOf(
         { HelpMenuScreenGettingStarted() },
         { HelpMenuScreenThirstVisibility() },
@@ -38,34 +46,35 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
 
     override fun init() {
         val leftPanelWidth = (width * 0.3).toInt()
-        val rightPanelWidth = (width * 0.2).toInt()
-        width - leftPanelWidth - rightPanelWidth - 40
+        //val rightPanelWidth = (width * 0.2).toInt()
 
+        initZombieEntity()
         initLeftPanel(leftPanelWidth)
+        initBottomButtons()
+    }
 
-        // Przyciski na dole
-        val buttonY = height - 40
-        val smallButtonWidth = 80
+    private fun initZombieEntity() {
+        zombieEntity = ZombieEntity(EntityType.ZOMBIE, client?.world).apply {
+            setPos(0.0, 0.0, 0.0)
 
-        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenMineZLoreQuestlines())
-        }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
+            setCustomName(Text.literal("Player Zombie"))
+            isCustomNameVisible = true
 
-        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenThirstVisibility())
-        }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
+            fun enchanted(item: Item, name: String): ItemStack {
+                return ItemStack(item).apply {
+                    setCustomName(Text.literal(name))
+                }
+            }
 
-        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.back")) {
-            client?.setScreen(HelpMenuScreenMobs())
-        }.dimensions(width - 450, buttonY, smallButtonWidth, 20).build())
+            equipStack(EquipmentSlot.HEAD, enchanted(Items.NETHERITE_HELMET, "Cursed Helmet"))
+            equipStack(EquipmentSlot.CHEST, enchanted(Items.NETHERITE_CHESTPLATE, "Undead Chestguard"))
+            equipStack(EquipmentSlot.LEGS, enchanted(Items.NETHERITE_LEGGINGS, "Rotten Leggings"))
+            equipStack(EquipmentSlot.FEET, enchanted(Items.NETHERITE_BOOTS, "Gravewalkers"))
 
-        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
-            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Mobs")
-        }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
-
-        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
-            client?.setScreen(null)
-        }.dimensions(width - 100, buttonY, smallButtonWidth, 20).build())
+            equipStack(EquipmentSlot.MAINHAND, ItemStack(Items.NETHERITE_SWORD).apply {
+                setCustomName(Text.literal("Soul Blade"))
+            })
+        }
     }
 
     private fun initLeftPanel(leftPanelWidth: Int) {
@@ -90,8 +99,7 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         val buttonCount = 15
         val buttonHeight = 22
         val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
-        val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
-
+        val buttonWidth = leftPanelWidth - 40
 
         for (i in 0 until buttonCount) {
             val y = startY + i * (buttonHeight + spacing)
@@ -101,6 +109,27 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
             dynamicButtons.add(button)
             addDrawableChild(button)
         }
+    }
+
+    private fun initBottomButtons() {
+        val buttonY = height - 40
+        val smallButtonWidth = 80
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
+            client?.setScreen(HelpMenuScreenMineZLoreQuestlines())
+        }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
+            client?.setScreen(HelpMenuScreenThirstVisibility())
+        }.dimensions(width - 550, buttonY, smallButtonWidth, 20).build())
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
+            Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Getting_Started")
+        }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
+
+        addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
+            client?.setScreen(null)
+        }.dimensions(width - 100, buttonY, smallButtonWidth, 20).build())
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -152,16 +181,28 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         context.fill(rightPanelX, 10, rightPanelX + rightPanelWidth - 10, height - 10, 0x80303030.toInt())
 
         context.drawTextWithShadow(textRenderer, Text.literal("Wygląd:"), rightPanelX + 10, 20, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("zombie.png"), rightPanelX + 10, 40, 0x00BFFF)
 
-        context.drawTextWithShadow(textRenderer, Text.literal("Drops:"), rightPanelX + 10, 180, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("1 Rotten Flesh 25%"), rightPanelX + 10, 190, 0xFFFFFF)
+        rightPanelX + 60
+        /*
+                drawEntity(
+                    context.matrices,
+                    modelX,
+                    modelY,
+                    scale,
+                    (modelX - mouseX).toFloat(),
+                    (modelY - mouseY).toFloat(),
+                    zombieEntity
+                )
+                */
 
-        context.drawTextWithShadow(textRenderer, Text.literal("Health:"), rightPanelX + 10, 230, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥"), rightPanelX + 10, 250, 0xFF5555)
+        context.drawTextWithShadow(textRenderer, Text.literal("Drops:"), rightPanelX + 10, 140, 0xFFFFFF)
+        context.drawTextWithShadow(textRenderer, Text.literal("1 Rotten Flesh (25%)"), rightPanelX + 10, 160, 0xFFFFFF)
 
-        context.drawTextWithShadow(textRenderer, Text.literal("Damage:"), rightPanelX + 10, 280, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("♥ ♥ ♥ ♥ ♥"), rightPanelX + 10, 290, 0xFF5555)
+        context.drawTextWithShadow(textRenderer, Text.literal("Health:"), rightPanelX + 10, 190, 0xFFFFFF)
+        context.drawTextWithShadow(textRenderer, Text.literal("♥♥♥♥♥♥♥♥♥♥"), rightPanelX + 10, 210, 0xFF5555)
+
+        context.drawTextWithShadow(textRenderer, Text.literal("Damage:"), rightPanelX + 10, 240, 0xFFFFFF)
+        context.drawTextWithShadow(textRenderer, Text.literal("♥♥♥♥♥"), rightPanelX + 10, 260, 0xFF5555)
 
         searchField?.render(context, mouseX, mouseY, delta)
         super.render(context, mouseX, mouseY, delta)
@@ -204,6 +245,7 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
     }
 
     private fun renderBackground() {}
+
 
     override fun shouldPause(): Boolean = false
 }
