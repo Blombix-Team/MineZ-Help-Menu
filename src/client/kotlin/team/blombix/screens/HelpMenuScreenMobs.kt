@@ -6,7 +6,7 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
-import team.blombix.screens.mobs.hostile.others.*
+import team.blombix.screens.mobs.hostile.others.Zombie
 
 class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) {
 
@@ -109,26 +109,27 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.zombie.button")) {
             client?.setScreen(Zombie())
         }.dimensions(width - 650, 95, smallButtonWidth, 20).build())
+        //TODO: Podłącznie klas z ekranami mobów
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.pigmen.button")) {
-            client?.setScreen(Pigmen())
+            //client?.setScreen(Pigmen()
         }.dimensions(width - 550, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.shivers.button")) {
-            client?.setScreen(Shivers())
+            //client?.setScreen(Shivers())
         }.dimensions(width - 450, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.revenants.button")) {
-            client?.setScreen(Revenants())
+            //client?.setScreen(Revenants())
         }.dimensions(width - 350, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.forsaken.button")) {
-            client?.setScreen(Forsaken())
+            //client?.setScreen(Forsaken())
         }.dimensions(width - 250, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.scorchers.button")) {
-            client?.setScreen(Scorchers())
+            //client?.setScreen(Scorchers())
         }.dimensions(width - 150, 95, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.wolf.button")) {
-            client?.setScreen(Wolf())
+            //client?.setScreen(Wolf())
         }.dimensions(width - 650, 120, smallButtonWidth, 20).build())
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.menu.ocelot.button")) {
-            client?.setScreen(Ocelot())
+            //client?.setScreen(Ocelot())
         }.dimensions(width - 550, 120, smallButtonWidth, 20).build())
     }
 

@@ -1,9 +1,9 @@
 {
   "required": true,
-  "package": "team.blombix.mixin.client",
+  "package": "team.blombix.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ExampleClientMixin"
+    "client.InventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
