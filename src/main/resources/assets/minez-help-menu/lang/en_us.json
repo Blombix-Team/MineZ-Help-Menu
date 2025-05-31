@@ -57,7 +57,7 @@
   "menu.minez_help.description.miningcomponentbags": "Mining & Component Bags",
   "menu.minez_help.description.recipes": "Recipes",
   "menu.minez_help.description.items": "Items",
-  "menu.minez_help.description.locations": "Locations",
+  "menu.minez_help.description.locations": "Locations\n\n/navigation start <name>",
   "menu.minez_help.description.dungeons": "Dungeons",
   "menu.minez_help.description.lootchests": "Loot Chests",
   "menu.minez_help.description.achievements": "Achievements",
@@ -257,11 +257,6 @@
   "menu.minez_help.thirst_table.rows[26][5]": "Craft",
   "menu.minez_toast.title": "Information!",
   "menu.minez_toast.noewikipage.text": "The official server wikii does not have a page on this topic.",
-  "screen.navigation.title": "Location List",
-  "button.navigation": "Navigation",
-  "message.navigation.selected": "Selected: %s",
-  "message.navigation.added": "Added location: %s",
-  "message.navigation.not_found": "Location not found: %s",
 
   "recipe.minez-help-menu.bread": "Bread Recipe"
 }
