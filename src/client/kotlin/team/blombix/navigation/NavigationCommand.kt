@@ -14,8 +14,8 @@ object NavigationCommand {
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
             dispatcher.register(
                 ClientCommandManager.literal("navigation")
-                    .then(
-                        ClientCommandManager.literal("start")
+                .then(
+                    ClientCommandManager.literal("start")
                         .then(
                             ClientCommandManager.argument("name", StringArgumentType.string())
                                 .suggests { _, builder ->
@@ -56,8 +56,8 @@ object NavigationCommand {
                                 }
                         )
                     )
-                    .then(
-                        ClientCommandManager.literal("info")
+                .then(
+                    ClientCommandManager.literal("info")
                         .then(
                             ClientCommandManager.argument("name", StringArgumentType.string())
                                 .suggests { _, builder ->
@@ -90,84 +90,84 @@ object NavigationCommand {
                                 }
                         )
                     )
-                    .then(
-                        ClientCommandManager.literal("add")
+                .then(
+                    ClientCommandManager.literal("add")
                         .then(
                             ClientCommandManager.argument("x", IntegerArgumentType.integer())
-                            .then(
-                                ClientCommandManager.argument("y", IntegerArgumentType.integer())
                                 .then(
-                                    ClientCommandManager.argument("z", IntegerArgumentType.integer())
-                                    .then(
-                                        ClientCommandManager.argument(
-                                        "name",
-                                        StringArgumentType.string()
-                                    )
+                                    ClientCommandManager.argument("y", IntegerArgumentType.integer())
                                         .then(
-                                            ClientCommandManager.argument(
-                                            "anvil",
-                                            BoolArgumentType.bool()
-                                        )
-                                            .then(
-                                                ClientCommandManager.argument(
-                                                "furnace",
-                                                BoolArgumentType.bool()
-                                            )
+                                            ClientCommandManager.argument("z", IntegerArgumentType.integer())
                                                 .then(
                                                     ClientCommandManager.argument(
-                                                    "crafting",
-                                                    BoolArgumentType.bool()
-                                                )
-                                                    .then(
-                                                        ClientCommandManager.argument(
-                                                        "cauldron",
-                                                        BoolArgumentType.bool()
+                                                        "name",
+                                                        StringArgumentType.string()
                                                     )
                                                         .then(
                                                             ClientCommandManager.argument(
-                                                            "brewing_stand",
-                                                            BoolArgumentType.bool()
-                                                        )
-                                                            .then(
-                                                                ClientCommandManager.argument(
-                                                                "iron_ore",
+                                                                "anvil",
                                                                 BoolArgumentType.bool()
                                                             )
                                                                 .then(
                                                                     ClientCommandManager.argument(
-                                                                    "coal_ore",
-                                                                    BoolArgumentType.bool()
-                                                                )
-                                                                    .then(
-                                                                        ClientCommandManager.argument(
-                                                                        "carrots",
+                                                                        "furnace",
                                                                         BoolArgumentType.bool()
                                                                     )
                                                                         .then(
                                                                             ClientCommandManager.argument(
-                                                                            "wheat",
-                                                                            BoolArgumentType.bool()
-                                                                        )
-                                                                            .then(
-                                                                                ClientCommandManager.argument(
-                                                                                "beetroots",
+                                                                                "crafting",
                                                                                 BoolArgumentType.bool()
                                                                             )
                                                                                 .then(
                                                                                     ClientCommandManager.argument(
-                                                                                    "potatoes",
-                                                                                    BoolArgumentType.bool()
-                                                                                )
-                                                                                    .then(
-                                                                                        ClientCommandManager.argument(
-                                                                                        "pumpkin",
+                                                                                        "cauldron",
                                                                                         BoolArgumentType.bool()
                                                                                     )
                                                                                         .then(
                                                                                             ClientCommandManager.argument(
-                                                                                                "melon",
+                                                                                                "brewing_stand",
                                                                                                 BoolArgumentType.bool()
                                                                                             )
+                                                                                                .then(
+                                                                                                    ClientCommandManager.argument(
+                                                                                                        "iron_ore",
+                                                                                                        BoolArgumentType.bool()
+                                                                                                    )
+                                                                                                        .then(
+                                                                                                            ClientCommandManager.argument(
+                                                                                                                "coal_ore",
+                                                                                                                BoolArgumentType.bool()
+                                                                                                            )
+                                                                                                                .then(
+                                                                                                                    ClientCommandManager.argument(
+                                                                                                                        "carrots",
+                                                                                                                        BoolArgumentType.bool()
+                                                                                                                    )
+                                                                                                                        .then(
+                                                                                                                            ClientCommandManager.argument(
+                                                                                                                                "wheat",
+                                                                                                                                BoolArgumentType.bool()
+                                                                                                                            )
+                                                                                                                                .then(
+                                                                                                                                    ClientCommandManager.argument(
+                                                                                                                                        "beetroots",
+                                                                                                                                        BoolArgumentType.bool()
+                                                                                                                                    )
+                                                                                                                                        .then(
+                                                                                                                                            ClientCommandManager.argument(
+                                                                                                                                                "potatoes",
+                                                                                                                                                BoolArgumentType.bool()
+                                                                                                                                            )
+                                                                                                                                                .then(
+                                                                                                                                                    ClientCommandManager.argument(
+                                                                                                                                                        "pumpkin",
+                                                                                                                                                        BoolArgumentType.bool()
+                                                                                                                                                    )
+                                                                                                                                                        .then(
+                                                                                                                                                            ClientCommandManager.argument(
+                                                                                                                                                                "melon",
+                                                                                                                                                                BoolArgumentType.bool()
+                                                                                                                                                            )
                                                                                                 .executes { context ->
                                                                                                     val x =
                                                                                                         IntegerArgumentType.getInteger(

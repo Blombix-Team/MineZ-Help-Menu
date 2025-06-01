@@ -17,7 +17,7 @@ object AStarPathfinder {
             get() = gCost + hCost
     }
 
-    fun findPath(world: World, start: BlockPos, end: BlockPos, maxSteps: Int = 600000): List<Vec3d> {
+    fun findPath(world: World, start: BlockPos, end: BlockPos, maxSteps: Int = 100000): List<Vec3d> {
         val openSet = PriorityQueue<Node>(compareBy { it.fCost })
         val closedSet = mutableSetOf<BlockPos>()
         val startNode = Node(start, 0, heuristic(start, end), null)

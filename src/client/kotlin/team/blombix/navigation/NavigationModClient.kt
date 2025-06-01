@@ -64,13 +64,14 @@ object NavigationModClient {
             if (path.isEmpty()) return@register
             if (targetPosition == null) return@register
 
-            val currentPlayerPos = player.pos
-            if (tickCounter >= 200 || lastPlayerPos == null || currentPlayerPos.squaredDistanceTo(lastPlayerPos) > 1.0) {
-                computePath(currentPlayerPos, targetPosition!!)
-                lastPlayerPos = currentPlayerPos
-                tickCounter = 0
-            }
-            tickCounter++
+//            val currentPlayerPos = player.pos
+//            if (tickCounter >= 200 || lastPlayerPos == null || currentPlayerPos.squaredDistanceTo(lastPlayerPos) > 1.0) {
+//                computePath(currentPlayerPos, targetPosition!!)
+//                lastPlayerPos = currentPlayerPos
+//                tickCounter = 0
+//            }
+//            tickCounter++
+//Live PathFinder update OFF
 
             val stepsToShow = 5
             for (i in 0 until stepsToShow) {
