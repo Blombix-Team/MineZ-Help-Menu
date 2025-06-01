@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "minez-help-menu",
-  "version": "0.0.32",
+  "version": "0.0.32.1",
   "name": "MineZ Help Menu",
   "description": "Minecraft Mod for menu to help while playing MineZ!",
   "authors": [

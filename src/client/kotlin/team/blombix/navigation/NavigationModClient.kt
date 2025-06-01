@@ -3,6 +3,7 @@ package team.blombix.navigation
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.client.MinecraftClient
 import net.minecraft.particle.DustParticleEffect
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import org.joml.Vector3f
@@ -64,31 +65,29 @@ object NavigationModClient {
             if (path.isEmpty()) return@register
             if (targetPosition == null) return@register
 
-//            val currentPlayerPos = player.pos
-//            if (tickCounter >= 200 || lastPlayerPos == null || currentPlayerPos.squaredDistanceTo(lastPlayerPos) > 1.0) {
-//                computePath(currentPlayerPos, targetPosition!!)
-//                lastPlayerPos = currentPlayerPos
-//                tickCounter = 0
-//            }
-//            tickCounter++
-//Live PathFinder update OFF
+            // AUTO-END when near destination
+            val target = targetPosition
+            if (target != null && player.pos.squaredDistanceTo(target) <= 1.5) {
+                player.sendMessage(
+                    Text.literal("§7[§a✔§7] §7You have reached your destination: §6${target.x.toInt()}, ${target.y.toInt()}, ${target.z.toInt()}"),
+                    false
+                )
+                clearNavigation()
+                return@register
+            }
 
-            val stepsToShow = 5
-            for (i in 0 until stepsToShow) {
-                val step = (animationTick + i) % path.size
-                val point = path[step]
-
+            // Show entire static path within 25 block range
+            for (point in path) {
                 val distanceSq = point.squaredDistanceTo(player.pos)
                 if (distanceSq <= 25.0 * 25.0) {
                     world.addParticle(
                         DustParticleEffect(Vector3f(0.6f, 0.0f, 1.0f), 1.0f),
                         point.x, point.y, point.z,
-                        0.0, 0.0, 0.0
+                        0.1, 0.0, 0.1
                     )
                 }
             }
-
-            animationTick++
         }
     }
+
 }
