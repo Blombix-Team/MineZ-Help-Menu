@@ -31,6 +31,17 @@ object NavigationCommand {
                                         val start = player.pos
                                         val end = Vec3d(loc.x + 0.5, loc.y.toDouble(), loc.z + 0.5)
                                         NavigationModClient.setNavigationTarget(start, end)
+                                        val (distance, walk, run) = NavigationModClient.estimateTime(NavigationModClient.getPath())
+                                        player.sendMessage(
+                                            Text.literal(
+                                                "§7[§b⏱§7] §7Distance: §f${"%.1f".format(distance)}m §8|§7 Walk: §f${
+                                                    "%.1f".format(
+                                                        walk
+                                                    )
+                                                }s §8|§7 Sprint: §f${"%.1f".format(run)}s"
+                                            ),
+                                            false
+                                        )
                                         player.sendMessage(
                                             Text.literal("§7[§a➤§7] §7Navigation to:§6 ${loc.name}"),
                                             false
@@ -258,6 +269,52 @@ object NavigationCommand {
                                 )
                                 1
                             }
+                    )
+                    .then(
+                        ClientCommandManager.literal("find")
+                        .then(
+                            ClientCommandManager.argument("feature", StringArgumentType.string())
+                                .suggests { _, builder ->
+                                    listOf(
+                                        "anvil", "crafting", "cauldron", "furnace", "brewingstand",
+                                        "ironore", "coalore", "carrots", "wheat", "beetroots",
+                                        "potatoes", "pumpkin", "melon"
+                                    ).forEach { builder.suggest(it) }
+                                    builder.buildFuture()
+                                }
+                                .executes { context ->
+                                    val feature = StringArgumentType.getString(context, "feature").lowercase()
+                                    val player = MinecraftClient.getInstance().player ?: return@executes 0
+                                    val locations = LocationManager.getAll()
+
+                                    val matching = locations.filter {
+                                        val field = Location::class.java.getDeclaredField(feature)
+                                        field.isAccessible = true
+                                        (field.get(it) as? Boolean) == true
+                                    }
+
+                                    if (matching.isEmpty()) {
+                                        player.sendMessage(
+                                            Text.literal("§7[§c✘§7] §7No location found with feature: §6$feature"),
+                                            false
+                                        )
+                                        return@executes 1
+                                    }
+
+                                    val closest = matching.minByOrNull {
+                                        Vec3d(it.x + 0.5, it.y.toDouble(), it.z + 0.5).squaredDistanceTo(player.pos)
+                                    } ?: return@executes 1
+
+                                    val target = Vec3d(closest.x + 0.5, closest.y.toDouble(), closest.z + 0.5)
+                                    NavigationModClient.setNavigationTarget(player.pos, target)
+
+                                    player.sendMessage(
+                                        Text.literal("§7[§b⏱§7] §7Navigating to closest: §6$feature §8→ §e${closest.name}"),
+                                        false
+                                    )
+                                    1
+                                }
+                        )
                     )
             )
         }

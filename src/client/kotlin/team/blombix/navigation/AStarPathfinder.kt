@@ -17,7 +17,7 @@ object AStarPathfinder {
             get() = gCost + hCost
     }
 
-    fun findPath(world: World, start: BlockPos, end: BlockPos, maxSteps: Int = 6000): List<Vec3d> {
+    fun findPath(world: World, start: BlockPos, end: BlockPos, maxSteps: Int = 600000): List<Vec3d> {
         val openSet = PriorityQueue<Node>(compareBy { it.fCost })
         val closedSet = mutableSetOf<BlockPos>()
         val startNode = Node(start, 0, heuristic(start, end), null)
@@ -63,8 +63,14 @@ object AStarPathfinder {
     private fun getNeighbors(world: World, pos: BlockPos): List<BlockPos> {
         val directions = listOf(
             BlockPos(1, 0, 0), BlockPos(-1, 0, 0),
-            BlockPos(0, 0, 1), BlockPos(0, 0, -1)
+            BlockPos(0, 0, 1), BlockPos(0, 0, -1),
+            BlockPos(1, 1, 0), BlockPos(-1, 1, 0),
+            BlockPos(1, -1, 0), BlockPos(-1, -1, 0),
+            BlockPos(0, 1, 1), BlockPos(0, -1, 1),
+            BlockPos(0, 1, -1), BlockPos(0, -1, -1),
+            BlockPos(0, 1, 0), BlockPos(0, -1, 0)
         )
+
 
         val result = mutableListOf<BlockPos>()
 
