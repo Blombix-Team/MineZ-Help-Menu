@@ -1,7 +1,6 @@
 package team.blombix.navigation
 
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import java.util.*
 import kotlin.math.abs
@@ -17,7 +16,7 @@ object AStarPathfinder {
             get() = gCost + hCost
     }
 
-    fun findPath(world: World, start: BlockPos, end: BlockPos, maxSteps: Int = 100000): List<Vec3d> {
+    fun findPath(world: World, start: BlockPos, end: BlockPos, maxSteps: Int = 2048): List<BlockPos> {
         val openSet = PriorityQueue<Node>(compareBy { it.fCost })
         val closedSet = mutableSetOf<BlockPos>()
         val startNode = Node(start, 0, heuristic(start, end), null)
@@ -37,24 +36,23 @@ object AStarPathfinder {
                 val hCost = heuristic(neighbor, end)
                 val node = Node(neighbor, gCost, hCost, current)
 
-                // Jeśli w openSet już istnieje z mniejszym kosztem — pomiń
                 if (openSet.any { it.pos == neighbor && it.fCost <= node.fCost }) continue
                 openSet.add(node)
             }
         }
 
-        return emptyList() // nie znaleziono ścieżki
+        return emptyList()
     }
 
     private fun heuristic(a: BlockPos, b: BlockPos): Int {
         return abs(a.x - b.x) + abs(a.y - b.y) + abs(a.z - b.z)
     }
 
-    private fun buildPath(endNode: Node): List<Vec3d> {
-        val path = mutableListOf<Vec3d>()
+    private fun buildPath(endNode: Node): List<BlockPos> {
+        val path = mutableListOf<BlockPos>()
         var node: Node? = endNode
         while (node != null) {
-            path.add(Vec3d(node.pos.x + 0.5, node.pos.y + 0.2, node.pos.z + 0.5))
+            path.add(node.pos)
             node = node.parent
         }
         return path.reversed()
@@ -64,42 +62,25 @@ object AStarPathfinder {
         val directions = listOf(
             BlockPos(1, 0, 0), BlockPos(-1, 0, 0),
             BlockPos(0, 0, 1), BlockPos(0, 0, -1),
-            BlockPos(1, 1, 0), BlockPos(-1, 1, 0),
-            BlockPos(1, -1, 0), BlockPos(-1, -1, 0),
-            BlockPos(0, 1, 1), BlockPos(0, -1, 1),
-            BlockPos(0, 1, -1), BlockPos(0, -1, -1),
             BlockPos(0, 1, 0), BlockPos(0, -1, 0)
         )
-
 
         val result = mutableListOf<BlockPos>()
 
         for (offset in directions) {
-            val forward = pos.add(offset)
+            val candidate = pos.add(offset)
+            val ground = candidate.down()
 
-            val candidates = listOf(
-                forward,
-                forward.up(),
-                forward.down()
-            )
+            val feetState = world.getBlockState(candidate)
+            val headState = world.getBlockState(candidate.up())
+            val groundState = world.getBlockState(ground)
 
-            for (candidate in candidates) {
-                val ground = candidate.down()
-                val stateAtFeet = world.getBlockState(candidate)
-                val stateAtHead = world.getBlockState(candidate.up())
-                val stateBelow = world.getBlockState(ground)
+            val feetPassable = feetState.isAir || feetState.getCollisionShape(world, candidate).isEmpty
+            val headPassable = headState.isAir || headState.getCollisionShape(world, candidate.up()).isEmpty
+            val groundSolid = groundState.isOpaque || groundState.block.translationKey.contains("water")
 
-                val isFeetPassable = stateAtFeet.isAir ||
-                        stateAtFeet.getCollisionShape(world, candidate).isEmpty ||
-                        stateAtFeet.block.translationKey.contains("door")
-
-                val isHeadClear = stateAtHead.isAir || stateAtHead.getCollisionShape(world, candidate.up()).isEmpty
-
-                val isGroundSolid = stateBelow.isOpaque || stateBelow.block.translationKey.contains("water")
-
-                if (isFeetPassable && isHeadClear && isGroundSolid) {
-                    result.add(candidate)
-                }
+            if (feetPassable && headPassable && groundSolid) {
+                result.add(candidate)
             }
         }
 

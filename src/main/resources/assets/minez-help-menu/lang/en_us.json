@@ -57,7 +57,7 @@
   "menu.minez_help.description.miningcomponentbags": "Mining & Component Bags",
   "menu.minez_help.description.recipes": "Recipes",
   "menu.minez_help.description.items": "Items",
-  "menu.minez_help.description.locations": "Locations\n\n/navigation start <name>",
+  "menu.minez_help.description.locations": "Locations\n\n/navigation start <name>\n\n/navigation info <name>\n\n/navigation find <x>",
   "menu.minez_help.description.dungeons": "Dungeons",
   "menu.minez_help.description.lootchests": "Loot Chests",
   "menu.minez_help.description.achievements": "Achievements",
