@@ -6,7 +6,10 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
-import team.blombix.screens.mobs.hostile.others.Zombie
+import team.blombix.screens.mobs.HMSMobsHostile
+import team.blombix.screens.mobs.HMSMobsHostileBosses
+import team.blombix.screens.mobs.HMSMobsHostileDungeons
+import team.blombix.screens.mobs.HMSMobsPassive
 
 class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) {
 
@@ -122,16 +125,17 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
         var sectionY = 80
 
         val categories = listOf(
-            "Hostile" to { Zombie() },
-            "Hostile - Bosses" to { Zombie() },
-            "Hostile - Dungeons" to { Zombie() },
-            "Passive" to { Zombie() }
+            "Hostile" to { HMSMobsHostile() },
+            "Hostile - Bosses" to { HMSMobsHostileBosses() },
+            "Hostile - Dungeons" to { HMSMobsHostileDungeons() },
+            "Passive" to { HMSMobsPassive() }
         )
 
-        for ((label, screenFactory) in categories) {
+        for ((label, _) in categories) {
             addDrawableChild(
                 ButtonWidget.builder(Text.literal(label)) {
-                    client?.setScreen(screenFactory())
+                    //client?.setScreen(screenFactory())
+                    //TODO:Napisać kod pod kategori modbów
                 }.dimensions(width - sectionButtonWidth - 20, sectionY, sectionButtonWidth, sectionButtonHeight).build()
             )
             sectionY += sectionButtonHeight + 5

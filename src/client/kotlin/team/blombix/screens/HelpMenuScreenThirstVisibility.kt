@@ -171,7 +171,7 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         }
 
         val (headers, rows) = getLangTableData()
-        val columnWidths = listOf(100, 60, 70, 60, 60, 150)
+        val columnWidths = listOf(95, 55, 70, 55, 55, 150)
         val cellHeight = 15
         val tableStartY = y + 10
 
