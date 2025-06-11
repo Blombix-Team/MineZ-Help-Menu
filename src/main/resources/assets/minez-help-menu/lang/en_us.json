@@ -15,7 +15,7 @@
   "menu.minez_help.button5": "Spawn Kit",
   "menu.minez_help.button6": "Mobs",
   "menu.minez_help.button7": "Grave Robbing & Fishing",
-  "menu.minez_help.button8": "Mining & Component Bags",
+  "menu.minez_help.button8": "Resources & Component Bags",
   "menu.minez_help.button9": "Recipes",
   "menu.minez_help.button10": "Items",
   "menu.minez_help.button11": "Locations",
@@ -37,7 +37,7 @@
   "menu.minez_help.menu5.title": "§f§lSpawn Kit",
   "menu.minez_help.menu6.title": "§f§lMobs",
   "menu.minez_help.menu7.title": "§f§lGrave Robbing & Fishing",
-  "menu.minez_help.menu8.title": "§f§lMining & Component Bags",
+  "menu.minez_help.menu8.title": "§f§lResources & Component Bags",
   "menu.minez_help.menu9.title": "§f§lRecipes",
   "menu.minez_help.menu10.title": "§f§lItems",
   "menu.minez_help.menu11.title": "L§f§locations",
@@ -53,17 +53,18 @@
   "menu.minez_help.description.spawnkit": "The current Spawn Kit in MineZ includes 3 items by default. More items can be added to the spawn kit for those that have achievements, though some items earned through achievements are temporary, whereas others are permanent. Spawn kit items can only be obtained through XP purchases and achievements.\n\n§3§lDefault Spawn Kit:\n\n §l•§f Wooden Sword\n §l•§f Bandage\n §l•§f Water Bottle\n §l•§f Leather Chestplate\n\n\n§3§lShotbow XP Purchased Items:§f\n\n15 Arrows - 60k XP\n4 Cookies - 50k XP\nAntibiotics - 25k XP\nBandage - 25k XP\nBow - 75k XP\nGolden Sword - 10k XP\nGrenade - 125k XP\nHemostatic Powder - 50k XP\nHeal Kit - 75k XP\nSpeed Potion - 150k XP\nStone Axe - 50k XP\nStone Sword 75k XP\nWater Bottle - 40k XP\nWeak Grapple - 150k XP\n\n\n§3§lAchievements kit Items:§f\n\n§cWork in progress!\n\n\n§3§lSoulbinding:§f\n\n  §l•§f All items obtained through the spawn kit are Soulbound.\n\n  §l•§f Soulbound means when the player tries to drop the item it will instead be destroyed. Soulbound items are also destroyed upon player death, and as a result player zombies will not drop Soulbound items.\n\n  §l•§f Soulbound items can't be stacked with normal items. A stack of 5 Soulbound arrows will not stack with arrows from a loot chest.\n\n  §l•§f When a Soulbound Water Bottle is drunk, the empty bottle will no longer be Soulbound.\n\n  §l•§f Repairing a Soulbound item will not remove its Soulbound property.",
   "menu.minez_help.description.mobs": "This page contains all the current known mobs of MineZ, each with a small summary on their behavior, drops and how to fight them.",
   "menu.minez_help.description.graverobbingfishing": "Tools in the MineZ world allow the player to do many things such as opening iron doors through the use of stone buttons, stopping hordes of zombies or even players with cobwebs and distracting the former using snowballs. Grave Robbing and Fishing allow the player to obtain a wide range of loot, similar to looting chests.\n\n§3§lGrave Robbing:\n\n§fGrave robbing is a feature in MineZ that lets the player rob a grave to find loot. An iron shovel is required to rob a grave. Rob graves by right-clicking mossy cobblestone on a grave with an iron shovel, which will take about 5 seconds to break the mossy cobblestone. The grave will reappear again after 6 minutes after being robbed. When robbing, there is a 95% chance to get an item and a 5% chance to spawn a Zombie or a baby zombie. There are 3 tiers of grave robbing. The first tier gives basic supplies and is only found down south. The second tier has some better supplies and is found in graves in the middle of the map. The third and final tier can be found up north, and gives much better gear, including buttons and even small bags! The ranges for these tiers are as follows:\n\n§l•§a Tier I§f: From Z: 1000 to Z: -499\n\n§l•§e Tier II§f: From Z: -500 to Z: -2499\n\n§l•§c Tier III§f: From Z: -2500 to Z: -4000\n\nRarely, a chicken can spawn from the grave, which is probably the cause of the rare Chicken Jockey, from Vanilla Minecraft, which consists of a baby zombie riding a chicken.\n\n§3§lLootTabel for Grave Robbing:\n§l•§a Tier I§f:\n\n§fBowl - 8,33%\nLeather - 8.33%\n2 Arrows - 8.33%\nPlank - 8.33%\nWater Bottle - 8.33%\nRaw Salmon - 8.33%\nRaw Cod - 8.33%\nBandage - 8.33%\nAntidote - 8.33%\nSplash Potion of Healing I - 8.33%\nDrink Potion of Healing I - 8.33%\n\n§l•§e Tier II§f:\n§cWork in progress!\n\n§l•§c Tier III§f:\n§cWork in progress!\n\n\n§3§lFishing:\n\n§fIt is very similar to how fishing works in Vanilla Minecraft, except it yields different loot. It is recommended to only use fishing when in desperate need for some essential items, like food or a water bottle. The loot scales as the player go more north just like with grave robbing. There are 3 tiers, each one yielding better loot than the first, so further north, better loot.\n\n§l•§a Tier I§f: From Z: 1000 to Z: -499\n\n§l•§e Tier II§f: From Z: -500 to Z: -2499\n\n§l•§c Tier III§f: From Z: -2500 to Z: -4000\n\n§3§lLootTabel for Fishing\n§l•§a Tier I§f:\n\n§cWork in progress!\n\n§l•§e Tier II§f:\n\n§cWork in progress!\n\n§l•§c Tier III§f:\n§cWork in progress!",
+  "menu.minez_help.description.miningcomponentbags": "Resources & Component Bags - §cWork in progress!",
+  "menu.minez_help.description.recipes": "Recipes - §cWork in progress!",
+  "menu.minez_help.description.items": "Items - §cWork in progress!",
+  "menu.minez_help.description.locations": "Locations - §cWork in progress!",
+  "menu.minez_help.description.dungeons": "Dungeons - §cWork in progress!",
+  "menu.minez_help.description.lootchests": "Loot Chests - §cWork in progress!",
+  "menu.minez_help.description.achievements": "Achievements - §cWork in progress!",
+  "menu.minez_help.description.lore": "Lore and Quest Lines - §cWork in progress!",
 
-  "menu.minez_help.description.miningcomponentbags": "Mining & Component Bags",
-  "menu.minez_help.description.recipes": "Recipes",
-  "menu.minez_help.description.items": "Items",
-  "menu.minez_help.description.locations": "Locations\n\n/navigation start <name>\n\n/navigation info <name>\n\n/navigation find <x>",
-  "menu.minez_help.description.dungeons": "Dungeons",
-  "menu.minez_help.description.lootchests": "Loot Chests",
-  "menu.minez_help.description.achievements": "Achievements",
-  "menu.minez_help.description.lore": "Lore",
+
   "menu.minez_help.title.mobs.hostile.others.zombie": "Zombie:",
-  "menu.minez_help.description.mobs.hostile.others.zombie": "Zombies are fast and dangerous brutes - modified by the developers to be clever, relentless and deadly.\n\nThey often travel in packs, and run almost as fast as you can while sprinting, swim faster in water and they can also 'dive' to get to the player. They have poor vision, but can hear well enough to detect you, especially if you're sprinting and/or jumping. If you get hit by a zombie, it can alert nearby zombies, causing them to run over and attack you. The use of grenades can stun zombies, as well as the use of a snowball, which will confuse all zombies and prevent them from attacking you for a short period of time. Use this to your advantage. A good way to avoid them is by sneaking. Sneaking reduces your Visibility, which makes the zombies less likely to spot you and eat your precious brains.\n\nUnlike vanilla zombies, they do not burn in sunlight or take fall damage (when ignited they have a chance of setting a player on fire). Zombies are capable of running at a player at sprinting speed, and can deal much more damage than vanilla zombies. They will also run faster and deal more damage the further North you go.\n\nWhen a player is killed, they will leave a zombie called a Player Zombie. This zombie will have the original player's armor and sword equipped, as well as having the player's nameplate above it. Player zombies are capable of dealing more damage and can have more protection, as they will equip the best armor and weapon the player had. When killed, they will drop everything that player was carrying in their inventory. When a predetermined period of time (around 30 minutes) has passed from the player's zombie spawn, it may not drop the loot the dead player had.\n\nZombies have around a 5% chance to give you Infection.",
+  "menu.minez_help.description.mobs.hostile.others.zombie": "Zombies are fast and dangerous brutes - modified by the developers to be clever, relentless and deadly.\n\nThey often travel in packs, and run almost as fast as you can while sprinting, swim faster in water and they can also 'dive' to get to the player. They have poor vision, but can hear well enough to detect you, especially if you're sprinting and/or jumping. If you get hit by a zombie, it can alert nearby zombies, causing them to run over and attack you. The use of grenades can stun zombies, as well as the use of a snowball, which will confuse all zombies and prevent them from attacking you for a short period of time. Use this to your advantage. A good way to avoid them is by sneaking. Sneaking reduces your Visibility, which makes the zombies less likely to spot you and eat your precious brains.\n\nUnlike vanilla zombies, they do not burn in sunlight or take fall damage (when ignited they have a chance of setting a player on fire). Zombies are capable of running at a player at sprinting speed, and can deal much more damage than vanilla zombies. They will also run faster and deal more damage the further North you go.\n\nWhen a player is killed, they will leave a zombie called a Player Zombie. This zombie will have the original player's armor and sword equipped, as well as having the player's nameplate above it. Player zombies are capable of dealing more damage and can have more protection, as they will equip the best armor and weapon the player had. When killed, they will drop everything that player was carrying in their inventory. When a predetermined period of time (around 30 minutes) has passed from the player's zombie spawn, it may not drop the loot the dead player had.\n\nZombies have around a 2.5% chance to give you Infection.",
   "menu.minez_help.title.mobs.hostile.others.pigmen": "Zombie:",
   "menu.minez_help.description.mobs.hostile.others.pigmen": "pigmen",
   "menu.minez_help.title.mobs.hostile.others.shivers": "Shivers:",
@@ -86,6 +87,7 @@
   "menu.minez_help.menu.scorchers.button": "Scorchers",
   "menu.minez_help.menu.ocelot.button": "Ocelot",
   "menu.minez_help.menu.wolf.button": "Wolf",
+
 
   "menu.minez_help.thirst_table.headers[0]": "Item",
   "menu.minez_help.thirst_table.headers[1]": "Hunger",
@@ -257,6 +259,7 @@
   "menu.minez_help.thirst_table.rows[26][5]": "Craft",
   "menu.minez_toast.title": "Information!",
   "menu.minez_toast.noewikipage.text": "The official server wikii does not have a page on this topic.",
+  "menu.minez_toast.workinprogres.text": "§cWork in progress!",
 
   "recipe.minez-help-menu.bread": "Bread Recipe"
 }

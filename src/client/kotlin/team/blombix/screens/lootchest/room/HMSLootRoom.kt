@@ -1,5 +1,5 @@
 package team.blombix.screens.lootchest.room
 
-class HMSLootRoomHigh {
+class HMSLootRoom {
     //TODO: Menu
 }

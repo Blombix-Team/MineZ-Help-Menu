@@ -100,11 +100,11 @@ class HelpMenuScreenBleedingInfection : Screen(Text.translatable("menu.minez_hel
         val buttonWidth = (leftPanelWidth - 40) / 2
 
         previousPageButton = ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
-            client?.setScreen(HelpMenuScreenMineZLoreQuestlines())
+            client?.setScreen(HelpMenuScreenHealing())
         }.dimensions(leftPanelX + 10, bottomButtonY, buttonWidth, 20).build()
 
         nextPageButton = ButtonWidget.builder(Text.translatable("menu.minez_help.next")) {
-            client?.setScreen(HelpMenuScreenThirstVisibility())
+            client?.setScreen(HelpMenuScreenSpawnKits())
         }.dimensions(leftPanelX + 20 + buttonWidth, bottomButtonY, buttonWidth, 20).build()
 
         addDrawableChild(previousPageButton)

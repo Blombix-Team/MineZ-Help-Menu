@@ -4,6 +4,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
+import net.minecraft.client.toast.SystemToast
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 import team.blombix.screens.mobs.HMSMobsHostile
@@ -134,6 +135,15 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
         for ((label, _) in categories) {
             addDrawableChild(
                 ButtonWidget.builder(Text.literal(label)) {
+                    //TMP toast alert
+                    this.client?.toastManager?.add(
+                        SystemToast.create(
+                            this.client,
+                            SystemToast.Type.NARRATOR_TOGGLE,
+                            Text.translatable("menu.minez_toast.title"),
+                            Text.translatable("menu.minez_toast.workinprogres.text")
+                        )
+                    )
                     //client?.setScreen(screenFactory())
                     //TODO:Napisać kod pod kategori modbów
                 }.dimensions(width - sectionButtonWidth - 20, sectionY, sectionButtonWidth, sectionButtonHeight).build()

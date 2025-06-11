@@ -311,7 +311,7 @@ object NavigationCommand {
                                             ).filter { it.second }
                                                 .joinToString(" ") { "§a${it.first}" }
 
-                                            val resourceText = if (resources.isBlank()) "§cBrak" else resources
+                                            val resourceText = if (resources.isBlank()) "§cNone" else resources
                                             player.sendMessage(Text.literal("§eResources: $resourceText"), false)
 
                                         } else {

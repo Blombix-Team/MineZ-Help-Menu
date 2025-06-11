@@ -1,3 +1,3 @@
 package team.blombix.screens.lootchest.tool
 
-class HMSLootToolRare
+class HMSLootTool
