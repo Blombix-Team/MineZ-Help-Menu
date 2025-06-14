@@ -2,6 +2,7 @@ package team.blombix.screens.mobs.hostile.others
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.screen.ingame.InventoryScreen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.entity.EntityType
@@ -12,13 +13,20 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.text.Text
 import net.minecraft.util.Util
+import org.joml.Quaternionf
+import org.joml.Vector3f
 import team.blombix.screens.*
 
-class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
+class Zombie : Screen(Text.translatable("menu.minez_help.title.mobs.hostile.others.zombie")) {
 
     private var searchField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
     private lateinit var zombieEntity: ZombieEntity
+
+    private var centerScrollOffset = 0
+    private var leftScrollOffset = 0
+    private var totalTextHeight = 0
+    private var totalLeftButtonsHeight = 0
 
     private val screenList: List<() -> Screen> = listOf(
         { HelpMenuScreenGettingStarted() },
@@ -38,54 +46,32 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         { HelpMenuScreenMineZLoreQuestlines() }
     )
 
-    private var scrollOffset = 0
-    private var totalTextHeight = 0
     private val scrollAreaTop = 38
     private val scrollAreaBottom get() = height - 65
     private val scrollAreaHeight get() = scrollAreaBottom - scrollAreaTop
 
+    private val leftPanelWidth get() = (width * 0.25f).toInt()
+    private val rightPanelWidth get() = (width * 0.25f).toInt()
+    private val centerPanelWidth get() = width - leftPanelWidth - rightPanelWidth - 40
+
+    private val leftPanelX = 10
+    private val centerPanelX get() = leftPanelX + leftPanelWidth + 10
+    private val rightPanelX get() = width - rightPanelWidth - 10
+
+    private val leftScrollTop get() = 60 + textRenderer.fontHeight + 10
+    private val leftScrollBottom get() = height - 90
+    private val leftScrollHeight get() = leftScrollBottom - leftScrollTop
+
     override fun init() {
-        val leftPanelWidth = (width * 0.3).toInt()
-        //val rightPanelWidth = (width * 0.2).toInt()
-
         initZombieEntity()
-        initLeftPanel(leftPanelWidth)
-        initBottomButtons()
-    }
 
-    private fun initZombieEntity() {
-        zombieEntity = ZombieEntity(EntityType.ZOMBIE, client?.world).apply {
-            setPos(0.0, 0.0, 0.0)
-
-            setCustomName(Text.literal("Player Zombie"))
-            isCustomNameVisible = true
-
-            fun enchanted(item: Item, name: String): ItemStack {
-                return ItemStack(item).apply {
-                    setCustomName(Text.literal(name))
-                }
-            }
-
-            equipStack(EquipmentSlot.HEAD, enchanted(Items.NETHERITE_HELMET, "Cursed Helmet"))
-            equipStack(EquipmentSlot.CHEST, enchanted(Items.NETHERITE_CHESTPLATE, "Undead Chestguard"))
-            equipStack(EquipmentSlot.LEGS, enchanted(Items.NETHERITE_LEGGINGS, "Rotten Leggings"))
-            equipStack(EquipmentSlot.FEET, enchanted(Items.NETHERITE_BOOTS, "Gravewalkers"))
-
-            equipStack(EquipmentSlot.MAINHAND, ItemStack(Items.NETHERITE_SWORD).apply {
-                setCustomName(Text.literal("Soul Blade"))
-            })
-        }
-    }
-
-    private fun initLeftPanel(leftPanelWidth: Int) {
-        val labelY = 20
-        val textFieldY = labelY + 15
+        val textFieldY = 20 + textRenderer.fontHeight + 5
 
         searchField = TextFieldWidget(
             textRenderer,
-            20,
+            leftPanelX + 10,
             textFieldY,
-            leftPanelWidth - 40,
+            leftPanelWidth - 20,
             20,
             Text.translatable("menu.minez_help.input")
         ).apply {
@@ -94,57 +80,85 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         }
         addSelectableChild(searchField)
 
-        val startY = textFieldY + 30
-        val availableHeight = height - startY - 60
-        val buttonCount = 15
+        dynamicButtons.clear()
         val buttonHeight = 20
-        val spacing = (availableHeight - buttonCount * buttonHeight) / (buttonCount - 1).coerceAtLeast(1)
-        val buttonWidth = ((leftPanelWidth - 20) * 2) / 3
+        val spacing = 5
 
-        for (i in 0 until buttonCount) {
-            val y = startY + i * (buttonHeight + spacing)
+        for (i in screenList.indices) {
             val button = ButtonWidget.builder(Text.translatable("menu.minez_help.button${i + 1}")) {
                 client?.setScreen(screenList[i]())
-            }.dimensions(20, y, buttonWidth, buttonHeight).build()
+            }.dimensions(0, 0, leftPanelWidth - 20, buttonHeight).build()
             dynamicButtons.add(button)
             addDrawableChild(button)
         }
-    }
 
-    private fun initBottomButtons() {
-        val buttonY = height - 40
+        totalLeftButtonsHeight = dynamicButtons.size * (buttonHeight + spacing)
+
+        val bottomButtonY = height - 60
+        val buttonHalfWidth = (leftPanelWidth - 30) / 2
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.back")) {
             client?.setScreen(HelpMenuScreenMobs())
-        }.dimensions(width - 650, buttonY, smallButtonWidth, 20).build())
+        }.dimensions(leftPanelX + 10, bottomButtonY, buttonHalfWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
             Util.getOperatingSystem().open("https://wiki.shotbow.net/MineZ_Mobs#Zombies")
-        }.dimensions(width - 200, buttonY, smallButtonWidth, 20).build())
+        }.dimensions(width - 190, height - 40, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
             client?.setScreen(null)
-        }.dimensions(width - 120, buttonY, smallButtonWidth, 20).build())
+        }.dimensions(width - 100, height - 40, smallButtonWidth, 20).build())
+    }
+
+    private fun initZombieEntity() {
+        zombieEntity = ZombieEntity(EntityType.ZOMBIE, client?.world).apply {
+            setPos(0.0, 0.0, 0.0)
+            setCustomName(Text.literal("Player Zombie"))
+            isCustomNameVisible = true
+
+            fun named(item: Item?, name: String) = ItemStack(item).apply {
+                setCustomName(Text.literal(name))
+            }
+
+            equipStack(EquipmentSlot.HEAD, named(Items.IRON_HELMET, "Cursed Helmet"))
+            equipStack(EquipmentSlot.CHEST, named(Items.IRON_CHESTPLATE, "Undead Chestguard"))
+            equipStack(EquipmentSlot.LEGS, named(Items.IRON_LEGGINGS, "Rotten Leggings"))
+            equipStack(EquipmentSlot.FEET, named(Items.IRON_BOOTS, "Gravewalkers"))
+            equipStack(EquipmentSlot.MAINHAND, named(Items.IRON_SWORD, "Soul Blade"))
+        }
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         renderBackground()
 
-        val leftPanelWidth = (width * 0.3).toInt()
-        val rightPanelWidth = (width * 0.2).toInt()
-        val centerPanelWidth = width - leftPanelWidth - rightPanelWidth - 40
+        // Left panel
+        context.fill(leftPanelX, 10, leftPanelX + leftPanelWidth, height - 10, 0x80000000.toInt())
+        context.drawTextWithShadow(
+            textRenderer,
+            Text.translatable("menu.minez_help.input_label"),
+            leftPanelX + 10,
+            20,
+            0xFFFFFF
+        )
+        searchField?.render(context, mouseX, mouseY, delta)
 
-        // Lewy panel
-        context.fill(10, 10, leftPanelWidth - 10, height - 10, 0x80000000.toInt())
-        context.drawTextWithShadow(textRenderer, Text.translatable("menu.minez_help.input_label"), 20, 20, 0xFFFFFF)
+        var y = leftScrollTop - leftScrollOffset
+        for (button in dynamicButtons) {
+            val visible = y + button.height > leftScrollTop && y < leftScrollBottom
+            button.x = leftPanelX + 10
+            button.y = y
+            button.width = leftPanelWidth - 20
+            button.visible = visible
+            if (visible) button.render(context, mouseX, mouseY, delta)
+            y += button.height + 5
+        }
 
-        // Środkowy panel
-        val centerPanelX = leftPanelWidth + 10
+        // Center panel (text)
         context.fill(centerPanelX, 10, centerPanelX + centerPanelWidth, height - 10, 0x80202020.toInt())
 
         context.matrices.push()
-        context.matrices.translate(centerPanelX + 10f, 15f, 0f)
+        context.matrices.translate((centerPanelX + 10).toFloat(), 15f, 0f)
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
@@ -161,7 +175,7 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         )
 
         totalTextHeight = lines.size * 12
-        var y = scrollAreaTop - scrollOffset
+        y = scrollAreaTop - centerScrollOffset
 
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
@@ -170,49 +184,62 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
             y += 12
         }
 
-        drawScrollbar(context, centerPanelX + centerPanelWidth)
+        drawScrollbar(context)
 
-        // Prawy panel
-        val rightPanelX = centerPanelX + centerPanelWidth + 10
-        context.fill(rightPanelX, 10, rightPanelX + rightPanelWidth - 10, height - 10, 0x80303030.toInt())
-
-        context.drawTextWithShadow(textRenderer, Text.literal("Zombie Model:"), rightPanelX + 10, 20, 0xFFFFFF)
-
-        rightPanelX + 60
-        /*
-                drawEntity(
-                    context.matrices,
-                    modelX,
-                    modelY,
-                    scale,
-                    (modelX - mouseX).toFloat(),
-                    (modelY - mouseY).toFloat(),
-                    zombieEntity
-                )
-                */
-
-        context.drawTextWithShadow(textRenderer, Text.literal("Drops:"), rightPanelX + 10, 140, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("1 Rotten Flesh (25%)"), rightPanelX + 10, 160, 0xFFFFFF)
-
-        context.drawTextWithShadow(textRenderer, Text.literal("Health:"), rightPanelX + 10, 190, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("!TEMP VALUE! ♥"), rightPanelX + 10, 210, 0xFF5555)
-
-        context.drawTextWithShadow(textRenderer, Text.literal("Damage:"), rightPanelX + 10, 240, 0xFFFFFF)
-        context.drawTextWithShadow(textRenderer, Text.literal("!TEMP VALUE! ♥"), rightPanelX + 10, 260, 0xFF5555)
-
-        searchField?.render(context, mouseX, mouseY, delta)
+        // Right panel
+        renderRightPanel(context)
         super.render(context, mouseX, mouseY, delta)
     }
 
-    private fun drawScrollbar(context: DrawContext, xPosition: Int) {
+    private fun renderRightPanel(context: DrawContext) {
+        val x = rightPanelX
+        val w = rightPanelWidth
+        context.fill(x, 10, x + w, height - 10, 0x80303030.toInt())
+
+        // Render 3D model
+        val yaw = Quaternionf().rotateY(Math.toRadians(180.0).toFloat())       // Obrót w stronę gracza
+        val flipZ = Quaternionf().rotateZ(Math.toRadians(180.0).toFloat())     // Obrót do góry nogami
+        val combined = yaw.mul(flipZ)
+
+        InventoryScreen.drawEntity(
+            context,
+            (x + w / 2).toFloat(),
+            80f,
+            30f,
+            Vector3f(0f, 0f, 0f),
+            combined,
+            null,
+            zombieEntity
+        )
+
+
+        var ry = 120
+        val spacing = 18
+
+        context.drawTextWithShadow(textRenderer, Text.literal("Drops:"), x + 10, ry, 0xFFFFFF)
+        ry += spacing
+        context.drawTextWithShadow(textRenderer, Text.literal("• 100x Rotten Flesh"), x + 10, ry, 0xAAAAAA)
+        ry += spacing
+
+        context.drawTextWithShadow(textRenderer, Text.literal("Health:"), x + 10, ry, 0xFFFFFF)
+        ry += spacing
+        context.drawTextWithShadow(textRenderer, Text.literal("♥ 200 (standard)"), x + 10, ry, 0x55FF55)
+        ry += spacing
+
+        context.drawTextWithShadow(textRenderer, Text.literal("Damage:"), x + 10, ry, 0xFFFFFF)
+        ry += spacing
+        context.drawTextWithShadow(textRenderer, Text.literal("♥ 200"), x + 10, ry, 0xFF5555)
+    }
+
+    private fun drawScrollbar(context: DrawContext) {
         if (totalTextHeight <= scrollAreaHeight) return
 
-        val scrollbarX = xPosition - 8
+        val scrollbarX = centerPanelX + centerPanelWidth - 4
         val scrollbarY = scrollAreaTop
         val scrollbarHeight = scrollAreaHeight
         val thumbHeight = (scrollbarHeight * (scrollAreaHeight.toFloat() / totalTextHeight)).toInt().coerceAtLeast(20)
         val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(1)
-        val thumbY = scrollbarY + ((scrollOffset.toFloat() / maxScroll) * (scrollbarHeight - thumbHeight)).toInt()
+        val thumbY = scrollbarY + ((centerScrollOffset.toFloat() / maxScroll) * (scrollbarHeight - thumbHeight)).toInt()
 
         context.fill(scrollbarX, scrollbarY, scrollbarX + 4, scrollbarY + scrollbarHeight, 0x80000000.toInt())
         context.fill(scrollbarX, thumbY, scrollbarX + 4, thumbY + thumbHeight, 0xFFAAAAAA.toInt())
@@ -225,10 +252,17 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
         verticalAmount: Double
     ): Boolean {
         val scrollStep = 12
-        val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(0)
+        val centerMaxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(0)
+        val leftMaxScroll = (totalLeftButtonsHeight - leftScrollHeight).coerceAtLeast(0)
 
-        if (mouseY in scrollAreaTop.toDouble()..scrollAreaBottom.toDouble()) {
-            scrollOffset = (scrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, maxScroll)
+        if (mouseX in centerPanelX.toDouble()..(centerPanelX + centerPanelWidth).toDouble() && mouseY in scrollAreaTop.toDouble()..scrollAreaBottom.toDouble()) {
+            centerScrollOffset =
+                (centerScrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, centerMaxScroll)
+            return true
+        }
+
+        if (mouseX in leftPanelX.toDouble()..(leftPanelX + leftPanelWidth).toDouble() && mouseY in leftScrollTop.toDouble()..leftScrollBottom.toDouble()) {
+            leftScrollOffset = (leftScrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, leftMaxScroll)
             return true
         }
 
@@ -241,7 +275,6 @@ class Zombie : Screen(Text.translatable("menu.minez_help.button1")) {
     }
 
     private fun renderBackground() {}
-
 
     override fun shouldPause(): Boolean = false
 }
