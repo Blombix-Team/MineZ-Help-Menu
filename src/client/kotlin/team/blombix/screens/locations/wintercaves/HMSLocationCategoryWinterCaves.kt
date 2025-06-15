@@ -1,0 +1,3 @@
+package team.blombix.screens.locations.wintercaves
+
+class HMSLocationCategoryWinterCaves

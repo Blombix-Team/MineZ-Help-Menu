@@ -43,7 +43,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         Text.translatable("menu.minez_help.button15")
     )
 
-    private val screenList: List<() -> Screen> = listOf(
+    private val screenList = listOf(
         { HelpMenuScreenGettingStarted() },
         { HelpMenuScreenThirstVisibility() },
         { HelpMenuScreenHealing() },
@@ -65,9 +65,14 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
     private val scrollAreaBottom get() = height - 65
     private val scrollAreaHeight get() = scrollAreaBottom - scrollAreaTop
 
-    private val leftPanelWidth get() = (width * 0.3f).toInt()
+    private val leftPanelWidth get() = (width * 0.25f).toInt()
+    private val rightPanelWidth get() = (width * 0.25f).toInt()
+    private val centerPanelWidth get() = width - leftPanelWidth - rightPanelWidth - 40
+
     private val leftPanelX = 10
-    private val leftPanelRight get() = leftPanelX + leftPanelWidth - 20
+    private val centerPanelX get() = leftPanelX + leftPanelWidth + 10
+    private val rightPanelX get() = centerPanelX + centerPanelWidth + 10
+
     private val leftScrollTop get() = 60 + textRenderer.fontHeight + 10
     private val leftScrollBottom get() = height - 90
     private val leftScrollHeight get() = leftScrollBottom - leftScrollTop
@@ -79,7 +84,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
             textRenderer,
             leftPanelX + 10,
             textFieldY,
-            leftPanelWidth - 40,
+            leftPanelWidth - 20,
             20,
             Text.translatable("menu.minez_help.input")
         ).apply {
@@ -95,7 +100,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         for (i in buttonTexts.indices) {
             val button = ButtonWidget.builder(buttonTexts[i]) {
                 client?.setScreen(screenList[i]())
-            }.dimensions(0, 0, leftPanelWidth - 40, buttonHeight).build()
+            }.dimensions(0, 0, leftPanelWidth - 20, buttonHeight).build()
             dynamicButtons.add(button)
             addDrawableChild(button)
         }
@@ -103,7 +108,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         totalLeftButtonsHeight = dynamicButtons.size * (buttonHeight + spacing)
 
         val bottomButtonY = height - 60
-        val buttonHalfWidth = (leftPanelWidth - 40) / 2
+        val buttonHalfWidth = (leftPanelWidth - 30) / 2
         val smallButtonWidth = 80
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.pageback")) {
@@ -114,20 +119,17 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
             client?.setScreen(HelpMenuScreenAchievements())
         }.dimensions(leftPanelX + 20 + buttonHalfWidth, bottomButtonY, buttonHalfWidth, 20).build())
 
-        val rightY = height - 40
-
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.wiki")) {
             Util.getOperatingSystem().open("https://wiki.shotbow.net/Loot_Chests")
-        }.dimensions(width - 200, rightY, smallButtonWidth, 20).build())
+        }.dimensions(width - 200, height - 40, smallButtonWidth, 20).build())
 
         addDrawableChild(ButtonWidget.builder(Text.translatable("menu.minez_help.close")) {
             client?.setScreen(null)
-        }.dimensions(width - 100, rightY, smallButtonWidth, 20).build())
+        }.dimensions(width - 100, height - 40, smallButtonWidth, 20).build())
 
-        // Kategorie mobów – sekcje po prawej
-        val sectionButtonWidth = 150
+        val sectionButtonWidth = rightPanelWidth - 20
         val sectionButtonHeight = 20
-        var sectionY = 80
+        var sectionY = 60
 
         val categories = listOf(
             "Civilian" to { HMSLootCivilian() },
@@ -152,9 +154,8 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
                             Text.translatable("menu.minez_toast.workinprogres.text")
                         )
                     )
-                    //client?.setScreen(screenFactory())
-                    //TODO:Napisać kod pod kategori lootu
-                }.dimensions(width - sectionButtonWidth - 20, sectionY, sectionButtonWidth, sectionButtonHeight).build()
+                    //client?.setScreen(factory())
+                }.dimensions(rightPanelX + 10, sectionY, sectionButtonWidth, sectionButtonHeight).build()
             )
             sectionY += sectionButtonHeight + 5
         }
@@ -163,7 +164,7 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         renderBackground()
 
-        context.fill(leftPanelX, 10, leftPanelRight + 20, height - 10, 0x80000000.toInt())
+        context.fill(leftPanelX, 10, leftPanelX + leftPanelWidth, height - 10, 0x80000000.toInt())
         context.drawTextWithShadow(
             textRenderer,
             Text.translatable("menu.minez_help.input_label"),
@@ -178,35 +179,34 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
             val visible = y + button.height > leftScrollTop && y < leftScrollBottom
             button.x = leftPanelX + 10
             button.y = y
-            button.width = leftPanelWidth - 40
+            button.width = leftPanelWidth - 20
             button.visible = visible
             if (visible) button.render(context, mouseX, mouseY, delta)
             y += button.height + 5
         }
 
-        val rightPanelX = leftPanelRight + 30
-        context.fill(rightPanelX, 10, width - 10, height - 10, 0x80202020.toInt())
-
+        context.fill(centerPanelX, 10, centerPanelX + centerPanelWidth, height - 10, 0x80202020.toInt())
         context.matrices.push()
-        context.matrices.translate((rightPanelX + 10).toFloat(), 15f, 0f)
+        context.matrices.translate((centerPanelX + 10).toFloat(), 15f, 0f)
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(textRenderer, Text.translatable("menu.minez_help.menu13.title"), 0, 0, 0xFFFFFF)
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
             Text.translatable("menu.minez_help.description.lootchests"),
-            width - rightPanelX - 20
+            centerPanelWidth - 20
         )
 
         totalTextHeight = lines.size * 12
         y = scrollAreaTop - scrollOffset
-
         for (line in lines) {
             if (y + 12 > scrollAreaTop && y < scrollAreaBottom) {
-                context.drawTextWithShadow(textRenderer, line, rightPanelX + 10, y, 0xFFFFFF)
+                context.drawTextWithShadow(textRenderer, line, centerPanelX + 10, y, 0xFFFFFF)
             }
             y += 12
         }
+
+        context.fill(rightPanelX, 10, rightPanelX + rightPanelWidth, height - 10, 0x80303030.toInt())
 
         drawScrollbar(context)
         super.render(context, mouseX, mouseY, delta)
@@ -222,12 +222,16 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(0)
         val leftMaxScroll = (totalLeftButtonsHeight - leftScrollHeight).coerceAtLeast(0)
 
-        if (mouseX > width * 0.3 && mouseY in scrollAreaTop.toDouble()..scrollAreaBottom.toDouble()) {
+        if (mouseX in centerPanelX.toDouble()..(centerPanelX + centerPanelWidth).toDouble() &&
+            mouseY in scrollAreaTop.toDouble()..scrollAreaBottom.toDouble()
+        ) {
             scrollOffset = (scrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, maxScroll)
             return true
         }
 
-        if (mouseX <= width * 0.3 && mouseY in leftScrollTop.toDouble()..leftScrollBottom.toDouble()) {
+        if (mouseX in leftPanelX.toDouble()..(leftPanelX + leftPanelWidth).toDouble() &&
+            mouseY in leftScrollTop.toDouble()..leftScrollBottom.toDouble()
+        ) {
             leftScrollOffset = (leftScrollOffset - (verticalAmount * scrollStep).toInt()).coerceIn(0, leftMaxScroll)
             return true
         }
@@ -237,15 +241,12 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
 
     private fun drawScrollbar(context: DrawContext) {
         if (totalTextHeight <= scrollAreaHeight) return
-
-        val scrollbarX = width - 8
-        val scrollbarY = scrollAreaTop
-        val scrollbarHeight = scrollAreaHeight
-        val thumbHeight = (scrollbarHeight * (scrollAreaHeight.toFloat() / totalTextHeight)).toInt().coerceAtLeast(20)
+        val scrollbarX = centerPanelX + centerPanelWidth - 4
+        val thumbHeight = (scrollAreaHeight * (scrollAreaHeight.toFloat() / totalTextHeight)).toInt().coerceAtLeast(20)
         val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(1)
-        val thumbY = scrollbarY + ((scrollOffset.toFloat() / maxScroll) * (scrollbarHeight - thumbHeight)).toInt()
+        val thumbY = scrollAreaTop + ((scrollOffset.toFloat() / maxScroll) * (scrollAreaHeight - thumbHeight)).toInt()
 
-        context.fill(scrollbarX, scrollbarY, scrollbarX + 4, scrollbarY + scrollbarHeight, 0x80000000.toInt())
+        context.fill(scrollbarX, scrollAreaTop, scrollbarX + 4, scrollAreaBottom, 0x80000000.toInt())
         context.fill(scrollbarX, thumbY, scrollbarX + 4, thumbY + thumbHeight, 0xFFAAAAAA.toInt())
     }
 
