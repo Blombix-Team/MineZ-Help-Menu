@@ -6,6 +6,7 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
+import team.blombix.MineZHelpMenuClient
 
 class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2")) {
 
@@ -55,6 +56,10 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
     private var totalTextHeight = 0
     private var totalLeftButtonsHeight = 0
 
+    private var isDraggingScrollbar = false
+    private var scrollbarDragStartY = 0
+    private var initialScrollOffset = 0
+
     private val scrollAreaTop = 38
     private val scrollAreaBottom get() = height - 65
     private val scrollAreaHeight get() = scrollAreaBottom - scrollAreaTop
@@ -67,6 +72,7 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
     private val leftScrollHeight get() = leftScrollBottom - leftScrollTop
 
     override fun init() {
+        MineZHelpMenuClient.NavigationState.lastScreenFactory = { HelpMenuScreenHealing() }
         val textFieldY = 20 + textRenderer.fontHeight + 5
 
         textField = TextFieldWidget(
@@ -203,6 +209,45 @@ class HelpMenuScreenHealing : Screen(Text.translatable("menu.minez_help.button2"
         }
 
         return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
+    }
+
+    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        val scrollbarX = width - 8
+        val scrollbarY = scrollAreaTop
+        val scrollbarHeight = scrollAreaHeight
+        val thumbHeight = (scrollbarHeight * (scrollAreaHeight.toFloat() / totalTextHeight)).toInt().coerceAtLeast(20)
+        val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(1)
+        val thumbY = scrollbarY + ((scrollOffset.toFloat() / maxScroll) * (scrollbarHeight - thumbHeight)).toInt()
+
+        if (mouseX in scrollbarX.toDouble()..(scrollbarX + 4).toDouble()
+            && mouseY in thumbY.toDouble()..(thumbY + thumbHeight).toDouble()
+        ) {
+            isDraggingScrollbar = true
+            scrollbarDragStartY = mouseY.toInt()
+            initialScrollOffset = scrollOffset
+            return true
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button)
+    }
+
+    override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        isDraggingScrollbar = false
+        return super.mouseReleased(mouseX, mouseY, button)
+    }
+
+    override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {
+        if (isDraggingScrollbar) {
+            val dy = mouseY.toInt() - scrollbarDragStartY
+            val maxScroll = (totalTextHeight - scrollAreaHeight).coerceAtLeast(1)
+            val scrollbarHeight = scrollAreaHeight
+            val thumbHeight =
+                (scrollbarHeight * (scrollAreaHeight.toFloat() / totalTextHeight)).toInt().coerceAtLeast(20)
+            val scrollRatio = dy.toFloat() / (scrollbarHeight - thumbHeight).toFloat()
+            scrollOffset = (initialScrollOffset + (scrollRatio * maxScroll)).toInt().coerceIn(0, maxScroll)
+            return true
+        }
+        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)
     }
 
     private fun drawScrollbar(context: DrawContext) {

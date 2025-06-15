@@ -3,6 +3,7 @@ package team.blombix
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import org.lwjgl.glfw.GLFW
@@ -33,8 +34,14 @@ class MineZHelpMenuClient : ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
             if (openGuiKey.wasPressed()) {
-                client.setScreen(HelpMenuScreenGettingStarted())
+                val screen = NavigationState.lastScreenFactory?.invoke() ?: HelpMenuScreenGettingStarted()
+                client.setScreen(screen)
             }
         })
     }
+
+    object NavigationState {
+        var lastScreenFactory: (() -> Screen)? = null
+    }
+
 }
