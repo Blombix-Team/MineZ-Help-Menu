@@ -175,7 +175,7 @@ class HMSLootFood : Screen(Text.translatable("menu.minez_help.button2")) {
         }
 
         val (headers, rows) = getLangTableData()
-        val columnWidths = listOf(90, 85, 85, 85)
+        val columnWidths = listOf(105, 85, 85, 85)
         val cellHeight = 15
         val tableStartY = y + 10
 
@@ -204,7 +204,7 @@ class HMSLootFood : Screen(Text.translatable("menu.minez_help.button2")) {
         val headers = (0..3).map { i ->
             Text.translatable("menu.minez_help.food_loot_table.headers[$i]").string
         }
-        val rows = (0 until 27).map { row ->
+        val rows = (0 until 26).map { row ->
             (0 until 4).map { col ->
                 Text.translatable("menu.minez_help.food_loot_table.rows[$row][$col]").string
             }
