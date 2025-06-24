@@ -16,7 +16,7 @@
     "homepage": "https://modrinth.com/project/minez-help-menu",
     "issues": "https://github.com/Blombix-Team/MineZ-Help-Doc/issues"
   },
-  "license": "ARR",
+  "license": "MHM Mod License",
   "icon": "assets/minez-help-menu/icon.png",
   "environment": "*",
   "entrypoints": {
