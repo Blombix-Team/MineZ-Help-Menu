@@ -9,7 +9,7 @@ import net.minecraft.util.Util
 import team.blombix.MineZHelpMenuClient
 import team.blombix.screens.*
 
-class HMSLootFood : Screen(Text.translatable("menu.minez_help.button2")) {
+class HMSLootFood : Screen(Text.translatable("menu.minez_help.button13")) {
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()

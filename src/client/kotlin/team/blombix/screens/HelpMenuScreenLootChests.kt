@@ -8,7 +8,13 @@ import net.minecraft.client.toast.SystemToast
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 import team.blombix.MineZHelpMenuClient
+import team.blombix.screens.lootchest.civilian.HMSLootCivilian
 import team.blombix.screens.lootchest.food.HMSLootFood
+import team.blombix.screens.lootchest.military.HMSLootMilitary
+import team.blombix.screens.lootchest.potion.HMSLootPotion
+import team.blombix.screens.lootchest.room.HMSLootRoom
+import team.blombix.screens.lootchest.supplydrop.HMSLootSD
+import team.blombix.screens.lootchest.tool.HMSLootTool
 
 class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.button13")) {
 
@@ -131,13 +137,14 @@ class HelpMenuScreenLootChests : Screen(Text.translatable("menu.minez_help.butto
         var sectionY = 60
 
         val categories = listOf(
-            //"Civilian" to { HMSLootCivilian() },
-            "Food" to { HMSLootFood() }//,
-            //"Military" to { HMSLootMilitary() },
-            //"Potion" to { HMSLootPotion() },
-            //"Tool" to { HMSLootTool() },
+            "Civilian" to { HMSLootCivilian() },
+            "Food" to { HMSLootFood() },
+            "Military" to { HMSLootMilitary() },
+            "Potion" to { HMSLootPotion() },
+            "Tool" to { HMSLootTool() },
+            "Room" to { HMSLootRoom() },
+            "Supply Drops" to { HMSLootSD() },
             //"Special" to { HMSLootSpecial() },
-            //"Supply Drops" to { HMSLootSD() },
             //"Dungeons" to { HMSLootDungeons() }
         )
 

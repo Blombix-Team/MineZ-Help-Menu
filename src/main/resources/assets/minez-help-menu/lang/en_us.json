@@ -1,6 +1,6 @@
 {
-  "category.minez_help_menu": "MineZ Help Menu",
   //Minecraft key settings
+  "category.minez_help_menu": "MineZ Help Menu",
   "key.minez_help_menu.open_gui": "Open Gui",
   "key.minez_help_menu.open_settings_gui": "Open Settings",
   "key.minez_help_menu.toggle_dh": "Toggle Distant Horizons Render",
@@ -23,6 +23,7 @@
   "menu.minez_help.button13": "Loot Chests",
   "menu.minez_help.button14": "Achievements",
   "menu.minez_help.button15": "MineZ Lore & Quest lines",
+  //Nav Buttons
   "menu.minez_help.pageback": "Previous page",
   "menu.minez_help.next": "Next page",
   "menu.minez_help.webmap": "MineZ Map",
@@ -46,21 +47,37 @@
   "menu.minez_help.menu14.title": "§f§lAchievements",
   "menu.minez_help.menu15.title": "§f§lMineZ Lore & Quest lines",
   //Main UI Description
+  //Getting Started Description
   "menu.minez_help.description.gettingstarted": "§3§lThe Basics:§f\n\n§f§l•§f MineZ is a zombie apocalypse game, so horde of zombies and some zombie-ish mobs such as zombie pigmen and wolves await! There may be other more terrifying creatures out there.\n\n§l•§f The experience level is your thirst level. 25 is the maximum amount of hydration you can have, but don't let it get to 0 otherwise you will start to dehydrate and die! You can only replenish it by drinking from your water bottle or by eating.\nFor long journeys, it may be wiser to carry more than one water bottle and refill it in every town with water. We recommend drink a water bottle when your thirst level is between 2-0.\n\n§l•§f The experience bar is the zombies' visibility level on you. The higher your visibility, the further and easier can a zombie spot you! You can sneak to keep your visibility to a minimum, but sprinting (even in water) and jumping will greatly increase your visibility and make you an easier target for zombies!\n\n§l•§f In MineZ the zombies are faster, stronger and smarter than the ones you can find in Vanilla Minecraft. They are as fast as a sprinting person, but if they lose sight of you they find go back to your previous location to trap you.\n\n§l•§f Chatting System is also modified. It is divided into Local and Global. Local shows player messages at a distance of 250m and less from you. Global displays all messages when the player uses ! At the beginning of their message.\n\n§l•§f Spawn into the world by Talking to the NPC next to the fountain. When you first spawn, you will spawn with a water bottle, a wooden sword, and a bandage.\n\n§l•§f You can buy other things with XP on the XP Shop to add to your Spawn Kit as well as getting them from achievements.\n\n§l•§f Playing on MineZ you have two types of servers to choose from PVP and PVE. PVE servers are only for players who buy a rank on the server's website. PVP servers, also called Public, also have a small part of the map with PVE, this is an area up to Z= -100, then there is a PVP zone.\n\n\n§3§lTypes of Players:§f\n  §l•§f §cBandits §fare players that will kill anyone else on sight. They are categorized into several types: Leather Bandits, Iron Roamers, Tricksters and Massacre Teams. Leather Bandits are newly spawned bandits that hit anyone in sight despite having poor gear. Iron Roamers are iron-clad bandits that wander around the map, killing usually to obtain health potions. Tricksters are bandits who pretend to befriend you before killing you. Massacre Teams are small groups of well-armed bandits that loot town by town. They can easil noy be spotted with sprinting players, clans of iron bandits and large slews of death messages appearing on the chat as they battle other groups of players.\n\n  §l•§f §aHealers§f are players that do not attack people on sight, but rather heal them and supply them with food, armor, gear etc. to send them on their way. However, do not let this facade of a friendly player fool you -occasionally, healers may be luring people with low health to them so they may kill them, as well as the fact that if you plan on becoming a healer, people may see you as a lesser-defended target and hunt you down. Healers that have healed 16 different people will have the Healer tag as a sign to others that they are reliable healers to trust.\n\n\n§3§lBasic Tips for Surviving:§f\n  §l•§f It may be very useful for you to use the MineZ Map: This map of MineZ will show you the coordinates of all locations, where the chests are and what type of chest are they and information on all locations, including warnings and zombie spawn rates.\n\n  §l•§f Before heading North it is extremely important that you have at least more than one water bottle and stock up on food as long journeys will consume a lot of water and hunger. Do not start heading North until you have obtained both of those.\n\n  §l•§f If a group of zombies spawn within a relatively close proximity to you, try to sneak to lower your visibility and keep your chances of getting spotted to the bare minimum.\n\n  §l•§f In every town you go to that has a water source, refill your water bottles, drink from it and then refill it again as your first priority. Then, after you are done looting refill it, drink it and refill it back. This will ensure that you never run out of water or take any unnecessary damage from dehydration.",
+  //Thirst and Visibility Description
   "menu.minez_help.description.thirstvisibility": "Thirst and Visibility are mechanics added in to MineZ that are not found in Vanilla Minecraft. Unlike bleeding and infection, these mechanics cannot be remedied or removed, but their effect can be delayed or reduced. See the categories below for additional information about the mechanics.\n\n§3§lThirst:§f\n  §l•§f Thirst is an added mechanic similar to Hunger. It is indicated by the number of levels you have above your visibility (experience) bar, with 25 representing full. Over time, a player's thirst will drain, taking approximately 15 minutes to fully deplete. Thirst will always deplete over time, whether you're moving or not, so it is not recommended to remain idle for long periods of time.\n\n  §l•§f Should you reach 0 thirst, you will begin taking a heart of damage every second until you either drink some water or die of dehydration.\n\n  §l•§f The most known way to restore your thirst is to drink a water bottle. Drinking water will always bring your thirst back to 20, so it is recommended you only drink when next to a water source or while your thirst is less than 3. Always be sure to keep extra water bottles on hand as many areas do not have a source near them. The water bottle is a default item on the spawn kit for a MineZ player.\n\n  §l•§f There are also other ways of bringing your thirst level up such as consuming various fresh foods like carrots or melons.\n\n§3§lFresh Water:§f\n  §l•§f Fresh Water is obtained by filling your water bottle from a source like a cauldron or by boiling a regular bottle of water in a furnace, instead of taking it straight from a well or ocean. Drinking Fresh Water will enable you to enjoy 25 thirst and half a heart of regeneration.\n\n§3§lHunger:§f\n  §l•§f Hunger in MineZ works very similarly to Vanilla Hunger even though some of the variables such as the saturation or nutritional values differ from Minecraft’s default ones. Below you will find a table with a full list of values they are also visible in the descriptions of items.\n\n§3§lVisibility:§f\n  §l•§f Visibility is represented by the exper.ience bar shows the range at which a mob will be able to 'hear' you or detect you. The higher the bar goes, the wider your detection range becomes. Movement will make the bar go up. Standing still while crouching will produce the least amount of sound, while sprint-jumping will produce the most sound. At night time, your visibility will decrease by a small amount. Certain items can make a lot of noise, such as Snowballs and Grenades, which are useful for either drawing attention to or away from you.\n\n  §l•§f Other items, such as the Zombie Head can lower your visibility, or eliminate it completely. For escaping from zombies, it is recommended to throw a snowball at your feet as it will 'stun' the zombies for a brief moment, giving you enough time to get away. Shovels also work similarly. If you hit a zombie with a shovel it will stun them for 4 seconds.\n\n§3§lFood variables table:§f",
+  //Healing Description
   "menu.minez_help.description.healing": "§f§l•§f Healing is a vital part of MineZ, as unlike Vanilla Minecraft, health will not regenerate with a full hunger bar. In order to regain health, healing items must be used, use potions or eat any kind of food, excluding rotten flesh.\n\n§3§lSelf-healing:§f\n\n§fHealing is pretty simple. Have at least a few of these ready for healing if in a group, and a lot more if traveling alone.\n\n §l•§f Paper (known as a bandage) can be right-clicked to instantly heal a single heart or stop any bleeding and it will only heal half a heart. The paper is immediately consumed, so carry more than one.\n\n §l•§f Food, excluding rotten flesh, heals half a heart every time it is eaten (in addition to restoring hunger). The most efficient food to restore health from is golden apples, since they give Regeneration II for five seconds and Absortion II for two minutes. Eating food will not stop bleeding.\n\n §l•§f Health potions can be found mainly in potion chests (mainly found in churches) and come in Instant Health I and II. Splash and Lingering versions also exist. Drink them for an instant 3 or 4 hearts of health respectively. Empty bottles won't be given back after drinking one. Drinkable Instant Health potions can be brewed with gunpowder to make them splash potions and glowstone dust can be used to make Health Is, drink or splash, into Health IIs.\n\n§3§lHealing Others:§f\n\n§fHealing others is a very good way for a team to keep each other's health up while taking up minimal inventory space. In order to heal another player without using health potions, use shears (also known as Healing kit) and the proper kit items such as healing ointment, antibiotics, bandages, etc. Healing another player will consume the items used, so if healing ointment and antibiotics are enabled it will consume one bandage and one of each enabled item. However, when nothing's enabled and the player attempt to heal someone with just a bandage it will give them a small amount of health without consuming a bandage or any kit items. After being successfully healed by another player, the player must wait out a cooldown that varies in length depending on what kit items were used for the heal in order for someone to heal that player again.\n\n§3§lHealing Items:§f\n\n §l•§f §fBandage - Right click to use. Stop bleeding. Heals one heart when not bleeding.\n\n §l•§f §fBandage Roll - Right click to use. Stop bleeding. Heals one heart when not bleeding. Can be used twice.\n\n §l•§f Mummy’s Cloth - Right click to use. Stop bleeding. Can be used three times\n\n §l•§f Antidote - Drink to cure infection.\n\n §l•§f Antidote Flask - Use to cure infection. Can be used twice.\n\n §l•§f Ectoplasm Gel - Use to cure infection Can be used three times\n\n §l•§f Golden Apple - Eat to cure infection. And get Regeneration II for 5s and 2 ❤ absorption.\n\n §l•§f Seafarer’s Grog - Drink to gain 2 ❤ absorption.\n\n §l•§f Cleansing Elixir - Drink to removes all afflictions and potion effects\n\n\n §l•§f Heal Kit - This item is used to store bandages and medicine in stacks of up to 10 for each item. It enables players to check other player's HP, provide better healing, and grant the benefits of medicine. Typically found in civilian chests, these items cannot stack.\n\n §l•§f §cHealing Ointment§f - Healing Kit item that furhter increases the healing effectiveness of bandages.\n\n §l•§f §aAntibiotics§f - Healing Kit item that cures infection when used.\n\n §l•§f §6Aloe Vera§f - Healing Kit item that provides temporary fire resistance.\nThis is almost necessary for a few dungeons and a huge advantage in others.\n\n §l•§f §eRevitalizer§f - Healing Kit item that provides temporary absorption.\n\n §l•§f §bStimulant§f - Healing Kit item that provides temporary speed.",
+  //Bleeding and Infection Description
   "menu.minez_help.description.bleedinginfection": "Bleeding and Infection are debuffs that can afflict any player during their time in the MineZ world. While the chances of bleeding and infection are low, these debuffs are deadly and one should always be prepared to handle them accordingly. Be warned that bleeding and infection can occur simultaneously and consecutively. It can happen at any moment!\n\n§3§lBleeding:§f\n\n §l•§f Bleeding can occur when taking damage from players or zombies. Upon receiving a hit that causes the player to bleed, they will be informed through a status message in the chat. Further messages are displayed in the bleeding player's chat whenever they take damage from bleeding.\n\n §l•§f While bleeding, one heart of true damage is taken and Slowness II for 3 seconds is applied every 30-40 seconds, and redstone particles resembling blood will fall from the bleeding player until the debuff is removed. This effect can also be seen by other players. The player can't die from bleeding, although it will bring the player to half a heart. Even at half a heart, the Slowness effect from bleeding is still applied.\n\n §l•§f There are two methods of removing bleeding from a player. Once a player has been cured of the debuff, a message in chat will confirm that the bleeding has stopped.\n\n §l•§f The first method of removing the effect is by right clicking with a bandage. Normally a bandage will restore one heart, however while bleeding a bandage will restore half a heart and cure the bleeding debuff. The second method is to be healed by another player using a bandage  and a healing ointment in a heal kit.\n\n §l•§f It is recommended to have two or more bandages at all times to avoid wasting other healing supplies.\n\n§3§lInfection:§f\n §l•§f Upon hit from a Zombie, Zombie Pigman or another player with the Infection debuff, the player has a 2.5% chance of contracting the Infection. The player also has a 5% chance of becoming infected upon consuming rotten flesh. Similarly to bleeding, a message will be displayed in the infected player's chat informing them of when they become infected or take damage from infection.\n\n §l•§f Infection causes half a heart of true damage every 10-20 seconds and causes Nausea III for five seconds each time until the debuff is cured. Infected players also emit transparent potion effect particles that are visible to all players. Once the infected player is reduced to half a heart, they will no longer take damage from infection but will still receive the Nausea effect every 10-20 seconds. If an infected player disconnects from the server, they will find themself dead upon reconnecting to MineZ.\n\n §l•§f Infection can be cured in two different ways. A message will appear in the player's chat when they are cured of the infection debuff.\n\n §l•§f The first way to cure infection is by drinking an antidote, which can be found in loot chests around the world. The second is by being healed by another player using a bandage and antibiotics in a heal kit.",
+  //Spawn kit Description
   "menu.minez_help.description.spawnkit": "The current Spawn Kit in MineZ includes 3 items by default. More items can be added to the spawn kit for those that have achievements, though some items earned through achievements are temporary, whereas others are permanent. Spawn kit items can only be obtained through XP purchases and achievements.\n\n§3§lDefault Spawn Kit:\n\n §l•§f Wooden Sword\n §l•§f Bandage\n §l•§f Water Bottle\n §l•§f Leather Chestplate\n\n\n§3§lShotbow XP Purchased Items:§f\n\n15 Arrows - 60k XP\n4 Cookies - 50k XP\nAntibiotics - 25k XP\nBandage - 25k XP\nBow - 75k XP\nGolden Sword - 10k XP\nGrenade - 125k XP\nHemostatic Powder - 50k XP\nHeal Kit - 75k XP\nSpeed Potion - 150k XP\nStone Axe - 50k XP\nStone Sword 75k XP\nWater Bottle - 40k XP\nWeak Grapple - 150k XP\n\n\n§3§lAchievements kit Items:§f\n\n§cWork in progress!\n\n\n§3§lSoulbinding:§f\n\n  §l•§f All items obtained through the spawn kit are Soulbound.\n\n  §l•§f Soulbound means when the player tries to drop the item it will instead be destroyed. Soulbound items are also destroyed upon player death, and as a result player zombies will not drop Soulbound items.\n\n  §l•§f Soulbound items can't be stacked with normal items. A stack of 5 Soulbound arrows will not stack with arrows from a loot chest.\n\n  §l•§f When a Soulbound Water Bottle is drunk, the empty bottle will no longer be Soulbound.\n\n  §l•§f Repairing a Soulbound item will not remove its Soulbound property.",
+  //Mobs Description
   "menu.minez_help.description.mobs": "This page contains all the current known mobs of MineZ, each with a small summary on their behavior, drops and how to fight them.",
+  //Grave Robbing Fishing Description
   "menu.minez_help.description.graverobbingfishing": "Tools in the MineZ world allow the player to do many things such as opening iron doors through the use of stone buttons, stopping hordes of zombies or even players with cobwebs and distracting the former using snowballs. Grave Robbing and Fishing allow the player to obtain a wide range of loot, similar to looting chests.\n\n§3§lGrave Robbing:\n\n§fGrave robbing is a feature in MineZ that lets the player rob a grave to find loot. An iron shovel is required to rob a grave. Rob graves by right-clicking mossy cobblestone on a grave with an iron shovel, which will take about 5 seconds to break the mossy cobblestone. The grave will reappear again after 6 minutes after being robbed. When robbing, there is a 95% chance to get an item and a 5% chance to spawn a Zombie or a baby zombie. There are 3 tiers of grave robbing. The first tier gives basic supplies and is only found down south. The second tier has some better supplies and is found in graves in the middle of the map. The third and final tier can be found up north, and gives much better gear, including buttons and even small bags! The ranges for these tiers are as follows:\n\n§l•§a Tier I§f: From Z: 1000 to Z: -499\n\n§l•§e Tier II§f: From Z: -500 to Z: -2499\n\n§l•§c Tier III§f: From Z: -2500 to Z: -4000\n\nRarely, a chicken can spawn from the grave, which is probably the cause of the rare Chicken Jockey, from Vanilla Minecraft, which consists of a baby zombie riding a chicken.\n\n§3§lLootTabel for Grave Robbing:\n§l•§a Tier I§f:\n\n§fBowl - 8,33%\nLeather - 8.33%\n2 Arrows - 8.33%\nPlank - 8.33%\nWater Bottle - 8.33%\nRaw Salmon - 8.33%\nRaw Cod - 8.33%\nBandage - 8.33%\nAntidote - 8.33%\nSplash Potion of Healing I - 8.33%\nDrink Potion of Healing I - 8.33%\n\n§l•§e Tier II§f:\n§cWork in progress!\nWaiting for data from the Wikii team.\n\n§l•§c Tier III§f:\n§cWork in progress!\nWaiting for data from the Wikii team.\n\n\n§3§lFishing:\n\n§fIt is very similar to how fishing works in Vanilla Minecraft, except it yields different loot. It is recommended to only use fishing when in desperate need for some essential items, like food or a water bottle. The loot scales as the player go more north just like with grave robbing. There are 3 tiers, each one yielding better loot than the first, so further north, better loot.\n\n§l•§a Tier I§f: From Z: 1000 to Z: -499\n\n§l•§e Tier II§f: From Z: -500 to Z: -2499\n\n§l•§c Tier III§f: From Z: -2500 to Z: -4000\n\n§3§lLootTabel for Fishing\n§l•§a Tier I§f:\n\nBowl - 8.33%\nPebble - 8.33%\nLeather - 8.33%\n2 Arrows - 8.33%\nPlank - 8.33%\nWater Bottle - 8.33%\nRaw Salmon - 8.33%\nRaw Cod - 8.33%\nBandage - 8.33%\nAntidote - 8.33%\nSplash Potion of Healing I - 8.33%\nDrink Potion of Healing I - 8.33%\n\n§l•§e Tier II§f:\n\nWater Bottle - 5.88%\nWheat - 5.88%\n2 Leather - 5.88%\nLeather - 5.88%\nCoal Chunk - 5.88%\nIron Nugget - 5.88%\n2 Iron Nuggets - 5.88%\n5 Arrows - 5.88%\nRaw Cod - 5.88%\nRaw Salmon - 5.88%\nAntidote - 5.88%\nFishing Rod (Lure I) - 5.88%\nFishing Rod (Luck of the Sea I) - 5.88%\nSplash Potion of Healing I - 5.88%\nSplash Potion of Healing II - 5.88%\nPotion of Healing I - 5.88%\nPotion of Healing II - 5.88%\n\n§l•§c Tier III§f:\nRaw Salmon - 10.42%\nRaw Cod - 10.42%\n2 Wheat - 8.33%\n15 Arrows - 8.33%\n3 Leather - 8.33%\n4 Iron Nuggets - 6.25%\n5 Iron Nuggets - 4.17%\n2 Coal Chunks - 6.25%\nSugar - 4.17%\nFishing Rod (Luck of the Sea I, Lure II) - 4.17%\nFishing Rod (Luck of the Sea I, Lure I) - 8.33%\nFishing Rod (Luck of the Sea II) - 6.25%\nFishing Rod (Luck of the Sea II, Lure II) - 2.08%\nSplash Potion of Healing II - 6.25%\nLingering Potion of Healing I - 6.25%\n \n\n\n§7Waterlogged Chests drop - §cWork in progress! Waiting for data from the Wikii team.",
+  //Resources Mining Component Bags Description
   "menu.minez_help.description.miningcomponentbags": "§3§lWays to obtaining resources:§f\n\nThere are a few ways of obtaining crafting resources such as:\n\n§f§l•§f §3Looting tool chests:§f\n\nTool chests have most of the resources used in crafting recipes but are not very reliable\nif you are trying to get more of a specific resource.\n\n§f§l•§f §3Killing mobs:§f\n\nSome mobs may drop crafting resources when killed:\n Cows - leather\n Zombified Villagers - various tool items, heal items\n\n§f§l•§f §3Mining & Cutting:§f\n\nPlayers in MineZ are able to gather resources by mining with tools such as axes or pickaxes.\n\n Axes are used to gather wood and sticks:\n   §f§l•§f Wooden axes can mine Wooden logs and will drop sticks.\n   (spread 4 of them in the 2x2 crafting grid to craft into wooden planks)§f\n   §f§l•§f Stone and Iron axes can mine wooden logs too but will drop planks\n\n Pickaxes are used to gather stones and ores.\n   §f§l•§f Wooden pickaxe can mine stones and coal but will drop small stones\n   (put 4 of them in the 2x2 crafting grid to craft into cobblestone)\n   §f§l•§f Stone and Iron pickaxes can be used to mine stones, coal and iron. Using them to mine stones will grant cobblestone instead of small stones\n   §f§l•§f Legendary pickaxe §7“Blast pickaxe”§f - works like a regular iron pickaxe but when used to mine iron ores\n   they get melted automatically and iron ingots drop instead of ores. This pickaxe is a rare drop from iron golems.\n§8Note: each non-legendary tool can be repaired by combining it with the material it was made with in the crafting grid.\n\n§3§lComponent Bags:§f\n\nA Component Bag is a special backpack for storing resources that the player can collect.\nThere are four backpack levels. Level I is created using §74 Planks and 4 Leather pieces§f, combining them in crafting.\nLevels II, III and IV are created by clicking the Upgrade button in the backpack menu.\nBelow are the capacities of the backpacks and items required for bag upgrade.\n\n\n§l•§e Tier I§f:\n   §f§l•§f Sticks: 16\n   §f§l•§f Planks: 4\n   §f§l•§f Small Stone: 16\n   §f§l•§f Cobblestone: 8\n   §f§l•§f Leather: 6\n   §f§l•§f Coal: 2\n   §f§l•§8§m Iron ore: 0§f\n   §f§l•§f Iron nugget: 2\n   §f§l•§8§m Iron ingot: 0§f\n\nItems needed to upgrade backpack:§7 8 Cobblestone§f\n§8Note: Items needed for upgrade must be inside backpack.\n\n§l•§2 Tier II§f:\n   §f§l•§f Sticks: 24\n   §f§l•§f Planks: 8\n   §f§l•§f Small Stone: 24\n   §f§l•§f Cobblestone: 12\n   §f§l•§f Leather: 10\n   §f§l•§f Coal: 6\n   §f§l•§f Iron ore: 9\n   §f§l•§f Iron nugget: 9\n   §f§l•§f Iron ingot: 9\n\nItems needed to upgrade backpack:§7 8 Iron§f\n\n§l•§9 Tier III§f:\n   §f§l•§f Sticks: 32\n   §f§l•§f Planks: 16\n   §f§l•§f Small Stone: 32\n   §f§l•§f Cobblestone: 16\n   §f§l•§f Leather: 14\n   §f§l•§f Coal: 10\n   §f§l•§f Iron ore: 15\n   §f§l•§f Iron nugget: 18\n   §f§l•§f Iron ingot: 24\n\nItems needed to upgrade backpack:§7 24 Iron§f\n\n§l•§5 Tier IV§f:\n   §f§l•§f Sticks: 40\n   §f§l•§f Planks: 32\n   §f§l•§f Small Stone: 40\n   §f§l•§f Cobblestone: 20\n   §f§l•§f Leather: 18\n   §f§l•§f Coal: 14\n   §f§l•§f Iron ore: 20\n   §f§l•§f Iron nugget: 27\n   §f§l•§f Iron ingot: 32",
+  //Recipes Description
   "menu.minez_help.description.recipes": "You can check the recipes using the command /mz craft\n\nRecipes JEI - §cWork in progress!",
+  //Items Description
   "menu.minez_help.description.items": "Items - §cWork in progress!",
+  //Locations Description
   "menu.minez_help.description.locations": "Locations - §cWork in progress!",
+  //Dungeons Description
   "menu.minez_help.description.dungeons": "In the world of MineZ, there are many dungeons. A dungeon is a location or section of another location specifically dedicated to challenging the player in a trial or set of trials of parkour, puzzles, and combat, usually with loot or a legendary item at the end. They heavily vary in difficulty, some being easy to complete alone while others can be challenging even with a skilled group, with the more challenging dungeons rewarding better and more loot at the end. Most dungeons contain a legendary, however, some do not.",
+  //Lootchests Description
   "menu.minez_help.description.lootchests": "Loot chests are a unique feature to MineZ and can be found at nearly every location across Valar. Loot chests can be right-clicked to access the items inside or left-clicked to break them and scatter their loot on the ground. A loot chest will automatically break if closed with no items remaining in its inventory.\n\nThe contents of a loot chest depend on the chest's classification and tiering, which are signified by the title above a chest's inventory when opened. In general, higher tier loot chests contain better items. For example, a Potion Rare loot chest will provide more potent healing brews than a Potion Common chest would. Each type of loot chest has its own specialized loot table which determines what items may be found within and how likely they are to appear. It is important to note that any given loot chest may only contain items from its designated loot table, so a Military loot chest will not contain an item found within a Civilian loot chest unless their loot tables share said item.\n\nEvery time a loot chest respawns, the items inside are randomized based on the chest's loot table. A loot chest will respawn when enough time has passed and there are no nearby players (although loot chests in spawn towns do not have the latter requirement). Every chest has a unique number of minimum and maximum items it can spawn with. Chests that are difficult or dangerous to reach typically have higher minimum and maximum amounts than other chests, however they might respawn slower or require players to be further away than normal.\n\nOccasionally a loot chest will take the physical appearance of a trapped chest. This indicates that the loot chest contains a zombie within it, which will jump out and attack the player if the chest is opened or broken. This zombie carries all the contents of the loot chest, and will equip any applicable items such as weapons and armor. On death, the zombie will drop all of the items it holds.\n\nA location's loot chests can be determined by manually opening each chest in the location, checking the location's wiki page, or zooming in on the location on the MineZ Map.",
+  //Achievements Description
   "menu.minez_help.description.achievements": "Achievements - §cWork in progress!",
+  //Lore Quest Lines Description
   "menu.minez_help.description.lore": "There are two “Quest lines” in our beloved MineZ\n\n§3§lEmerald Quest§f\n\n§cWork in progress!\n\n§3§lPath Of The Eclipsed§f\n\n§cWork in progress!",
+  //
   //HMSMobsHostile - Mobs UI Titles & Descriptions
   //Zombie
   "menu.minez_help.title.mobs.hostile.others.zombie": "Zombie:",
@@ -99,14 +116,6 @@
   "menu.minez_help.title.loot.chests.food": "§f§lFood Loot Chests",
   "menu.minez_help.description.loot.chests.food": "Food Loot Chests",
   //TODO: Napisać description dla Food Loot Chests page
-  //HMSLootMilitary - Military Chests UI Titles & Descriptions
-
-  //HMSLootCivilian - Civilian Chests UI Titles & Descriptions
-
-  //HMSLootPotion - Potion Chests UI Titles & Descriptions
-
-  //HMSLootMilitary - Military Chests UI Titles & Descriptions
-
   //HMSLootFood - Loots tabel
   //HMSLootFood - Loots tabel - Headers
   "menu.minez_help.food_loot_table.headers[0]": "Item Name",
@@ -218,7 +227,186 @@
   "menu.minez_help.food_loot_table.rows[25][1]": "§c0.0%",
   "menu.minez_help.food_loot_table.rows[25][2]": "§c0.0%",
   "menu.minez_help.food_loot_table.rows[25][3]": "§e3.0%",
-
+  //HMSLootMilitary - Military Chests UI Titles & Descriptions
+  "menu.minez_help.title.loot.chests.military": "§f§lMilitary Loot Chests",
+  "menu.minez_help.description.loot.chests.military": "Military Loot Chests",
+  //HMSLootMilitary - Loots tabel
+  //HMSLootMilitary - Loots tabel - Headers
+  "menu.minez_help.military_loot_table.headers[0]": "Item Name",
+  "menu.minez_help.military_loot_table.headers[1]": "Military Common",
+  "menu.minez_help.military_loot_table.headers[2]": "Military Uncommon",
+  "menu.minez_help.military_loot_table.headers[3]": "Military Rare",
+  "menu.minez_help.military_loot_table.headers[4]": "Military Epic",
+  "menu.minez_help.military_loot_table.headers[5]": "Military Mythic",
+  //HMSLootMilitary - Loots tabel - Rows
+  "menu.minez_help.military_loot_table.rows[0][0]": "Item",
+  "menu.minez_help.military_loot_table.rows[0][1]": "§c0.0%",
+  "menu.minez_help.military_loot_table.rows[0][2]": "§c0.0%",
+  "menu.minez_help.military_loot_table.rows[0][3]": "§c0.0%",
+  "menu.minez_help.military_loot_table.rows[0][4]": "§c0.0%",
+  "menu.minez_help.military_loot_table.rows[0][5]": "§c0.0%",
+  //HMSLootCivilian - Civilian Chests UI Titles & Descriptions
+  "menu.minez_help.title.loot.chests.civilian": "§f§lCivilian Loot Chests",
+  "menu.minez_help.description.loot.chests.civilian": "Civilian Loot Chests",
+  //HMSLootCivilian - Loots tabel
+  //HMSLootCivilian - Loots tabel - Headers
+  "menu.minez_help.civilian_loot_table.headers[0]": "Item Name",
+  "menu.minez_help.civilian_loot_table.headers[1]": "Civilian Common",
+  "menu.minez_help.civilian_loot_table.headers[2]": "Civilian Uncommon",
+  "menu.minez_help.civilian_loot_table.headers[3]": "Civilian Rare",
+  //HMSLootCivilian - Loots tabel - Rows
+  "menu.minez_help.civilian_loot_table.rows[0][0]": "Bandage",
+  "menu.minez_help.civilian_loot_table.rows[0][1]": "§a15.0%",
+  "menu.minez_help.civilian_loot_table.rows[0][2]": "§e12.0%",
+  "menu.minez_help.civilian_loot_table.rows[0][3]": "§e10.0%",
+  "menu.minez_help.civilian_loot_table.rows[1][0]": "Antidote",
+  "menu.minez_help.civilian_loot_table.rows[1][1]": "§a15.0%",
+  "menu.minez_help.civilian_loot_table.rows[1][2]": "§e10.0%",
+  "menu.minez_help.civilian_loot_table.rows[1][3]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[2][0]": "Bowl",
+  "menu.minez_help.civilian_loot_table.rows[2][1]": "§a15.0%",
+  "menu.minez_help.civilian_loot_table.rows[2][2]": "§e10.0%",
+  "menu.minez_help.civilian_loot_table.rows[2][3]": "§e8.0%",
+  "menu.minez_help.civilian_loot_table.rows[3][0]": "Glass Bottle",
+  "menu.minez_help.civilian_loot_table.rows[3][1]": "§a13.0%",
+  "menu.minez_help.civilian_loot_table.rows[3][2]": "§e4.0%",
+  "menu.minez_help.civilian_loot_table.rows[3][3]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[4][0]": "Snowball",
+  "menu.minez_help.civilian_loot_table.rows[4][1]": "§e10.0%",
+  "menu.minez_help.civilian_loot_table.rows[4][2]": "§a12.0%",
+  "menu.minez_help.civilian_loot_table.rows[4][3]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[5][0]": "2 Snowballs",
+  "menu.minez_help.civilian_loot_table.rows[5][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[5][2]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[5][3]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[6][0]": "3 Snowball",
+  "menu.minez_help.civilian_loot_table.rows[6][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[6][2]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[6][3]": "§e7.0%",
+  "menu.minez_help.civilian_loot_table.rows[7][0]": "Bandage Roll",
+  "menu.minez_help.civilian_loot_table.rows[7][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[7][2]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[7][3]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[8][0]": "Antidote Flask",
+  "menu.minez_help.civilian_loot_table.rows[8][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[8][2]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[8][3]": "§e8.0%",
+  "menu.minez_help.civilian_loot_table.rows[9][0]": " ",
+  "menu.minez_help.civilian_loot_table.rows[9][1]": " ",
+  "menu.minez_help.civilian_loot_table.rows[9][2]": " ",
+  "menu.minez_help.civilian_loot_table.rows[9][3]": " ",
+  //Heal Kit items
+  "menu.minez_help.civilian_loot_table.rows[10][0]": "Healing Ointment",
+  "menu.minez_help.civilian_loot_table.rows[10][1]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[10][2]": "§e9.0%",
+  "menu.minez_help.civilian_loot_table.rows[10][3]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[11][0]": "Antibiotics",
+  "menu.minez_help.civilian_loot_table.rows[11][1]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[11][2]": "§e9.0%",
+  "menu.minez_help.civilian_loot_table.rows[11][3]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[12][0]": "Aloe Vera",
+  "menu.minez_help.civilian_loot_table.rows[12][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[12][2]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[12][3]": "§a9.0%",
+  "menu.minez_help.civilian_loot_table.rows[13][0]": "Stimulant",
+  "menu.minez_help.civilian_loot_table.rows[13][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[13][2]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[13][3]": "§a9.0%",
+  "menu.minez_help.civilian_loot_table.rows[14][0]": "Revitalizer",
+  "menu.minez_help.civilian_loot_table.rows[14][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[14][2]": "§e6.0%",
+  "menu.minez_help.civilian_loot_table.rows[14][3]": "§a9.0%",
+  "menu.minez_help.civilian_loot_table.rows[15][0]": " ",
+  "menu.minez_help.civilian_loot_table.rows[15][1]": " ",
+  "menu.minez_help.civilian_loot_table.rows[15][2]": " ",
+  "menu.minez_help.civilian_loot_table.rows[15][3]": " ",
+  //Heal Kits spawn types
+  "menu.minez_help.civilian_loot_table.rows[16][0]": "Heal Kit",
+  "menu.minez_help.civilian_loot_table.rows[16][1]": "§a12.0%",
+  "menu.minez_help.civilian_loot_table.rows[16][2]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[16][3]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[17][0]": "(Empty)",
+  //line 16 + 17
+  "menu.minez_help.civilian_loot_table.rows[17][1]": " ",
+  "menu.minez_help.civilian_loot_table.rows[17][2]": " ",
+  "menu.minez_help.civilian_loot_table.rows[17][3]": " ",
+  "menu.minez_help.civilian_loot_table.rows[18][0]": "Heal Kit",
+  "menu.minez_help.civilian_loot_table.rows[18][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[18][2]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[18][3]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[19][0]": "(2 Bandages, 1 Healing Ointment)",
+  //line 18 + 19
+  "menu.minez_help.civilian_loot_table.rows[19][1]": " ",
+  "menu.minez_help.civilian_loot_table.rows[19][2]": " ",
+  "menu.minez_help.civilian_loot_table.rows[19][3]": " ",
+  "menu.minez_help.civilian_loot_table.rows[20][0]": "Heal Kit",
+  "menu.minez_help.civilian_loot_table.rows[20][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[20][2]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[20][3]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[21][0]": "(2 Bandages, 1 Aloe Vera)",
+  //line 20 + 21
+  "menu.minez_help.civilian_loot_table.rows[21][1]": " ",
+  "menu.minez_help.civilian_loot_table.rows[21][2]": " ",
+  "menu.minez_help.civilian_loot_table.rows[21][3]": " ",
+  "menu.minez_help.civilian_loot_table.rows[22][0]": "Heal Kit",
+  "menu.minez_help.civilian_loot_table.rows[22][1]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[22][2]": "§c0.0%",
+  "menu.minez_help.civilian_loot_table.rows[22][3]": "§a10.0%",
+  "menu.minez_help.civilian_loot_table.rows[23][0]": "(1 Bandage, 2 Healing Ointment, 2 Stimulant)",
+  //line 23 + 23
+  "menu.minez_help.civilian_loot_table.rows[23][1]": " ",
+  "menu.minez_help.civilian_loot_table.rows[23][2]": " ",
+  "menu.minez_help.civilian_loot_table.rows[23][3]": " ",
+  //HMSLootPotion - Potion Chests UI Titles & Descriptions
+  "menu.minez_help.title.loot.chests.potion": "§f§lPotion Loot Chests",
+  "menu.minez_help.description.loot.chests.potion": "Potion Loot Chests",
+  //HMSLootPotion - Loots tabel
+  //HMSLootPotion - Loots tabel - Headers
+  "menu.minez_help.potion_loot_table.headers[0]": "Item Name",
+  "menu.minez_help.potion_loot_table.headers[1]": "Potion Common",
+  "menu.minez_help.potion_loot_table.headers[2]": "Potion Uncommon",
+  "menu.minez_help.potion_loot_table.headers[3]": "Potion Rare",
+  //HMSLootPotion - Loots tabel - Rows
+  "menu.minez_help.potion_loot_table.rows[0][0]": "Potion of Healing I",
+  "menu.minez_help.potion_loot_table.rows[0][1]": "§a69.0%",
+  "menu.minez_help.potion_loot_table.rows[0][2]": "§e20.0%",
+  "menu.minez_help.potion_loot_table.rows[0][3]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[1][0]": "Potion of Healing II",
+  "menu.minez_help.potion_loot_table.rows[1][1]": "§e25.0%",
+  "menu.minez_help.potion_loot_table.rows[1][2]": "§a60.0%",
+  "menu.minez_help.potion_loot_table.rows[1][3]": "§a65.0%",
+  "menu.minez_help.potion_loot_table.rows[2][0]": "Splash Potion of Healing I",
+  "menu.minez_help.potion_loot_table.rows[2][1]": "§e4.0%",
+  "menu.minez_help.potion_loot_table.rows[2][2]": "§a10.0%",
+  "menu.minez_help.potion_loot_table.rows[2][3]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[3][0]": "Splash Potion of Healing II",
+  "menu.minez_help.potion_loot_table.rows[3][1]": "§e2.0%",
+  "menu.minez_help.potion_loot_table.rows[3][2]": "§e5.0%",
+  "menu.minez_help.potion_loot_table.rows[3][3]": "§a15.0%",
+  "menu.minez_help.potion_loot_table.rows[4][0]": "Lingering Potion of Healing I",
+  "menu.minez_help.potion_loot_table.rows[4][1]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[4][2]": "§e3.0%",
+  "menu.minez_help.potion_loot_table.rows[4][3]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[5][0]": "Lingering Potion of Healing II",
+  "menu.minez_help.potion_loot_table.rows[5][1]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[5][2]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[5][3]": "§e9.0%",
+  "menu.minez_help.potion_loot_table.rows[6][0]": "Golden Apple",
+  "menu.minez_help.potion_loot_table.rows[6][1]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[6][2]": "§e2.0%",
+  "menu.minez_help.potion_loot_table.rows[6][3]": "§a5.0%",
+  "menu.minez_help.potion_loot_table.rows[7][0]": "Speed II Potion",
+  "menu.minez_help.potion_loot_table.rows[7][1]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[7][2]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[7][3]": "§e4.0%",
+  "menu.minez_help.potion_loot_table.rows[8][0]": "Glowstone Dust",
+  "menu.minez_help.potion_loot_table.rows[8][1]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[8][2]": "§c0.0%",
+  "menu.minez_help.potion_loot_table.rows[8][3]": "§e2.0%",
+  //HMSLootTool - Tool Chests UI Titles & Descriptions
+  //HMSLootTool - Loots tabel
+  //HMSLootTool - Loots tabel - Headers
+  //HMSLootTool - Loots tabel - Rows
 
 
 
@@ -390,9 +578,8 @@
   "menu.minez_help.thirst_table.rows[26][3]": "§f1",
   "menu.minez_help.thirst_table.rows[26][4]": "§e+1",
   "menu.minez_help.thirst_table.rows[26][5]": "Craft",
+  //toasts
   "menu.minez_toast.title": "Information!",
   "menu.minez_toast.noewikipage.text": "The official server wikii does not have a page on this topic.",
-  "menu.minez_toast.workinprogres.text": "§cWork in progress!",
-
-  "recipe.minez-help-menu.bread": "Bread Recipe"
+  "menu.minez_toast.workinprogres.text": "§cWork in progress!"
 }
