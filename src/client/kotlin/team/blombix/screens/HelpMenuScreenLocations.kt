@@ -6,6 +6,7 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.client.toast.SystemToast
 import net.minecraft.text.Text
+import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import team.blombix.MineZHelpMenuClient
 import team.blombix.screens.locations.buttonrequire.HMSLocationCategoryButtonRequire
@@ -16,6 +17,10 @@ import team.blombix.screens.locations.wintercaves.HMSLocationCategoryWinterCaves
 
 
 class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button11")) {
+
+    val locationImage = Identifier.tryParse("minez-help-menu:textures/gui/minezmap.png")
+        ?.also { println("✅ Identifier loaded: $it") }
+        ?: error("❌ Texture `minezmap.png` not found!")
 
     private var textField: TextFieldWidget? = null
     private val dynamicButtons = mutableListOf<ButtonWidget>()
@@ -206,6 +211,35 @@ class HelpMenuScreenLocations : Screen(Text.translatable("menu.minez_help.button
             }
             y += 12
         }
+
+        val imageBoxX = centerPanelX + 10
+        val imageBoxY = y + 10 // y po ostatnim tekście
+        val imageBoxWidth = centerPanelWidth - 50
+        val imageBoxHeight = imageBoxWidth / 2
+
+        // Ramka
+        context.fill(
+            imageBoxX - 1,
+            imageBoxY - 1,
+            imageBoxX + imageBoxWidth + 1,
+            imageBoxY + imageBoxHeight + 1,
+            0xFFFFFFFF.toInt()
+        )
+        context.fill(imageBoxX, imageBoxY, imageBoxX + imageBoxWidth, imageBoxY + imageBoxHeight, 0xFF000000.toInt())
+
+        // Obraz (dopasowany do rozmiaru ramki)
+        context.drawTexture(
+            locationImage,
+            imageBoxX,
+            imageBoxY,
+            0f,
+            0f,
+            imageBoxWidth,
+            imageBoxHeight,
+            imageBoxWidth,
+            imageBoxHeight
+        )
+
 
         context.fill(rightPanelX, 10, rightPanelX + rightPanelWidth, height - 10, 0x80303030.toInt())
 
