@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "minez-help-menu",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "name": "MineZ Help Menu",
   "description": "Minecraft Mod for menu to help while playing MineZ!",
   "authors": [
@@ -14,9 +14,10 @@
   ],
   "contact": {
     "homepage": "https://modrinth.com/project/minez-help-menu",
-    "issues": "https://github.com/Blombix-Team/MineZ-Help-Doc/issues"
+    "issues": "https://github.com/Blombix-Team/MineZ-Help-Doc/issues",
+    "sources": "https://github.com/Blombix-Team/MineZ-Help-Menu"
   },
-  "license": "ARR",
+  "license": "MHM Mod License",
   "icon": "assets/minez-help-menu/icon.png",
   "environment": "*",
   "entrypoints": {

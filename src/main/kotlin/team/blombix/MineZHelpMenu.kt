@@ -22,7 +22,7 @@ object MineZHelpMenu : ModInitializer {
         logger.info("BasicAly")
         logger.info("All MineZ Wiki Editors")
         logger.info(" ")
-        logger.info("Version: 0.0.40")
+        logger.info("Version: 0.0.41")
         logger.info(" ")
         logger.info("[==============================================]")
 
