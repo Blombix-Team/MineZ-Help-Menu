@@ -7,12 +7,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 import team.blombix.MineZHelpMenuClient
-import team.blombix.screens.dungeons.easy.HMSDungeonsCategoryEasy
-import team.blombix.screens.dungeons.extreme.HMSDungeonsCategoryExtreme
-import team.blombix.screens.dungeons.hard.HMSDungeonsCategoryHard
-import team.blombix.screens.dungeons.insane.HMSDungeonsCategoryInsane
-import team.blombix.screens.dungeons.moderate.HMSDungeonsCategoryModerate
-import team.blombix.screens.dungeons.veryhard.HMSDungeonsCategoryVeryHard
+import team.blombix.screens.dungeons.*
 
 class HelpMenuScreenDungeons : Screen(Text.translatable("menu.minez_help.button12")) {
 

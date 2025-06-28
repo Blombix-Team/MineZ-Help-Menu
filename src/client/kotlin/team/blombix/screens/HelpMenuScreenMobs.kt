@@ -12,7 +12,7 @@ import team.blombix.MineZHelpMenuClient
 //import team.blombix.screens.mobs.HMSMobsHostileBosses
 //import team.blombix.screens.mobs.HMSMobsHostileDungeons
 //import team.blombix.screens.mobs.HMSMobsPassive
-import team.blombix.screens.mobs.hostile.others.Zombie
+import team.blombix.screens.mobs.hostile.others.HMSMobsHostileZombie
 
 class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) {
 
@@ -135,7 +135,7 @@ class HelpMenuScreenMobs : Screen(Text.translatable("menu.minez_help.button6")) 
         var sectionY = 60
 
         val categories = listOf(
-            "Test Page" to { Zombie() },
+            "Test Page" to { HMSMobsHostileZombie() },
             //"Hostile" to { HMSMobsHostile() },
             //"Hostile - Bosses" to { HMSMobsHostileBosses() },
             //"Hostile - Dungeons" to { HMSMobsHostileDungeons() },

@@ -153,7 +153,7 @@ class HMSLootTool : Screen(Text.translatable("menu.minez_help.button13")) {
         context.matrices.scale(1.5f, 1.5f, 1f)
         context.drawTextWithShadow(
             textRenderer,
-            Text.translatable("menu.minez_help.title.loot.chests.civilian"),
+            Text.translatable("menu.minez_help.title.loot.chests.tool"),
             0,
             0,
             0xFFFFFF
@@ -161,7 +161,7 @@ class HMSLootTool : Screen(Text.translatable("menu.minez_help.button13")) {
         context.matrices.pop()
 
         val lines = textRenderer.wrapLines(
-            Text.translatable("menu.minez_help.description.loot.chests.civilian"),
+            Text.translatable("menu.minez_help.description.loot.chests.tool"),
             width - rightPanelX - 20
         )
 
@@ -203,11 +203,11 @@ class HMSLootTool : Screen(Text.translatable("menu.minez_help.button13")) {
 
     private fun getLangTableData(): Pair<List<String>, List<List<String>>> {
         val headers = (0..3).map { i ->
-            Text.translatable("menu.minez_help.civilian_loot_table.headers[$i]").string
+            Text.translatable("menu.minez_help.tool_loot_table.headers[$i]").string
         }
         val rows = (0 until 24).map { row ->
             (0 until 4).map { col ->
-                Text.translatable("menu.minez_help.civilian_loot_table.rows[$row][$col]").string
+                Text.translatable("menu.minez_help.tool_loot_table.rows[$row][$col]").string
             }
         }
         return Pair(headers, rows)
