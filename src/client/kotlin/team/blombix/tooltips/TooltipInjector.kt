@@ -35,15 +35,7 @@ object TooltipInjector {
                         )
                 )
 
-                Items.BEETROOT -> lines.add(
-                    Text.literal("Thirst: ")
-                        .formatted(Formatting.AQUA)
-                        .append(
-                            Text.literal("+2").formatted(Formatting.DARK_AQUA)
-                        )
-                )
-
-                Items.MELON_SLICE -> lines.add(
+                Items.GOLDEN_CARROT -> lines.add(
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
@@ -51,11 +43,28 @@ object TooltipInjector {
                         )
                 )
 
+
+                Items.BEETROOT -> lines.add(
+                    Text.literal("Thirst: ")
+                        .formatted(Formatting.AQUA)
+                        .append(
+                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
+                        )
+                )
+
+                Items.MELON_SLICE -> lines.add(
+                    Text.literal("Thirst: ")
+                        .formatted(Formatting.AQUA)
+                        .append(
+                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
+                        )
+                )
+
                 Items.BEETROOT_SOUP -> lines.add(
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
-                            Text.literal("+10").formatted(Formatting.DARK_AQUA)
+                            Text.literal("+8").formatted(Formatting.DARK_AQUA)
                         )
                 )
 
@@ -63,7 +72,7 @@ object TooltipInjector {
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
-                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
+                            Text.literal("+6").formatted(Formatting.DARK_AQUA)
                         )
                 )
 
@@ -71,7 +80,7 @@ object TooltipInjector {
                     Text.literal("Thirst: ")
                         .formatted(Formatting.AQUA)
                         .append(
-                            Text.literal("+1").formatted(Formatting.DARK_AQUA)
+                            Text.literal("+4").formatted(Formatting.DARK_AQUA)
                         )
                 )
             }
