@@ -203,11 +203,11 @@ class HMSLootMilitary : Screen(Text.translatable("menu.minez_help.button13")) {
 
     private fun getLangTableData(): Pair<List<String>, List<List<String>>> {
         val headers = (0..3).map { i ->
-            Text.translatable("menu.minez_help.civilian_loot_table.headers[$i]").string
+            Text.translatable("menu.minez_help.military_loot_table.headers[$i]").string
         }
         val rows = (0 until 24).map { row ->
             (0 until 4).map { col ->
-                Text.translatable("menu.minez_help.civilian_loot_table.rows[$row][$col]").string
+                Text.translatable("menu.minez_help.military_loot_table.rows[$row][$col]").string
             }
         }
         return Pair(headers, rows)

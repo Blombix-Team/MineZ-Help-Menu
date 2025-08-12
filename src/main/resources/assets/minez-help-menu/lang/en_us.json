@@ -76,7 +76,7 @@
   //Achievements Description
   "menu.minez_help.description.achievements": "Achievements - §cWork in progress!",
   //Lore Quest Lines Description
-  "menu.minez_help.description.lore": "There are two “Quest lines” in our beloved MineZ\n\n§3§lEmerald Quest§f\n\n§cWork in progress!\n\n§3§lPath Of The Eclipsed§f\n\n§cWork in progress!",
+  "menu.minez_help.description.lore": "There are two “Quest lines” in our beloved MineZ\n\n§3§lEmerald Quest§f\n\n  §l•§f In order to complete the Emerald Quest players need to obtain an Emerald Shard from each of these locations/dungeons:\n\n    §l•§f §3Snowhelm§f\n    The Emerald Shard here is the easiest one to obtain.\n    Simply pick it up from the table, Inside small house with purple bed.\n\n    §l•§f §3Fort Erie§f\n    The shard can be obtained from the middle-left cell in the basement. Once a player gets there they are supposed to push the crates in a way that lets them parkour up to another room, Once two levers, Inside this room are flipped, the doorway will open letting you push out last crate. With all crates you are able to parkour up to cell to obtain Emeral Shard. \n\n    §l•§f §3Alchemical Lab§f\n    Once a bottle of “Acid Vial” is obtained, leave the dungeon though its entrance and go down the river.\n    By bringing the “Acid Vial” to the statue you obtain the shard needed for the Emerald Quest\n\n    §l•§f §3Serpent’s Hold§f\n    Drop a smite III sword onto the dark prismarine block with particles on it, this will start the puzzle,\n    this sword will be consumed. Move banners to reflect light towards statues that hold items,\n    one of which is an Emerald Shard.\n\n    §l•§f §3Excavation Site§f\n    In this dungeon, players dig up certain items, one of them being an Emerald Shard, by using Special Shovel\n    (Obtained by dropping Iron Shovel on Table inside This dunegon).\n\nOnce all of the 5 shards are obtained head over to Eclipsed Headquarters\nWalk directly south to a circle-stone-brick pedestal.\nIf you have all five unique Emerald Shards, the pedestal will glow with particles.\nPlace all the shards on it in order to open a portal to the dungeon.\nBy completing the last piece of Emerald Quest (Eclipsed Headquarters) you obtain a Heal Bow and an Emerald Geode.\n\n\n\n§3§lPath Of The Eclipsed§f\n\n§cWork in progress!\n\n\n§3§lSeal Stones§f\n\n§cWork in progress!\n\n\n§3§lRunes§f\n\n§cWork in progress!",
   //
   //HMSMobsHostile - Mobs UI Titles & Descriptions
   //Zombie
@@ -615,6 +615,13 @@
   "menu.minez_help.thirst_table.rows[26][3]": "§f1",
   "menu.minez_help.thirst_table.rows[26][4]": "§e+4",
   "menu.minez_help.thirst_table.rows[26][5]": "Craft",
+  //Seafarer’s Grog
+  "menu.minez_help.thirst_table.rows[27][0]": "Seafarer’s Grog",
+  "menu.minez_help.thirst_table.rows[27][1]": "§a5",
+  "menu.minez_help.thirst_table.rows[27][2]": "§c0",
+  "menu.minez_help.thirst_table.rows[27][3]": "§f1",
+  "menu.minez_help.thirst_table.rows[27][4]": "§a+5",
+  "menu.minez_help.thirst_table.rows[27][5]": "Orlop Deck Dungeon",
   //Mod Toasts texts & titles
   "menu.minez_toast.title": "Information!",
   "menu.minez_toast.noewikipage.text": "The official server wikii does not have a page on this topic.",

@@ -205,7 +205,7 @@ class HelpMenuScreenThirstVisibility : Screen(Text.translatable("menu.minez_help
         val headers = (0..5).map { i ->
             Text.translatable("menu.minez_help.thirst_table.headers[$i]").string
         }
-        val rows = (0 until 27).map { row ->
+        val rows = (0 until 28).map { row ->
             (0 until 6).map { col ->
                 Text.translatable("menu.minez_help.thirst_table.rows[$row][$col]").string
             }

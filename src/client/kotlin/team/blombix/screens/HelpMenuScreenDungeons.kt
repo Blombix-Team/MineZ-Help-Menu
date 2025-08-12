@@ -8,10 +8,7 @@ import net.minecraft.client.toast.SystemToast
 import net.minecraft.text.Text
 import net.minecraft.util.Util
 import team.blombix.MineZHelpMenuClient
-import team.blombix.screens.dungeons.HMSDungeonsCategoryEasy
-import team.blombix.screens.dungeons.HMSDungeonsCategoryHard
-import team.blombix.screens.dungeons.HMSDungeonsCategoryModerate
-import team.blombix.screens.dungeons.HMSDungeonsCategoryVeryHard
+import team.blombix.screens.dungeons.*
 
 class HelpMenuScreenDungeons : Screen(Text.translatable("menu.minez_help.button12")) {
 
@@ -138,8 +135,8 @@ class HelpMenuScreenDungeons : Screen(Text.translatable("menu.minez_help.button1
             "§2T2 - Moderate" to { HMSDungeonsCategoryModerate() },
             "§eT3 - Hard" to { HMSDungeonsCategoryHard() },
             "§6T4 - Very Hard" to { HMSDungeonsCategoryVeryHard() },
-            //"§cT5 - Extreme" to { HMSDungeonsCategoryExtreme() },
-            //"§5T6 - Insane" to { HMSDungeonsCategoryInsane() }
+            "§cT5 - Extreme" to { HMSDungeonsCategoryExtreme() },
+            "§5T6 - Insane" to { HMSDungeonsCategoryInsane() }
         )
 
         for ((label, factory) in categories) {

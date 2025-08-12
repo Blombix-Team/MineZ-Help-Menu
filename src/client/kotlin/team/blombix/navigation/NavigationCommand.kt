@@ -1,12 +1,13 @@
 package team.blombix.navigation
 
+import com.mojang.brigadier.arguments.BoolArgumentType
+import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.text.Text
 import net.minecraft.util.math.Vec3d
-import team.blombix.navigation.navscreens.LocationEditorScreen
 
 object NavigationCommand {
     fun register() {
@@ -97,11 +98,262 @@ object NavigationCommand {
                     )
                     .then(
                         ClientCommandManager.literal("add")
-
-                            .executes { context ->
-                                MinecraftClient.getInstance().setScreen(LocationEditorScreen())
-                                1
-                            }
+                            .then(
+                                ClientCommandManager.argument("x", IntegerArgumentType.integer())
+                                    .then(
+                                        ClientCommandManager.argument("y", IntegerArgumentType.integer())
+                                            .then(
+                                                ClientCommandManager.argument("z", IntegerArgumentType.integer())
+                                                    .then(
+                                                        ClientCommandManager.argument(
+                                                            "name",
+                                                            StringArgumentType.string()
+                                                        )
+                                                            .then(
+                                                                ClientCommandManager.argument(
+                                                                    "biome",
+                                                                    StringArgumentType.string()
+                                                                )
+                                                                    .suggests { _, builder ->
+                                                                        listOf(
+                                                                            "swamp",
+                                                                            "gravel",
+                                                                            "forest",
+                                                                            "dark-forest",
+                                                                            "jungle",
+                                                                            "jungle-forest",
+                                                                            "savana",
+                                                                            "winter",
+                                                                            "lava",
+                                                                            "desert",
+                                                                            "islands",
+                                                                            "swamp-caves",
+                                                                            "winter-caves"
+                                                                        ).forEach { builder.suggest(it) }
+                                                                        builder.buildFuture()
+                                                                    }
+                                                                    .then(
+                                                                        ClientCommandManager.argument(
+                                                                            "anvil",
+                                                                            BoolArgumentType.bool()
+                                                                        )
+                                                                            .then(
+                                                                                ClientCommandManager.argument(
+                                                                                    "furnace",
+                                                                                    BoolArgumentType.bool()
+                                                                                )
+                                                                                    .then(
+                                                                                        ClientCommandManager.argument(
+                                                                                            "crafting",
+                                                                                            BoolArgumentType.bool()
+                                                                                        )
+                                                                                            .then(
+                                                                                                ClientCommandManager.argument(
+                                                                                                    "cauldron",
+                                                                                                    BoolArgumentType.bool()
+                                                                                                )
+                                                                                                    .then(
+                                                                                                        ClientCommandManager.argument(
+                                                                                                            "water",
+                                                                                                            BoolArgumentType.bool()
+                                                                                                        )
+                                                                                                            .then(
+                                                                                                                ClientCommandManager.argument(
+                                                                                                                    "brewingstand",
+                                                                                                                    BoolArgumentType.bool()
+                                                                                                                )
+                                                                                                                    .then(
+                                                                                                                        ClientCommandManager.argument(
+                                                                                                                            "ironore",
+                                                                                                                            BoolArgumentType.bool()
+                                                                                                                        )
+                                                                                                                            .then(
+                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                    "coalore",
+                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                )
+                                                                                                                                    .then(
+                                                                                                                                        ClientCommandManager.argument(
+                                                                                                                                            "carrots",
+                                                                                                                                            BoolArgumentType.bool()
+                                                                                                                                        )
+                                                                                                                                            .then(
+                                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                                    "wheat",
+                                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                                )
+                                                                                                                                                    .then(
+                                                                                                                                                        ClientCommandManager.argument(
+                                                                                                                                                            "beetroots",
+                                                                                                                                                            BoolArgumentType.bool()
+                                                                                                                                                        )
+                                                                                                                                                            .then(
+                                                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                                                    "potatoes",
+                                                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                                                )
+                                                                                                                                                                    .then(
+                                                                                                                                                                        ClientCommandManager.argument(
+                                                                                                                                                                            "pumpkin",
+                                                                                                                                                                            BoolArgumentType.bool()
+                                                                                                                                                                        )
+                                                                                                                                                                            .then(
+                                                                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                                                                    "melon",
+                                                                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                                                                )
+                                                                                                                                                                                    .then(
+                                                                                                                                                                                        ClientCommandManager.argument(
+                                                                                                                                                                                            "buttonroom",
+                                                                                                                                                                                            BoolArgumentType.bool()
+                                                                                                                                                                                        )
+                                                                                                                                                                                            .then(
+                                                                                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                                                                                    "buttonentry",
+                                                                                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                                                                                )
+                                                                                                                                                                                                    .then(
+                                                                                                                                                                                                        ClientCommandManager.argument(
+                                                                                                                                                                                                            "iscave",
+                                                                                                                                                                                                            BoolArgumentType.bool()
+                                                                                                                                                                                                        )
+                                                                                                                                                                                                            .then(
+                                                                                                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                                                                                                    "iscaveentrance",
+                                                                                                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                                                                                                )
+                                                                                                                                                                                                                    .then(
+                                                                                                                                                                                                                        ClientCommandManager.argument(
+                                                                                                                                                                                                                            "iscaveexit",
+                                                                                                                                                                                                                            BoolArgumentType.bool()
+                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                            .then(
+                                                                                                                                                                                                                                ClientCommandManager.argument(
+                                                                                                                                                                                                                                    "hiden",
+                                                                                                                                                                                                                                    BoolArgumentType.bool()
+                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                    .executes { context ->
+                                                                                                                                                                                                                                        val x =
+                                                                                                                                                                                                                                            IntegerArgumentType.getInteger(
+                                                                                                                                                                                                                                                context,
+                                                                                                                                                                                                                                                "x"
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        val y =
+                                                                                                                                                                                                                                            IntegerArgumentType.getInteger(
+                                                                                                                                                                                                                                                context,
+                                                                                                                                                                                                                                                "y"
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        val z =
+                                                                                                                                                                                                                                            IntegerArgumentType.getInteger(
+                                                                                                                                                                                                                                                context,
+                                                                                                                                                                                                                                                "z"
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        val name =
+                                                                                                                                                                                                                                            StringArgumentType.getString(
+                                                                                                                                                                                                                                                context,
+                                                                                                                                                                                                                                                "name"
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        val biome =
+                                                                                                                                                                                                                                            StringArgumentType.getString(
+                                                                                                                                                                                                                                                context,
+                                                                                                                                                                                                                                                "biome"
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        val loc =
+                                                                                                                                                                                                                                            Location(
+                                                                                                                                                                                                                                                name = name,
+                                                                                                                                                                                                                                                x = x,
+                                                                                                                                                                                                                                                y = y,
+                                                                                                                                                                                                                                                z = z,
+                                                                                                                                                                                                                                                anvil = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "anvil"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                furnace = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "furnace"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                crafting = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "crafting"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                cauldron = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "cauldron"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                brewingstand = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "brewingstand"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                ironore = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "ironore"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                coalore = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "coalore"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                carrots = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "carrots"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                wheat = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "wheat"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                beetroots = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "beetroots"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                potatoes = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "potatoes"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                pumpkin = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "pumpkin"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                melon = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "melon"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                buttonroom = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "buttonroom"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                buttonentry = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "buttonentry"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                iscave = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "iscave"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                iscaveentrance = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "iscaveentrance"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                iscaveexit = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "iscaveexit"
+                                                                                                                                                                                                                                                ),
+                                                                                                                                                                                                                                                biome = biome,
+                                                                                                                                                                                                                                                hiden = BoolArgumentType.getBool(
+                                                                                                                                                                                                                                                    context,
+                                                                                                                                                                                                                                                    "hiden"
+                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                        LocationManager.addLocation(
+                                                                                                                                                                                                                                            loc
+                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                        MinecraftClient.getInstance().player?.sendMessage(
+                                                                                                                                                                                                                                            Text.literal(
+                                                                                                                                                                                                                                                "§7[§a✚§7] §7Location added: §6$name"
+                                                                                                                                                                                                                                            ),
+                                                                                                                                                                                                                                            false
+                                                                                                                                                                                                                                        )
+                                                                                                                                                                                                                                        1
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                            )))))))))))))))))))))))))
                     )
                     .then(
                         ClientCommandManager.literal("end")
@@ -129,11 +381,11 @@ object NavigationCommand {
 
                                         if (loc != null && player != null) {
                                             player.sendMessage(
-                                                Text.literal("§7§lLocation information: §6${loc.name}"),
+                                                Text.literal("§7[§7☁§7] §7§lLocation information: §6${loc.name}"),
                                                 false
                                             )
                                             player.sendMessage(
-                                                Text.literal("§ePosition: §fX:${loc.x} Y:${loc.y} Z:${loc.z}"),
+                                                Text.literal("§7[§7☁§7] §7Position: §fX:${loc.x} Y:${loc.y} Z:${loc.z}"),
                                                 false
                                             )
                                             val resources = listOf(
@@ -152,10 +404,13 @@ object NavigationCommand {
                                                 "pumpkin" to loc.pumpkin,
                                                 "melon" to loc.melon
                                             ).filter { it.second }
-                                                .joinToString(" ") { "§a${it.first}" }
+                                                .joinToString("§7, ") { "§a${it.first}" }
 
                                             val resourceText = if (resources.isBlank()) "§cNone" else resources
-                                            player.sendMessage(Text.literal("§eResources: $resourceText"), false)
+                                            player.sendMessage(
+                                                Text.literal("§7[§7☁§7] §7Resources: $resourceText"),
+                                                false
+                                            )
 
                                         } else {
                                             player?.sendMessage(

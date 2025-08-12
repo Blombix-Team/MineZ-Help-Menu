@@ -15,6 +15,7 @@ import team.blombix.tooltips.TooltipInjector
 
 class MineZHelpMenuClient : ClientModInitializer {
     private lateinit var openGuiKey: KeyBinding
+    private lateinit var openDevDebugKey: KeyBinding
 
     override fun onInitializeClient() {
 
@@ -28,6 +29,14 @@ class MineZHelpMenuClient : ClientModInitializer {
                 "key.minez_help_menu.open_gui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_H,
+                "category.minez_help_menu"
+            )
+        )
+        openDevDebugKey = KeyBindingHelper.registerKeyBinding(
+            KeyBinding(
+                "key.minez_help_menu.dev_debug",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_UNKNOWN,
                 "category.minez_help_menu"
             )
         )
