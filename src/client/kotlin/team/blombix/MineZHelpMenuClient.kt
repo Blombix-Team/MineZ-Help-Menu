@@ -7,6 +7,9 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import org.lwjgl.glfw.GLFW
+import team.blombix.bankviewer.BankCaptureHandler
+import team.blombix.bankviewer.BankKeybinds
+import team.blombix.dungshelper.mazeofthetenth.MazeOfTheTenth
 import team.blombix.navigation.LocationManager
 import team.blombix.navigation.NavigationCommand
 import team.blombix.navigation.NavigationModClient
@@ -18,10 +21,12 @@ class MineZHelpMenuClient : ClientModInitializer {
     private lateinit var openDevDebugKey: KeyBinding
 
     override fun onInitializeClient() {
-
+        MazeOfTheTenth().register()
         LocationManager.loadLocations()
         NavigationCommand.register()
         NavigationModClient.register()
+        BankCaptureHandler.init()
+        BankKeybinds.init()
 
         TooltipInjector.register()
         openGuiKey = KeyBindingHelper.registerKeyBinding(
