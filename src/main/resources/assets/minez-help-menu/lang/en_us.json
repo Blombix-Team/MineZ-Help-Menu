@@ -3,7 +3,7 @@
   "category.minez_help_menu": "MineZ Help Menu",
   "key.minez_help_menu.open_gui": "Open Gui",
   "key.minez_help_menu.open_settings_gui": "Open Settings",
-  "key.minez_help_menu.toggle_dh": "Toggle Distant Horizons Render",
+  "key.bankviewer.open": "Open BankViewer Gui",
   
   "menu.minez_help.title": "MineZ Help Menu",
   "menu.minez_help.input_label": "Search for information:",
@@ -622,7 +622,7 @@
   "menu.minez_help.thirst_table.rows[27][3]": "§f1",
   "menu.minez_help.thirst_table.rows[27][4]": "§a+5",
   "menu.minez_help.thirst_table.rows[27][5]": "Orlop Deck Dungeon",
-  //Mod Toasts texts & titles
+  //Mod Toasts texts and titles
   "menu.minez_toast.title": "Information!",
   "menu.minez_toast.noewikipage.text": "The official server wikii does not have a page on this topic.",
   "menu.minez_toast.workinprogres.text": "§cWork in progress!"

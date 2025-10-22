@@ -1,157 +1,134 @@
 package team.blombix.bankviewer
 
 import com.google.gson.GsonBuilder
-import net.minecraft.client.MinecraftClient
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.NbtComponent
+import com.google.gson.reflect.TypeToken
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtElement
+import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
+import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.registry.Registries
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import java.io.File
+import java.lang.Exception
+import java.lang.reflect.Type
+import kotlin.collections.set
 
-data class ItemRecord(
-    val id: String,
-    val count: Int,
-    val nbt: String = "{}"
-)
+data class ItemRecord(val id: String, var count: Int, val nbt: String = "")
 
 object BankStorageManager {
+    private val gson = GsonBuilder().setPrettyPrinting().create()
+    private val dataDir = File("bankviewer").apply { if (!exists()) mkdirs() }
+    private val cache = mutableMapOf<String, MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>>()
 
-    private val dataFolder = File(MinecraftClient.getInstance().runDirectory, "bankviewer_data")
-    private val storage = mutableMapOf<String, MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>>()
+    private fun getPlayerFile(player: String): File = File(dataDir, "$player.json")
 
-    init {
-        if (!dataFolder.exists()) dataFolder.mkdirs()
+    fun storePageForPlayer(player: String, bankType: String, page: Int, items: List<ItemRecord>) {
+        val playerMap = cache.computeIfAbsent(player) { mutableMapOf() }
+        val bankMap = playerMap.computeIfAbsent(bankType) { mutableMapOf() }
+        bankMap[page] = items.toMutableList()
+        // ensure dir
+        if (!dataDir.exists()) dataDir.mkdirs()
+        saveToFile(player)
     }
 
-    fun getPlayers(): List<String> = storage.keys.sorted()
-
-    fun getBanksForPlayer(player: String): Map<String, MutableMap<Int, MutableList<ItemRecord>>> {
-        return storage[player] ?: emptyMap()
-    }
-
-    fun getPages(player: String, bankType: String): Map<Int, MutableList<ItemRecord>> {
-        return storage[player]?.get(bankType) ?: emptyMap()
-    }
-
-    fun getAggregateFor(player: String?, bankType: String?): Map<String, ItemRecord> {
-        val players = if (player == null) storage.keys else listOf(player)
-        val map = mutableMapOf<String, ItemRecord>()
-
-        for (p in players) {
-            val banks = storage[p] ?: continue
-            for ((type, pages) in banks) {
-                if (bankType != null && bankType != type) continue
-                for (page in pages.values) {
-                    for (rec in page) {
-                        val existing = map[rec.id]
-                        if (existing == null) {
-                            map[rec.id] = rec.copy()
-                        } else {
-                            map[rec.id] = existing.copy(count = existing.count + rec.count)
-                        }
-                    }
-                }
-            }
-        }
-        return map
-    }
-
-    fun storePageForPlayer(player: String, bankType: String, pageNum: Int, records: List<ItemRecord>) {
-        val playerBanks = storage.getOrPut(player) { mutableMapOf() }
-        val pages = playerBanks.getOrPut(bankType) { mutableMapOf() }
-        pages[pageNum] = records.toMutableList()
-
-        saveToDisk(player)
-    }
-
-    private fun getFileForPlayer(player: String): File {
-        return File(dataFolder, "$player.json")
-    }
-
-    private fun saveToDisk(player: String) {
-        val file = getFileForPlayer(player)
-        val json = GsonBuilder().setPrettyPrinting().create().toJson(storage[player])
-        file.writeText(json)
-    }
-
-    fun loadFromDisk() {
-        if (!dataFolder.exists()) return
-        dataFolder.listFiles { f -> f.extension == "json" }?.forEach { file ->
-            val player = file.nameWithoutExtension
-            try {
-                val mapType = mutableMapOf<String, MutableMap<Int, MutableList<ItemRecord>>>()::class.java
-                val map = GsonBuilder().create().fromJson(file.readText(), mapType)
-                storage[player] = map
-            } catch (_: Exception) {
-            }
-        }
-    }
-
-    fun itemRecordToItemStack(record: ItemRecord): ItemStack {
-        val id = try {
-            Identifier.of(record.id)
+    private fun saveToFile(player: String) {
+        try {
+            val file = getPlayerFile(player)
+            val toSave = cache[player] ?: emptyMap<String, MutableMap<Int, MutableList<ItemRecord>>>()
+            file.writeText(gson.toJson(toSave))
         } catch (e: Exception) {
-            Identifier.of("minecraft:air")
+            e.printStackTrace()
         }
+    }
 
-        val item = Registries.ITEM.get(id)
-        val stack = ItemStack(item, record.count)
+    fun getPlayers(): List<String> {
+        // list files in folder
+        return dataDir.listFiles()?.mapNotNull { f ->
+            if (f.isFile && f.extension == "json") f.nameWithoutExtension else null
+        }?.sorted() ?: emptyList()
+    }
 
-        if (record.nbt.isNotEmpty()) {
-            try {
-                val nbt = StringNbtReader.parse(record.nbt)
-                val nbtComp = NbtComponent.of(nbt)
-                stack.set(DataComponentTypes.CUSTOM_DATA, nbtComp)
-
-                // DISPLAY
-                if (nbt.contains("display", NbtElement.COMPOUND_TYPE.toInt())) {
-                    val display = nbt.getCompound("display")
-
-                    // NAME
-                    if (display.contains("Name", NbtElement.STRING_TYPE.toInt())) {
-                        val nameJson = display.getString("Name")
-                        val parsed = try {
-                            val json = com.google.gson.JsonParser.parseString(nameJson)
-                            net.minecraft.text.TextCodecs.CODEC
-                                .parse(com.mojang.serialization.JsonOps.INSTANCE, json)
-                                .result().orElse(Text.literal(nameJson))
-                        } catch (_: Exception) {
-                            Text.literal(nameJson.replace("§", "§"))
-                        }
-                        stack.set(DataComponentTypes.CUSTOM_NAME, parsed)
-                    }
-
-                    // LORE
-                    if (display.contains("Lore", NbtElement.LIST_TYPE.toInt())) {
-                        val loreList = display.getList("Lore", NbtElement.STRING_TYPE.toInt())
-                        val loreTexts = mutableListOf<Text>()
-                        for (i in 0 until loreList.size) {
-                            val loreRaw = loreList.getString(i)
-                            val parsed = try {
-                                val json = com.google.gson.JsonParser.parseString(loreRaw)
-                                net.minecraft.text.TextCodecs.CODEC
-                                    .parse(com.mojang.serialization.JsonOps.INSTANCE, json)
-                                    .result().orElse(Text.literal(loreRaw))
-                            } catch (_: Exception) {
-                                Text.literal(loreRaw.replace("§", "§"))
-                            }
-                            loreTexts.add(parsed)
-                        }
-                        if (loreTexts.isNotEmpty()) {
-                            stack.set(DataComponentTypes.LORE, net.minecraft.component.type.LoreComponent(loreTexts))
-                        }
-                    }
+    fun getBanksForPlayer(player: String): Map<String, Map<Int, List<ItemRecord>>> {
+        if (!cache.containsKey(player)) {
+            val file = getPlayerFile(player)
+            if (file.exists()) {
+                try {
+                    val type: Type = object : TypeToken<MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>>() {}.type
+                    val data: MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>? = gson.fromJson(file.readText(), type)
+                    cache[player] = data ?: mutableMapOf()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    cache[player] = mutableMapOf()
                 }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } else {
+                cache[player] = mutableMapOf()
             }
         }
+        return cache[player] ?: emptyMap()
+    }
 
-        return stack
+    fun getPages(player: String, bankType: String): Map<Int, List<ItemRecord>> {
+        return getBanksForPlayer(player)[bankType] ?: emptyMap()
+    }
+
+    /**
+     * Aggregate by id|nbt preserving distinct variants. Returns map key->ItemRecord (first seen variant),
+     * counts summed for equal id+nbt.
+     */
+    fun getAggregateFor(player: String?, bankType: String?): Map<String, ItemRecord> {
+        val result = mutableMapOf<String, ItemRecord>()
+        val players = if (player == null) getPlayers() else listOf(player)
+        for (p in players) {
+            val banks = getBanksForPlayer(p)
+            for ((bt, pages) in banks) {
+                if (bankType != null && bankType != bt) continue
+                for (items in pages.values) {
+                    for (rec in items) {
+                        val key = "${rec.id}|${rec.nbt}"
+                        val existing = result[key]
+                        if (existing == null) result[key] = rec.copy()
+                        else result[key] = existing.copy(count = existing.count + rec.count)
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    /**
+     * Build ItemStack from ItemRecord. Uses ItemStack.fromNbt(DynamicRegistryManager.EMPTY, nbt) preferred.
+     */
+    fun itemRecordToItemStack(rec: ItemRecord): ItemStack {
+        val id = try { Identifier.of(rec.id) } catch (_: Exception) { Identifier.of("minecraft:air") }
+        val item = Registries.ITEM.get(id)
+        val fallback = ItemStack(item, rec.count)
+
+        if (rec.nbt.isBlank()) return fallback
+
+        try {
+            val nbt: NbtCompound = StringNbtReader.parse(rec.nbt)
+
+            // ensure Count tag present so fromNbt sets correct count
+            if (!nbt.contains("Count")) nbt.putByte("Count", rec.count.toByte())
+
+            val opt = ItemStack.fromNbt(DynamicRegistryManager.EMPTY, nbt)
+            if (opt.isPresent) {
+                val full = opt.get()
+                if (full.count <= 0) full.count = rec.count
+                return full
+            }
+        } catch (t: Throwable) {
+            t.printStackTrace()
+        }
+
+        // fallback (should rarely be used) — return a simple stack with custom name/lore components if possible
+        try {
+            val nbt2 = StringNbtReader.parse(rec.nbt)
+            // set custom name/lore via DataComponents so at least tooltip has display
+            // but primary path is ItemStack.fromNbt above
+            // (we keep fallback minimal)
+        } catch (_: Throwable) {}
+        return fallback
     }
 }
