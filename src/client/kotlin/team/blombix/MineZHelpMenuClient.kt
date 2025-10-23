@@ -27,6 +27,7 @@ class MineZHelpMenuClient : ClientModInitializer {
         NavigationModClient.register()
         BankCaptureHandler.init()
         BankKeybinds.init()
+        DebugKeybinds.init()
 
         TooltipInjector.register()
         openGuiKey = KeyBindingHelper.registerKeyBinding(
@@ -34,14 +35,6 @@ class MineZHelpMenuClient : ClientModInitializer {
                 "key.minez_help_menu.open_gui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_H,
-                "category.minez_help_menu"
-            )
-        )
-        openDevDebugKey = KeyBindingHelper.registerKeyBinding(
-            KeyBinding(
-                "key.minez_help_menu.dev_debug",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_UNKNOWN,
                 "category.minez_help_menu"
             )
         )

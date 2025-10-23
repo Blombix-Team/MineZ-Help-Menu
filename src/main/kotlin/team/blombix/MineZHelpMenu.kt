@@ -23,7 +23,7 @@ object MineZHelpMenu : ModInitializer {
         logger.info("All MineZ Wiki Editors")
         logger.info("Senoc")
         logger.info(" ")
-        logger.info("Version: 0.0.49")
+        logger.info("Version: 0.0.50")
         logger.info(" ")
         logger.info("[==============================================]")
 

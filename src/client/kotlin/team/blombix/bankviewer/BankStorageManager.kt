@@ -4,50 +4,48 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.StringNbtReader
-import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.registry.Registries
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import java.io.File
-import java.lang.Exception
+import java.lang.reflect.Field
+import java.lang.reflect.Method
 import java.lang.reflect.Type
-import kotlin.collections.set
 
-data class ItemRecord(val id: String, var count: Int, val nbt: String = "")
+data class ItemRecord(val id: String, val count: Int, val nbt: String = "")
 
 object BankStorageManager {
     private val gson = GsonBuilder().setPrettyPrinting().create()
-    private val dataDir = File("bankviewer").apply { if (!exists()) mkdirs() }
+    private val rootDir = File("bankviewer")
     private val cache = mutableMapOf<String, MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>>()
 
-    private fun getPlayerFile(player: String): File = File(dataDir, "$player.json")
+    init {
+        if (!rootDir.exists()) rootDir.mkdirs()
+    }
+
+    private fun getPlayerFile(player: String) = File(rootDir, "$player.json")
 
     fun storePageForPlayer(player: String, bankType: String, page: Int, items: List<ItemRecord>) {
         val playerMap = cache.computeIfAbsent(player) { mutableMapOf() }
         val bankMap = playerMap.computeIfAbsent(bankType) { mutableMapOf() }
         bankMap[page] = items.toMutableList()
-        // ensure dir
-        if (!dataDir.exists()) dataDir.mkdirs()
         saveToFile(player)
     }
 
     private fun saveToFile(player: String) {
         try {
             val file = getPlayerFile(player)
-            val toSave = cache[player] ?: emptyMap<String, MutableMap<Int, MutableList<ItemRecord>>>()
-            file.writeText(gson.toJson(toSave))
+            val json = gson.toJson(cache[player])
+            file.writeText(json)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    fun getPlayers(): List<String> {
-        // list files in folder
-        return dataDir.listFiles()?.mapNotNull { f ->
-            if (f.isFile && f.extension == "json") f.nameWithoutExtension else null
-        }?.sorted() ?: emptyList()
-    }
+    fun getPlayers(): List<String> = rootDir.listFiles()?.mapNotNull {
+        if (it.extension == "json") it.nameWithoutExtension else null
+    } ?: emptyList()
 
     fun getBanksForPlayer(player: String): Map<String, Map<Int, List<ItemRecord>>> {
         if (!cache.containsKey(player)) {
@@ -72,10 +70,14 @@ object BankStorageManager {
         return getBanksForPlayer(player)[bankType] ?: emptyMap()
     }
 
-    /**
-     * Aggregate by id|nbt preserving distinct variants. Returns map key->ItemRecord (first seen variant),
-     * counts summed for equal id+nbt.
-     */
+    fun getPagesForDisplay(player: String?, bankType: String): List<Int> {
+        return if (player == null) {
+            cache.values.flatMap { it[bankType]?.keys ?: emptySet() }.distinct().sorted()
+        } else {
+            getBanksForPlayer(player)[bankType]?.keys?.sorted() ?: emptyList()
+        }
+    }
+
     fun getAggregateFor(player: String?, bankType: String?): Map<String, ItemRecord> {
         val result = mutableMapOf<String, ItemRecord>()
         val players = if (player == null) getPlayers() else listOf(player)
@@ -85,10 +87,11 @@ object BankStorageManager {
                 if (bankType != null && bankType != bt) continue
                 for (items in pages.values) {
                     for (rec in items) {
+                        // Key by id + nbt to not merge different named items
                         val key = "${rec.id}|${rec.nbt}"
                         val existing = result[key]
-                        if (existing == null) result[key] = rec.copy()
-                        else result[key] = existing.copy(count = existing.count + rec.count)
+                        if (existing == null) result[key] = ItemRecord(rec.id, rec.count, rec.nbt)
+                        else result[key] = ItemRecord(existing.id, existing.count + rec.count, existing.nbt)
                     }
                 }
             }
@@ -97,38 +100,83 @@ object BankStorageManager {
     }
 
     /**
-     * Build ItemStack from ItemRecord. Uses ItemStack.fromNbt(DynamicRegistryManager.EMPTY, nbt) preferred.
+     * Reconstruct ItemStack from ItemRecord.
+     * Preferred: ItemStack.CODEC.parse(NbtOps.INSTANCE, nbtElement) — this correctly reconstructs DataComponents on 1.21.1 build.3
+     * Fallbacks: reflection into private 'nbt' field or basic ItemStack(item, count)
      */
     fun itemRecordToItemStack(rec: ItemRecord): ItemStack {
-        val id = try { Identifier.of(rec.id) } catch (_: Exception) { Identifier.of("minecraft:air") }
-        val item = Registries.ITEM.get(id)
-        val fallback = ItemStack(item, rec.count)
-
-        if (rec.nbt.isBlank()) return fallback
-
         try {
-            val nbt: NbtCompound = StringNbtReader.parse(rec.nbt)
-
-            // ensure Count tag present so fromNbt sets correct count
-            if (!nbt.contains("Count")) nbt.putByte("Count", rec.count.toByte())
-
-            val opt = ItemStack.fromNbt(DynamicRegistryManager.EMPTY, nbt)
-            if (opt.isPresent) {
-                val full = opt.get()
-                if (full.count <= 0) full.count = rec.count
-                return full
+            // quick id fallback
+            val id = try {
+                Identifier.of(rec.id)
+            } catch (_: Exception) {
+                Identifier.of("minecraft:air")
             }
-        } catch (t: Throwable) {
-            t.printStackTrace()
+
+            // if no nbt stored -> simple stack
+            if (rec.nbt.isBlank() || rec.nbt == "{}") {
+                return ItemStack(Registries.ITEM.get(id), rec.count)
+            }
+
+            val nbtElement = try {
+                StringNbtReader.parse(rec.nbt)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return ItemStack(Registries.ITEM.get(id), rec.count)
+            }
+
+            // Try CODEC parse with NbtOps.INSTANCE (works for build.3)
+            try {
+                val parsed = ItemStack.CODEC.parse(NbtOps.INSTANCE, nbtElement)
+                val stack = parsed.result().orElseGet {
+                    ItemStack(Registries.ITEM.get(id), rec.count)
+                }
+                stack.count = rec.count
+                return stack
+            } catch (e: Exception) {
+                // continue to fallbacks
+                e.printStackTrace()
+            }
+
+            // Fallback: try calling ItemStack.fromNbt / decode via reflection
+            try {
+                val nbtCompound = if (nbtElement is NbtCompound) nbtElement else NbtCompound()
+                // fromNbt static method possibility
+                val fromNbtMethod: Method? = try {
+                    ItemStack::class.java.getDeclaredMethod("fromNbt", NbtCompound::class.java)
+                } catch (_: NoSuchMethodException) {
+                    try {
+                        ItemStack::class.java.getDeclaredMethod("decode", NbtCompound::class.java)
+                    } catch (_: NoSuchMethodException) {
+                        null
+                    }
+                }
+                if (fromNbtMethod != null) {
+                    fromNbtMethod.isAccessible = true
+                    val loaded = fromNbtMethod.invoke(null, nbtCompound) as? ItemStack
+                    if (loaded != null) {
+                        loaded.count = rec.count
+                        return loaded
+                    }
+                }
+            } catch (_: Throwable) {
+            }
+
+            // Last resort: create basic stack and set private 'nbt' field by reflection
+            try {
+                val fallback = ItemStack(Registries.ITEM.get(id), rec.count)
+                val nbtField: Field = ItemStack::class.java.getDeclaredField("nbt")
+                nbtField.isAccessible = true
+                if (nbtElement is NbtCompound) nbtField.set(fallback, nbtElement)
+                return fallback
+            } catch (_: Throwable) {
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
-        // fallback (should rarely be used) — return a simple stack with custom name/lore components if possible
-        try {
-            val nbt2 = StringNbtReader.parse(rec.nbt)
-            // set custom name/lore via DataComponents so at least tooltip has display
-            // but primary path is ItemStack.fromNbt above
-            // (we keep fallback minimal)
-        } catch (_: Throwable) {}
-        return fallback
+        // final fallback
+        return ItemStack(Registries.ITEM.get(Identifier.of("minecraft:air")))
     }
 }

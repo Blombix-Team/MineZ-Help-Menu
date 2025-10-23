@@ -2,6 +2,7 @@
   //Minecraft key settings
   "category.minez_help_menu": "MineZ Help Menu",
   "key.minez_help_menu.open_gui": "Open Gui",
+  "key.minez_help_menu.toggle_debugmode": "Toggle Debug Mode",
   "key.minez_help_menu.open_settings_gui": "Open Settings",
   "key.bankviewer.open": "Open BankViewer Gui",
   

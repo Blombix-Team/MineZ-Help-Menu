@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.item.tooltip.TooltipType
+import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import kotlin.math.ceil
@@ -13,51 +13,49 @@ import kotlin.math.max
 class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
 
     private val mc = MinecraftClient.getInstance()
+
     private var selectedPlayer: String? = null
     private var selectedBankType: String? = null
     private var selectedPage: Int? = null
+    private var searchQuery: String = ""
 
     private var scrollOffset = 0.0
     private var maxScroll = 0.0
-
     private var hoveredStack: ItemStack? = null
+
+    private lateinit var searchBox: TextFieldWidget
 
     override fun init() {
         super.init()
         clearChildren()
 
-        var x = 10
-        val y = 10
-
-        addDrawableChild(ButtonWidget.builder(Text.literal("All")) {
-            selectedPlayer = null
-            init()
-        }.dimensions(x, y, 60, 20).build())
-        x += 70
-
-        for (p in BankStorageManager.getPlayers()) {
-            addDrawableChild(ButtonWidget.builder(Text.literal(p)) {
-                selectedPlayer = p
-                init()
-            }.dimensions(x, y, 80, 20).build())
-            x += 90
+        // === 🔵 Pasek wyszukiwania (50% szerokości, wyśrodkowany) ===
+        val searchWidth = width / 2
+        val searchX = width / 2 - searchWidth / 2
+        searchBox = TextFieldWidget(textRenderer, searchX, 10, searchWidth, 20, Text.literal("Search"))
+        searchBox.setPlaceholder(Text.literal("Search items..."))
+        searchBox.setChangedListener {
+            searchQuery = it.lowercase()
         }
+        addDrawableChild(searchBox)
 
-        var by = 40
+        // === 🟧 Pomarańczowa sekcja (lewa góra): wybór stron ===
+        var leftY = 40
+        val leftX = 10
         addDrawableChild(ButtonWidget.builder(Text.literal("Aggregate")) {
             selectedBankType = null
             selectedPage = null
             init()
-        }.dimensions(10, by, 100, 20).build())
-        by += 24
+        }.dimensions(leftX, leftY, 100, 20).build())
 
+        leftY += 24
         for (bankType in gatherBankTypes()) {
             addDrawableChild(ButtonWidget.builder(Text.literal(bankType)) {
                 selectedBankType = bankType
                 selectedPage = null
                 init()
-            }.dimensions(10, by, 100, 20).build())
-            by += 24
+            }.dimensions(leftX, leftY, 100, 20).build())
+            leftY += 24
 
             val playerForPages = selectedPlayer ?: continue
             val pages = BankStorageManager.getPages(playerForPages, bankType).keys.sorted()
@@ -66,12 +64,31 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
                     selectedBankType = bankType
                     selectedPage = p
                     init()
-                }.dimensions(20, by, 80, 18).build())
-                by += 20
+                }.dimensions(leftX + 10, leftY, 80, 18).build())
+                leftY += 20
             }
-            by += 8
+            leftY += 8
         }
 
+        // === 🟨 Żółta sekcja — pusta (pod pomarańczową) ===
+        leftY += 20
+        addDrawableChild(
+            ButtonWidget.builder(Text.literal("(Empty Zone)")) {}.dimensions(leftX, leftY, 100, 20).build()
+        )
+
+        // === 🟪 Fioletowa sekcja (po prawej): lista kont ===
+        var rightY = 40
+        val rightX = width - 120
+        val players = BankStorageManager.getPlayers().sorted()
+        for (p in players) {
+            addDrawableChild(ButtonWidget.builder(Text.literal(p)) {
+                selectedPlayer = p
+                init()
+            }.dimensions(rightX, rightY, 100, 20).build())
+            rightY += 24
+        }
+
+        // === 🟫 Przycisk Close (dół po prawej) ===
         addDrawableChild(ButtonWidget.builder(Text.literal("Close")) {
             mc.setScreen(null)
         }.dimensions(width - 110, height - 30, 100, 20).build())
@@ -88,15 +105,25 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         renderBackground(context)
+
+        // === Tło sekcji (szare półprzezroczyste) ===
+        context.fill(0, 35, 120, height - 40, 0x44000000.toInt()) // lewa sekcja (pomarańczowa + żółta)
+        context.fill(width - 130, 35, width - 10, height - 40, 0x44000000.toInt()) // prawa (fioletowa)
+        context.fill(width / 4, 40, width - width / 4, height - 50, 0x22000000.toInt()) // środkowa przestrzeń (itemy)
+        context.fill(width / 4, 5, width - width / 4, 35, 0x33000000.toInt()) // tło paska wyszukiwania
+
+        // === Tytuł ===
         val title = Text.literal("Bank Viewer")
         context.drawText(textRenderer, title, width / 2 - textRenderer.getWidth(title) / 2, 6, 0xFFFFFF, false)
-        super.render(context, mouseX, mouseY, delta)
 
-        val x = 130
-        val y = 40
-        val w = width - x - 20
-        val h = height - y - 50
-        context.fill(x - 6, y - 6, x + w + 6, y + h + 6, 0x55000000)
+        // === Pasek wyszukiwania ===
+        searchBox.render(context, mouseX, mouseY, delta)
+
+        // === Rysowanie elementów banku ===
+        val x = width / 4 + 20
+        val y = 60
+        val w = width / 2
+        val h = height - 120
 
         hoveredStack = null
 
@@ -106,12 +133,13 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
             else -> renderPage(context, x, y, w, h, mouseX, mouseY)
         }
 
+        // === Tooltipy ===
         hoveredStack?.let { stack ->
             try {
                 val tooltip = stack.getTooltip(
                     net.minecraft.item.Item.TooltipContext.DEFAULT,
                     mc.player,
-                    TooltipType.BASIC
+                    net.minecraft.item.tooltip.TooltipType.BASIC
                 )
                 context.drawTooltip(textRenderer, tooltip, mouseX, mouseY)
             } catch (_: Throwable) {
@@ -119,26 +147,32 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
             }
         }
 
+
+        super.render(context, mouseX, mouseY, delta)
     }
 
     private fun renderBackground(context: DrawContext) {}
 
     private fun renderAggregate(context: DrawContext, x: Int, y: Int, w: Int, h: Int, mouseX: Int, mouseY: Int) {
         val agg = BankStorageManager.getAggregateFor(selectedPlayer, null)
+        context.drawText(textRenderer, Text.literal("Aggregate summary:"), x, y - 12, 0xFFFFFF, false)
+
+        val filtered = if (searchQuery.isNotBlank()) {
+            agg.filter { it.key.lowercase().contains(searchQuery) }
+        } else agg
+
         val cols = 8
         val slot = 20
-        val rows = ceil(agg.size / cols.toDouble()).toInt()
+        val rows = ceil(filtered.size / cols.toDouble()).toInt()
         maxScroll = max(0.0, rows * slot - h + 20.0)
 
-        val startY = y + 14
         var idx = 0
-        for ((_, rec) in agg.entries) {
+        for ((_, rec) in filtered.entries) {
             val stack = BankStorageManager.itemRecordToItemStack(rec)
             val row = idx / cols
             val col = idx % cols
             val sx = x + col * slot
-            val sy = (startY + row * slot - scrollOffset).toInt()
-
+            val sy = (y + row * slot - scrollOffset).toInt()
             if (sy in (y - slot)..(y + h)) {
                 context.drawItem(stack, sx, sy)
                 context.drawItemInSlot(textRenderer, stack, sx, sy)
@@ -150,8 +184,8 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
 
     private fun renderOverview(context: DrawContext, x: Int, y: Int, w: Int, h: Int) {
         val bank = selectedBankType ?: return
-        context.drawText(textRenderer, Text.literal("$bank - Overview"), x, y, 0xFFFFFF, false)
-        var yy = y + 14
+        context.drawText(textRenderer, Text.literal("$bank - Overview"), x, y - 12, 0xFFFFFF, false)
+        var yy = y
         val players = if (selectedPlayer == null) BankStorageManager.getPlayers() else listOf(selectedPlayer!!)
         for (p in players) {
             val pages = BankStorageManager.getBanksForPlayer(p)[bank] ?: continue
@@ -169,20 +203,24 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
         val player = selectedPlayer ?: return
         val items = BankStorageManager.getPages(player, bank)[page] ?: return
 
+        context.drawText(textRenderer, Text.literal("$bank - Page $page"), x, y - 12, 0xFFFFFF, false)
+
+        val filtered = if (searchQuery.isNotBlank()) {
+            items.filter { it.id.lowercase().contains(searchQuery) }
+        } else items
+
         val cols = 8
         val slot = 20
-        val rows = ceil(items.size / cols.toDouble()).toInt()
+        val rows = ceil(filtered.size / cols.toDouble()).toInt()
         maxScroll = max(0.0, rows * slot - h + 20.0)
 
         var idx = 0
-        val startY = y + 14
-        for (rec in items) {
+        for (rec in filtered) {
             val stack = BankStorageManager.itemRecordToItemStack(rec)
             val row = idx / cols
             val col = idx % cols
             val sx = x + col * slot
-            val sy = (startY + row * slot - scrollOffset).toInt()
-
+            val sy = (y + row * slot - scrollOffset).toInt()
             if (sy in (y - slot)..(y + h)) {
                 context.drawItem(stack, sx, sy)
                 context.drawItemInSlot(textRenderer, stack, sx, sy)
