@@ -44,25 +44,27 @@ object BankCaptureHandler {
                     if (stack.isEmpty) continue
 
                     val id = RegistryUtil.getItemId(stack)
+                    var nbtString = "{}"
 
-                    // Try CODEC encode (NbtOps.INSTANCE) for full fidelity
-                    val nbtString = try {
-                        val encoded = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, stack)
-                        val res = encoded.result()
-                        if (res.isPresent) {
-                            res.get().toString()
+                    try {
+                        // użyj aktualnego registry managera klienta, nie EMPTY
+                        val registryManager = client.world?.registryManager ?: DynamicRegistryManager.EMPTY
+
+                        // encode() w 1.21.1 serializuje wszystko, łącznie z DataComponents
+                        val encoded = stack.encode(registryManager)
+
+                        if (encoded is NbtCompound) {
+                            nbtString = encoded.toString()
                         } else {
-                            // fallback to older encode(DynamicRegistryManager.EMPTY)
-                            try {
-                                val element = stack.encode(DynamicRegistryManager.EMPTY)
-                                if (element is NbtCompound) element.toString() else "{}"
-                            } catch (_: Throwable) {
-                                "{}"
+                            // jeśli CODEC też coś da, to jeszcze lepiej
+                            val alt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, stack).result().orElse(null)
+                            if (alt != null) {
+                                nbtString = alt.toString()
                             }
                         }
                     } catch (e: Throwable) {
                         e.printStackTrace()
-                        "{}"
+                        nbtString = "{}"
                     }
 
                     records.add(ItemRecord(id, stack.count, nbtString))
@@ -71,7 +73,7 @@ object BankCaptureHandler {
                 if (records.isNotEmpty()) {
                     BankStorageManager.storePageForPlayer(playerName, bankType, pageNum, records)
                     DebugConfig.log(
-                        "BankCaptureHandler: saved %s page %d for %s (%d items)",
+                        "Saved %s page %d for %s (%d items)",
                         bankType,
                         pageNum,
                         playerName,

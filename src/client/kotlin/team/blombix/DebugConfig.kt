@@ -40,7 +40,7 @@ object DebugKeybinds {
             KeyBinding(
                 "key.minez_help_menu.toggle_debugmode",
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_BACKSLASH, // 🔁 zmień tu, jeśli chcesz inny klawisz
+                GLFW.GLFW_KEY_BACKSLASH,
                 "category.minez_help_menu"
             )
         )

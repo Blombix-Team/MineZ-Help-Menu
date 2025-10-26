@@ -3,14 +3,11 @@ package team.blombix.bankviewer
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import java.io.File
-import java.lang.reflect.Field
-import java.lang.reflect.Method
 import java.lang.reflect.Type
 
 data class ItemRecord(val id: String, val count: Int, val nbt: String = "")
@@ -99,84 +96,31 @@ object BankStorageManager {
         return result
     }
 
-    /**
-     * Reconstruct ItemStack from ItemRecord.
-     * Preferred: ItemStack.CODEC.parse(NbtOps.INSTANCE, nbtElement) — this correctly reconstructs DataComponents on 1.21.1 build.3
-     * Fallbacks: reflection into private 'nbt' field or basic ItemStack(item, count)
-     */
     fun itemRecordToItemStack(rec: ItemRecord): ItemStack {
-        try {
-            // quick id fallback
-            val id = try {
-                Identifier.of(rec.id)
-            } catch (_: Exception) {
-                Identifier.of("minecraft:air")
-            }
-
-            // if no nbt stored -> simple stack
-            if (rec.nbt.isBlank() || rec.nbt == "{}") {
-                return ItemStack(Registries.ITEM.get(id), rec.count)
-            }
-
-            val nbtElement = try {
-                StringNbtReader.parse(rec.nbt)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                return ItemStack(Registries.ITEM.get(id), rec.count)
-            }
-
-            // Try CODEC parse with NbtOps.INSTANCE (works for build.3)
-            try {
-                val parsed = ItemStack.CODEC.parse(NbtOps.INSTANCE, nbtElement)
-                val stack = parsed.result().orElseGet {
-                    ItemStack(Registries.ITEM.get(id), rec.count)
-                }
-                stack.count = rec.count
-                return stack
-            } catch (e: Exception) {
-                // continue to fallbacks
-                e.printStackTrace()
-            }
-
-            // Fallback: try calling ItemStack.fromNbt / decode via reflection
-            try {
-                val nbtCompound = if (nbtElement is NbtCompound) nbtElement else NbtCompound()
-                // fromNbt static method possibility
-                val fromNbtMethod: Method? = try {
-                    ItemStack::class.java.getDeclaredMethod("fromNbt", NbtCompound::class.java)
-                } catch (_: NoSuchMethodException) {
-                    try {
-                        ItemStack::class.java.getDeclaredMethod("decode", NbtCompound::class.java)
-                    } catch (_: NoSuchMethodException) {
-                        null
-                    }
-                }
-                if (fromNbtMethod != null) {
-                    fromNbtMethod.isAccessible = true
-                    val loaded = fromNbtMethod.invoke(null, nbtCompound) as? ItemStack
-                    if (loaded != null) {
-                        loaded.count = rec.count
-                        return loaded
-                    }
-                }
-            } catch (_: Throwable) {
-            }
-
-            // Last resort: create basic stack and set private 'nbt' field by reflection
-            try {
-                val fallback = ItemStack(Registries.ITEM.get(id), rec.count)
-                val nbtField: Field = ItemStack::class.java.getDeclaredField("nbt")
-                nbtField.isAccessible = true
-                if (nbtElement is NbtCompound) nbtField.set(fallback, nbtElement)
-                return fallback
-            } catch (_: Throwable) {
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
+        val item = try {
+            Registries.ITEM.get(Identifier.of(rec.id))
+        } catch (_: Exception) {
+            Registries.ITEM.get(Identifier.of("minecraft:air"))
         }
 
-        // final fallback
-        return ItemStack(Registries.ITEM.get(Identifier.of("minecraft:air")))
+        val stack = ItemStack(item, rec.count.coerceAtLeast(1))
+
+        if (rec.nbt.isNotBlank() && rec.nbt != "{}") {
+            try {
+                // Kod używający CODEC do sparsowania NBT
+                val nbt = StringNbtReader.parse(rec.nbt) // parse string do NbtCompound
+                val parsed = ItemStack.CODEC.parse(NbtOps.INSTANCE, nbt)
+                val finalStack = parsed.result().orElse(stack)
+                finalStack.count = rec.count
+                return finalStack
+            } catch (_: Throwable) {
+                // fallback – stack bez NBT
+            }
+        }
+
+        return stack
     }
+
+
+
 }
