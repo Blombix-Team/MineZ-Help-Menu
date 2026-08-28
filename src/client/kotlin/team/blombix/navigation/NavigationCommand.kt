@@ -18,82 +18,82 @@ object NavigationCommand {
                         ClientCommandManager.literal("start")
                             .then(
                                 ClientCommandManager.argument("name", StringArgumentType.string())
-                                .suggests { _, builder ->
-                                    LocationManager.getAll().forEach { builder.suggest(it.name) }
-                                    builder.buildFuture()
-                                }
-                                .executes { context ->
-                                    val name = StringArgumentType.getString(context, "name")
-                                    val loc = LocationManager.getLocationByName(name)
-                                    val player = MinecraftClient.getInstance().player
-
-                                    if (loc != null && player != null) {
-                                        val target = Vec3d(loc.x + 0.5, loc.y.toDouble(), loc.z + 0.5)
-                                        NavigationModClient.navigateTo(target)
-                                        player.sendMessage(
-                                            Text.literal("§7[§a➤§7] §7Navigation to: §6${loc.name}"),
-                                            false
-                                        )
-                                    } else {
-                                        player?.sendMessage(
-                                            Text.literal("§7[§c✘§7] §7No location was found: §6$name"),
-                                            false
-                                        )
+                                    .suggests { _, builder ->
+                                        LocationManager.getAll().forEach { builder.suggest(it.name) }
+                                        builder.buildFuture()
                                     }
-                                    1
-                                }
+                                    .executes { context ->
+                                        val name = StringArgumentType.getString(context, "name")
+                                        val loc = LocationManager.getLocationByName(name)
+                                        val player = MinecraftClient.getInstance().player
+
+                                        if (loc != null && player != null) {
+                                            val target = Vec3d(loc.x + 0.5, loc.y.toDouble(), loc.z + 0.5)
+                                            NavigationModClient.navigateTo(target)
+                                            player.sendMessage(
+                                                Text.literal("§7[§a➤§7] §7Navigation to: §6${loc.name}"),
+                                                false
+                                            )
+                                        } else {
+                                            player?.sendMessage(
+                                                Text.literal("§7[§c✘§7] §7No location was found: §6$name"),
+                                                false
+                                            )
+                                        }
+                                        1
+                                    }
                             )
                     )
                     .then(
                         ClientCommandManager.literal("find")
                             .then(
                                 ClientCommandManager.argument("feature", StringArgumentType.string())
-                                .suggests { _, builder ->
-                                    listOf(
-                                        "anvil",
-                                        "crafting",
-                                        "cauldron",
-                                        "water",
-                                        "furnace",
-                                        "brewingstand",
-                                        "ironore",
-                                        "coalore",
-                                        "carrots",
-                                        "wheat",
-                                        "beetroots",
-                                        "potatoes",
-                                        "pumpkin",
-                                        "melon"
-                                    ).forEach { builder.suggest(it) }
-                                    builder.buildFuture()
-                                }
-                                .executes { context ->
-                                    val feature = StringArgumentType.getString(context, "feature").lowercase()
-                                    val player = MinecraftClient.getInstance().player ?: return@executes 0
-                                    val locations = LocationManager.getAll()
-                                    val matching = locations.filter {
-                                        val field = Location::class.java.getDeclaredField(feature)
-                                        field.isAccessible = true
-                                        (field.get(it) as? Boolean) == true
+                                    .suggests { _, builder ->
+                                        listOf(
+                                            "anvil",
+                                            "crafting",
+                                            "cauldron",
+                                            "water",
+                                            "furnace",
+                                            "brewingstand",
+                                            "ironore",
+                                            "coalore",
+                                            "carrots",
+                                            "wheat",
+                                            "beetroots",
+                                            "potatoes",
+                                            "pumpkin",
+                                            "melon"
+                                        ).forEach { builder.suggest(it) }
+                                        builder.buildFuture()
                                     }
-                                    if (matching.isEmpty()) {
+                                    .executes { context ->
+                                        val feature = StringArgumentType.getString(context, "feature").lowercase()
+                                        val player = MinecraftClient.getInstance().player ?: return@executes 0
+                                        val locations = LocationManager.getAll()
+                                        val matching = locations.filter {
+                                            val field = Location::class.java.getDeclaredField(feature)
+                                            field.isAccessible = true
+                                            (field.get(it) as? Boolean) == true
+                                        }
+                                        if (matching.isEmpty()) {
+                                            player.sendMessage(
+                                                Text.literal("§7[§c✘§7] §7No location with a feature: §6$feature"),
+                                                false
+                                            )
+                                            return@executes 1
+                                        }
+                                        val closest = matching.minByOrNull {
+                                            Vec3d(it.x + 0.5, it.y.toDouble(), it.z + 0.5).squaredDistanceTo(player.pos)
+                                        } ?: return@executes 1
+                                        val target = Vec3d(closest.x + 0.5, closest.y.toDouble(), closest.z + 0.5)
+                                        NavigationModClient.navigateTo(target)
                                         player.sendMessage(
-                                            Text.literal("§7[§c✘§7] §7No location with a feature: §6$feature"),
+                                            Text.literal("§7[§b⏱§7] §7Navigation to: §e${closest.name}"),
                                             false
                                         )
-                                        return@executes 1
+                                        1
                                     }
-                                    val closest = matching.minByOrNull {
-                                        Vec3d(it.x + 0.5, it.y.toDouble(), it.z + 0.5).squaredDistanceTo(player.pos)
-                                    } ?: return@executes 1
-                                    val target = Vec3d(closest.x + 0.5, closest.y.toDouble(), closest.z + 0.5)
-                                    NavigationModClient.navigateTo(target)
-                                    player.sendMessage(
-                                        Text.literal("§7[§b⏱§7] §7Navigation to: §e${closest.name}"),
-                                        false
-                                    )
-                                    1
-                                }
                             )
                     )
                     .then(
@@ -116,19 +116,20 @@ object NavigationCommand {
                                                                 )
                                                                     .suggests { _, builder ->
                                                                         listOf(
-                                                                            "swamp",
-                                                                            "gravel",
-                                                                            "forest",
-                                                                            "dark-forest",
-                                                                            "jungle",
-                                                                            "jungle-forest",
-                                                                            "savana",
-                                                                            "winter",
-                                                                            "lava",
-                                                                            "desert",
-                                                                            "islands",
-                                                                            "swamp-caves",
-                                                                            "winter-caves"
+                                                                            "Swamp",
+                                                                            "Gravel",
+                                                                            "Forest",
+                                                                            "Plains",
+                                                                            "Ocean",
+                                                                            "Redwood-forest",
+                                                                            "Jungle-forest",
+                                                                            "Savana",
+                                                                            "Winter",
+                                                                            "Lava",
+                                                                            "Desert",
+                                                                            "Islands",
+                                                                            "Swamp-Caves",
+                                                                            "Winter-Caves"
                                                                         ).forEach { builder.suggest(it) }
                                                                         builder.buildFuture()
                                                                     }
@@ -367,6 +368,56 @@ object NavigationCommand {
                             }
                     )
                     .then(
+                        ClientCommandManager.literal("edit")
+                            .then(
+                                ClientCommandManager.argument(
+                                    "name",
+                                    StringArgumentType.greedyString()
+                                )
+                                    .suggests { _, builder ->
+                                        LocationManager.getAll().forEach {
+                                            builder.suggest(it.name)
+                                        }
+                                        builder.buildFuture()
+                                    }
+                                    .executes { context ->
+
+                                        val name = StringArgumentType
+                                            .getString(context, "name")
+                                            .trim()
+
+                                        val client = MinecraftClient.getInstance()
+                                        val player = client.player
+
+                                        val location = LocationManager.getLocationByName(name)
+
+                                        if (location == null) {
+                                            player?.sendMessage(
+                                                Text.literal(
+                                                    "§7[§c✘§7] §7No location was found: §6$name"
+                                                ),
+                                                false
+                                            )
+
+                                            return@executes 1
+                                        }
+
+                                        player?.sendMessage(
+                                            Text.literal(
+                                                "§7[§e✎§7] §7Opening editor for: §6${location.name}"
+                                            ),
+                                            false
+                                        )
+
+                                        // Otworzenie nastąpi na następnym client ticku,
+                                        // po zakończeniu obsługi ChatScreen.
+                                        NavigationModClient.openLocationEditor(location)
+
+                                        1
+                                    }
+                            )
+                    )
+                    .then(
                         ClientCommandManager.literal("info")
                             .then(
                                 ClientCommandManager.argument("name", StringArgumentType.string())
@@ -385,24 +436,30 @@ object NavigationCommand {
                                                 false
                                             )
                                             player.sendMessage(
-                                                Text.literal("§7[§7☁§7] §7Position: §fX:${loc.x} Y:${loc.y} Z:${loc.z}"),
+                                                Text.literal("§7[§7☁§7] §7Position: X: §6${loc.x} §7Y: §6${loc.y} §7Z: §6${loc.z}"),
                                                 false
                                             )
+
+                                            player.sendMessage(
+                                                Text.literal("§7[§7☁§7] §7Biome: §6${loc.biome}"),
+                                                false
+                                            )
+
                                             val resources = listOf(
-                                                "anvil" to loc.anvil,
-                                                "crafting" to loc.crafting,
-                                                "cauldron" to loc.cauldron,
-                                                "water" to loc.water,
-                                                "furnace" to loc.furnace,
-                                                "brewingstand" to loc.brewingstand,
-                                                "ironore" to loc.ironore,
-                                                "coalore" to loc.coalore,
-                                                "carrots" to loc.carrots,
-                                                "wheat" to loc.wheat,
-                                                "beetroots" to loc.beetroots,
-                                                "potatoes" to loc.potatoes,
-                                                "pumpkin" to loc.pumpkin,
-                                                "melon" to loc.melon
+                                                "Anvil" to loc.anvil,
+                                                "Crafting" to loc.crafting,
+                                                "Cauldron With Water" to loc.cauldron,
+                                                "Water" to loc.water,
+                                                "Furnace" to loc.furnace,
+                                                "Brewingstand" to loc.brewingstand,
+                                                "Iron Ores" to loc.ironore,
+                                                "Coal Ores" to loc.coalore,
+                                                "Carrots" to loc.carrots,
+                                                "Wheats" to loc.wheat,
+                                                "Beetroots" to loc.beetroots,
+                                                "Potatoes" to loc.potatoes,
+                                                "Pumpkin" to loc.pumpkin,
+                                                "Melon" to loc.melon
                                             ).filter { it.second }
                                                 .joinToString("§7, ") { "§a${it.first}" }
 

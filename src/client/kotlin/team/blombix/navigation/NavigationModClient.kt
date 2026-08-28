@@ -14,6 +14,9 @@ object NavigationModClient : ClientModInitializer {
     private var currentPath: List<Vec3d>? = null
     private var fallbackPath: List<Vec3d>? = null
     private var targetPosition: Vec3d? = null
+
+    private var pendingEditorLocation: Location? = null
+
     private const val PARTICLE_RANGE_SQ = 45.0 * 45.0
     private const val MAX_ASTAR_RANGE = 300.0
 
@@ -23,6 +26,23 @@ object NavigationModClient : ClientModInitializer {
 
     fun register() {
         ClientTickEvents.END_CLIENT_TICK.register { client ->
+
+            // Otwórz edytor dopiero po zakończeniu obsługi ChatScreen
+            pendingEditorLocation?.let { location ->
+                pendingEditorLocation = null
+
+                client.setScreen(
+                    LocationEditScreen(
+                        location = location,
+                        parent = null
+                    )
+                )
+            }
+
+            if (client.currentScreen != null) {
+                return@register
+            }
+
             val world = client.world ?: return@register
             val player = client.player ?: return@register
             val target = targetPosition ?: return@register
@@ -67,6 +87,10 @@ object NavigationModClient : ClientModInitializer {
                 }
             }
         }
+    }
+
+    fun openLocationEditor(location: Location) {
+        pendingEditorLocation = location
     }
 
     fun navigateTo(target: Vec3d) {

@@ -49,8 +49,8 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
         val bottomHeight = 40
 
         // --- SEARCH BOX ---
-        val searchWidth = (width * 0.6).toInt()
-        val searchX = width / 2 - searchWidth / 2
+        val searchWidth = width / 5
+        val searchX = 10
         searchBox = TextFieldWidget(textRenderer, searchX, 10, searchWidth, 20, Text.literal("Search"))
         searchBox.setChangedListener { searchQuery = it.lowercase() }
         addDrawableChild(searchBox)
@@ -65,12 +65,10 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
 
         val leftButtons = listOf(
             "All" to { openAll() },
-            "Main All" to { openBank("Main", null) },
             "Main 1" to { openBank("Main", 1) },
             "Main 2" to { openBank("Main", 2) },
             "Main 3" to { openBank("Main", 3) },
             "Main 4" to { openBank("Main", 4) },
-            "Legacy All" to { openBank("Legacy", null) },
             "Legacy 1" to { openBank("Legacy", 1) },
             "Legacy 2" to { openBank("Legacy", 2) },
             "Legacy 3" to { openBank("Legacy", 3) }
@@ -94,6 +92,7 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
                         Text.literal("Work in progress")
                     )
                 )
+                //TODO: BankViewer Settings
             }.dimensions(centerButtonX, height - bottomHeight, buttonW, buttonH).build()
         )
 
@@ -267,10 +266,7 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
         val itemPanelH = height - 140
 
         // backgrounds
-        context.fill(5, 35, leftPanelWidth + 5, height - 35, 0x66000000)
-        context.fill(width - rightPanelWidth - 5, 35, width - 5, height - 35, 0x66000000)
-        context.fill(itemPanelX - 5, 35, itemPanelX + itemPanelW + 5, height - 55, 0x44000000)
-        context.fill(width / 2 - itemPanelW / 2, 5, width / 2 + itemPanelW / 2, 35, 0x44000000)
+        context.fill(0, 0, width, height, 0x66000000)
 
         // search
         searchBox.render(context, mouseX, mouseY, delta)
@@ -308,7 +304,7 @@ class BankViewerScreen : Screen(Text.literal("Bank Viewer")) {
             val tooltipList = stack.getTooltip(
                 Item.TooltipContext.DEFAULT,
                 mc.player,
-                TooltipType.BASIC
+                TooltipType.ADVANCED
             )
             val lines = tooltipList.toMutableList()
             hoveredOwner?.let { owner ->
