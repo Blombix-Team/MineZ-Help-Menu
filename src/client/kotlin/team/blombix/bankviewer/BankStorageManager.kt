@@ -99,11 +99,6 @@ object BankStorageManager {
         return result
     }
 
-    /**
-     * Tworzy pełny ItemStack z zapisu JSON.
-     * Obsługuje enchanty, lore, nazwę, atrybuty, durability itd.
-     * Kompatybilne z Minecraft 1.21.1 (system componentów).
-     */
     fun itemRecordToItemStack(rec: ItemRecord): ItemStack {
         val item = try {
             Registries.ITEM.get(Identifier.of(rec.id))

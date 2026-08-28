@@ -432,10 +432,6 @@ object NavigationCommand {
 
                                         if (loc != null && player != null) {
                                             player.sendMessage(
-                                                Text.literal("§7[§7☁§7] §7§l======================================="),
-                                                false
-                                            )
-                                            player.sendMessage(
                                                 Text.literal("§7[§7☁§7] §7§lLocation information: §6${loc.name}"),
                                                 false
                                             )
@@ -472,11 +468,6 @@ object NavigationCommand {
                                                 Text.literal("§7[§7☁§7] §7Resources: $resourceText"),
                                                 false
                                             )
-                                            player.sendMessage(
-                                                Text.literal("§7[§7☁§7] §7§l======================================="),
-                                                false
-                                            )
-
 
                                         } else {
                                             player?.sendMessage(
