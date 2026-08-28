@@ -24,15 +24,15 @@ class LocationEditScreen(
         "Forest",
         "Plains",
         "Ocean",
-        "Redwood-forest",
-        "Jungle-forest",
+        "Redwood-Forest",
+        "Jungle-Forest",
         "Savana",
-        "Winter",
+        "Snow",
         "Lava",
         "Desert",
         "Islands",
         "Swamp-Caves",
-        "Winter-Caves"
+        "Snow-Caves"
     )
 
     private var biomeIndex = 0

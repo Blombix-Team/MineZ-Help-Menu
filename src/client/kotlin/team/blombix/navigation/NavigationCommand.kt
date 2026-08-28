@@ -121,15 +121,15 @@ object NavigationCommand {
                                                                             "Forest",
                                                                             "Plains",
                                                                             "Ocean",
-                                                                            "Redwood-forest",
-                                                                            "Jungle-forest",
+                                                                            "Redwood-Forest",
+                                                                            "Jungle-Forest",
                                                                             "Savana",
-                                                                            "Winter",
+                                                                            "Snow",
                                                                             "Lava",
                                                                             "Desert",
                                                                             "Islands",
                                                                             "Swamp-Caves",
-                                                                            "Winter-Caves"
+                                                                            "Snow-Caves"
                                                                         ).forEach { builder.suggest(it) }
                                                                         builder.buildFuture()
                                                                     }
