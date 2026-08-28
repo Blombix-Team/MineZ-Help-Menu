@@ -40,17 +40,20 @@ object BankStorageManager {
         }
     }
 
-    fun getPlayers(): List<String> = rootDir.listFiles()?.mapNotNull {
-        if (it.extension == "json") it.nameWithoutExtension else null
-    } ?: emptyList()
+    fun getPlayers(): List<String> =
+        rootDir.listFiles()?.mapNotNull {
+            if (it.extension == "json") it.nameWithoutExtension else null
+        } ?: emptyList()
 
     fun getBanksForPlayer(player: String): Map<String, Map<Int, List<ItemRecord>>> {
         if (!cache.containsKey(player)) {
             val file = getPlayerFile(player)
             if (file.exists()) {
                 try {
-                    val type: Type = object : TypeToken<MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>>() {}.type
-                    val data: MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>? = gson.fromJson(file.readText(), type)
+                    val type: Type = object :
+                        TypeToken<MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>>() {}.type
+                    val data: MutableMap<String, MutableMap<Int, MutableList<ItemRecord>>>? =
+                        gson.fromJson(file.readText(), type)
                     cache[player] = data ?: mutableMapOf()
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -84,11 +87,11 @@ object BankStorageManager {
                 if (bankType != null && bankType != bt) continue
                 for (items in pages.values) {
                     for (rec in items) {
-                        // Key by id + nbt to not merge different named items
                         val key = "${rec.id}|${rec.nbt}"
                         val existing = result[key]
                         if (existing == null) result[key] = ItemRecord(rec.id, rec.count, rec.nbt)
-                        else result[key] = ItemRecord(existing.id, existing.count + rec.count, existing.nbt)
+                        else result[key] =
+                            ItemRecord(existing.id, existing.count + rec.count, existing.nbt)
                     }
                 }
             }
@@ -96,6 +99,11 @@ object BankStorageManager {
         return result
     }
 
+    /**
+     * Tworzy pełny ItemStack z zapisu JSON.
+     * Obsługuje enchanty, lore, nazwę, atrybuty, durability itd.
+     * Kompatybilne z Minecraft 1.21.1 (system componentów).
+     */
     fun itemRecordToItemStack(rec: ItemRecord): ItemStack {
         val item = try {
             Registries.ITEM.get(Identifier.of(rec.id))
@@ -117,10 +125,6 @@ object BankStorageManager {
                 // fallback – stack bez NBT
             }
         }
-
         return stack
     }
-
-
-
 }

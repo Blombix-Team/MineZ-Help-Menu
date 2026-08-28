@@ -1,6 +1,5 @@
 package team.blombix.navigation
 
-
 import com.google.gson.Gson
 import net.fabricmc.loader.api.FabricLoader
 import java.io.File
@@ -21,7 +20,7 @@ object LocationManager {
 
         try {
             val content = file.readText()
-            val loaded = gson.fromJson<MutableList<Location>>(content, type)
+            val loaded = gson.fromJson<MutableList<Location>>(content, type) ?: mutableListOf()
             locations.clear()
             locations.addAll(loaded)
         } catch (e: Exception) {
@@ -43,9 +42,21 @@ object LocationManager {
         saveLocations()
     }
 
+    fun updateLocation(index: Int, location: Location) {
+        if (index !in locations.indices) return
+        locations[index] = location
+        saveLocations()
+    }
+
+    fun removeLocation(index: Int) {
+        if (index !in locations.indices) return
+        locations.removeAt(index)
+        saveLocations()
+    }
+
     fun getLocationByName(name: String): Location? {
         return locations.find { it.name.equals(name, ignoreCase = true) }
     }
 
-    fun getAll(): List<Location> = locations
+    fun getAll(): List<Location> = locations.toList()
 }
